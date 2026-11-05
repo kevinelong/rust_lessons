@@ -1,0 +1,18 @@
+[package]
+name = "rust_lessons"
+version = "0.1.1"
+edition = "2021"
+description = "Introduction to programming, taught in Rust: the same lessons as the Python, Java and JavaScript courses"
+license-file = "LICENSE.md"
+publish = false
+
+[lib]
+name = "rust_lessons"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rust_lessons"
+path = "src/main.rs"
+
+[profile.release]
+strip = true
