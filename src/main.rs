@@ -30,7 +30,7 @@ fn main() -> ExitCode {
             serve(port)
         }
         Some(other) => match other.parse::<u8>() {
-            Ok(n) if (1..=20).contains(&n) => {
+            Ok(n) if (1..=rust_lessons::SECTION_COUNT).contains(&n) => {
                 print_section(n as usize);
                 ExitCode::SUCCESS
             }
@@ -44,7 +44,7 @@ fn main() -> ExitCode {
 }
 
 fn usage() {
-    println!("usage: rust_lessons [1-20 | --version | serve [port]]");
+    println!("usage: rust_lessons [1-21 | --version | serve [port]]");
     println!("       with no argument, print the course map");
 }
 
@@ -88,6 +88,8 @@ fn lesson(n: u8) -> (&'static str, &'static str) {
         19 => ("The keyboard and the disk", "`read_line` on anything that can be read, `fs::read_to_string`, `?` to keep it one line."),
         18 => ("Errors", "panic for bugs, Result for the world; `?` returns the error to who asked for it."),
         17 => ("Ownership and moves", "One owner per value, freed at the end of its scope. `&` exists so you can avoid moving."),
+        21 => ("Reading compiler errors", "Read the code, then the span, then the note: E0308 mismatched types, E0382 use after move, E0499 two mutable borrows, E0004 non-exhaustive match, E0061 wrong argument count."),
+        16 => ("Tables and SQL", "Tables, DDL to shape them, and CRUD — insert, select, update, delete — each with its SQL."),
         _ => ("Tables and SQL", "Tables, DDL to shape them, and CRUD — insert, select, update, delete — each with its SQL."),
     }
 }

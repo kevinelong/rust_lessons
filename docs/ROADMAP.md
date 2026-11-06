@@ -45,9 +45,9 @@ generated rather than authored.
 
 4. **Subgoal labels** in sections 07, 08, 11, 16 — the procedural ones. *Done when* each
    procedure's steps are named in both the prose and the example file.
-5. **Section 21: reading compiler errors** — real transcripts, five classic errors, each with
-   the message, the misreading, and the fix. *Done when* the section's example compiles and
-   the error texts are captured from real runs, not paraphrased.
+5. ~~Section 21: reading compiler errors~~ — **done in 0.11.0.** Five errors compiled with
+   `rustc 1.96.0`, stderr recorded verbatim into `docs/compiler-errors.md` (E0308, E0382,
+   E0499, E0004, E0061), and the corrected form of each is a compiling function with a test.
 6. **Track B diagrams for ownership** — extend the four existing figures to cover move in a
    loop and reborrow, where RustLIVE found visualisation helps most.
 

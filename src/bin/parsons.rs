@@ -20,12 +20,12 @@ use rust_lessons::lesson;
 fn main() -> std::process::ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let sections: Vec<u8> = match args.first().and_then(|a| a.parse::<u8>().ok()) {
-        Some(n) if (1..=20).contains(&n) => vec![n],
+        Some(n) if (1..=rust_lessons::SECTION_COUNT).contains(&n) => vec![n],
         Some(_) => {
             eprintln!("no such section");
             return std::process::ExitCode::from(2);
         }
-        None => (1..=20).collect(),
+        None => (1..=rust_lessons::SECTION_COUNT).collect(),
     };
 
     let out_dir = PathBuf::from("problems");
@@ -325,7 +325,7 @@ mod tests {
     #[test]
     fn every_section_that_has_a_short_function_yields_a_problem() {
         let mut covered = 0;
-        for n in 1..=20u8 {
+        for n in 1..=rust_lessons::SECTION_COUNT {
             let source = read_section_source(n).expect("section source");
             if let Some(lines) = pick_function(&source) {
                 covered += 1;

@@ -20,12 +20,12 @@ const MAX_QUESTIONS: usize = 5;
 fn main() -> std::process::ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let sections: Vec<u8> = match args.first().and_then(|a| a.parse::<u8>().ok()) {
-        Some(n) if (1..=20).contains(&n) => vec![n],
+        Some(n) if (1..=rust_lessons::SECTION_COUNT).contains(&n) => vec![n],
         Some(_) => {
             eprintln!("no such section");
             return std::process::ExitCode::from(2);
         }
-        None => (1..=20).collect(),
+        None => (1..=rust_lessons::SECTION_COUNT).collect(),
     };
 
     let out_dir = PathBuf::from("problems");
@@ -204,7 +204,7 @@ mod tests {
     #[test]
     fn every_section_offers_a_retrieval_check() {
         let mut with_questions = 0;
-        for n in 1..=20u8 {
+        for n in 1..=rust_lessons::SECTION_COUNT {
             let beats = lesson::beats(n).expect("beats");
             let qs = questions_for(&beats);
             assert!(qs.len() <= MAX_QUESTIONS, "section {n} exceeded the cap");

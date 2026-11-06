@@ -46,4 +46,4 @@ pub fn is_valid_identifier(name: &str) -> bool {
 
 </details>
 
-<sub>Generated from `src/section_01_*.rs` by `cargo run --bin parsons` — rust_lessons 0.9.0</sub>
+<sub>Generated from `src/section_01_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0</sub>

@@ -42,5 +42,5 @@ pub fn word_counts(text: &str) -> HashMap<String, usize> {
 
 </details>
 
-<sub>Generated from `src/section_08_*.rs` by `cargo run --bin parsons` — rust_lessons 0.9.0
+<sub>Generated from `src/section_08_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0
 </sub>

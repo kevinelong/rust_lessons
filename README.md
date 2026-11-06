@@ -41,7 +41,9 @@ cargo run -- serve            the section 15 server on 127.0.0.1:8765
 | 16 | Tables and SQL | DDL, and CRUD — create, read, update, delete | 79–84 | `src/section_16_databases.rs` | `cargo run --example 16_databases` |
 
 **Track B — required by Rust, absent from the deck** (the deck has no slide for any of
-these, and `python_lessons` teaches them in files rather than slides):
+these, and `python_lessons` teaches them in files rather than slides). Section 21's five
+error transcripts were **captured from `rustc`**, not written from memory: see
+[docs/compiler-errors.md](docs/compiler-errors.md).
 
 | # | Section | Why it is here | Code | Run it |
 |---|---|---|---|---|
@@ -49,6 +51,7 @@ these, and `python_lessons` teaches them in files rather than slides):
 | 18 | Errors | `assert_try_except.py` in the Python course; two levels, `panic` and `Result` | `src/section_18_errors.rs` | `cargo run --example 18_errors` |
 | 19 | The keyboard and the disk | `interactive.py` and `09_file_input_and_output.py` in the Python course | `src/section_19_input_output.rs` | `cargo run --example 19_input_output` |
 | 20 | Testing | the Python course shipped `problems/` pairs; the JS cohorts a whole `tdd_*` family | `src/section_20_testing.rs` | `cargo run --example 20_testing` |
+| 21 | Reading compiler errors | the Ruby track had *reading error messages*; the deck had none, and CMU's study puts compiler messages among Rust's top barriers | `src/section_21_compiler_errors.rs` | `cargo run --example 21_compiler_errors` |
 
 `docs/course-plan.md` lays the same sixteen sections out as a ten-session course with
 timings, the way the earlier cohorts were scheduled.
@@ -158,7 +161,7 @@ re-derives itself when the prose changes. Details, verified output and publishin
 
 **Watch them:** the generated videos are published as release assets in
 [`rust-lessons-releases`](https://github.com/kevinelong/rust-lessons-releases/releases) —
-**all twenty sections, 26:59**, 1920×1080 with narration, verified by SHA-256. They are
+**all 21 sections, 29:43**, 1920×1080 with narration, verified by SHA-256. They are
 build output, so they live there and not here.
 
 A test guards the derivation: `every_section_has_prose_to_narrate` fails the build if a
@@ -170,7 +173,7 @@ error.
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0**, the notebook tier **0.7.0**, and diagrams embedded in slides and video **0.8.0** — minor bumps for features, patch reset to 0 each time.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0**, the notebook tier **0.7.0**, diagrams embedded in slides and video **0.8.0**, practice artefacts **0.10.0**, and compiler-error literacy **0.11.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 

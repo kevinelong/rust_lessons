@@ -23,12 +23,12 @@ use rust_lessons::lesson::{self, Beat};
 fn main() -> std::process::ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let sections: Vec<u8> = match args.first().and_then(|a| a.parse::<u8>().ok()) {
-        Some(n) if (1..=20).contains(&n) => vec![n],
+        Some(n) if (1..=rust_lessons::SECTION_COUNT).contains(&n) => vec![n],
         Some(_) => {
             eprintln!("no such section");
             return std::process::ExitCode::from(2);
         }
-        None => (1..=20).collect(),
+        None => (1..=rust_lessons::SECTION_COUNT).collect(),
     };
 
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -220,7 +220,7 @@ mod tests {
 
     #[test]
     fn every_section_has_playground_cells_that_print() {
-        for n in 1..=20u8 {
+        for n in 1..=rust_lessons::SECTION_COUNT {
             let cells = playground(n);
             assert!(!cells.is_empty(), "section {n} has no runnable cells");
             assert!(

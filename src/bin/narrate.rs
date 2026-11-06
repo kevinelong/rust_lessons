@@ -30,7 +30,7 @@ fn main() -> std::process::ExitCode {
         eprintln!("usage: narrate <section 1-20> [--voice NAME] [--speed F]");
         return std::process::ExitCode::from(2);
     };
-    if !(1..=20).contains(&n) {
+    if !(1..=rust_lessons::SECTION_COUNT).contains(&n) {
         eprintln!("no such section: {n}");
         return std::process::ExitCode::from(2);
     }

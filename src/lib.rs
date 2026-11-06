@@ -30,7 +30,8 @@
 //!
 //! Four more sections cover what the deck never had to say, because no Python course
 //! needs to: [`section_17_ownership`], [`section_18_errors`],
-//! [`section_19_input_output`] and [`section_20_testing`] — see [`TRACK_B`].
+//! [`section_19_input_output`], [`section_20_testing`] and
+//! [`section_21_compiler_errors`] — see [`TRACK_B`].
 
 pub mod section_01_comments;
 pub mod section_02_variables;
@@ -54,6 +55,7 @@ pub mod section_17_ownership;
 pub mod section_18_errors;
 pub mod section_19_input_output;
 pub mod section_20_testing;
+pub mod section_21_compiler_errors;
 
 pub mod lesson;
 pub mod version;
@@ -87,4 +89,9 @@ pub const TRACK_B: &[(&str, &str)] = &[
     ("18", "Errors: panic, Result and ?"),
     ("19", "The keyboard and the disk"),
     ("20", "Testing, and the red-green loop"),
+    ("21", "Reading compiler errors"),
 ];
+
+/// How many sections the course has. One constant, so adding a section cannot leave a
+/// generator or a test behind.
+pub const SECTION_COUNT: u8 = 21;

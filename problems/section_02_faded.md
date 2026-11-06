@@ -32,5 +32,5 @@ pub fn describe_types() -> [(&'static str, &'static str); 4] {
 
 </details>
 
-<sub>Generated from `src/section_02_*.rs` by `cargo run --bin parsons` — rust_lessons 0.9.0
+<sub>Generated from `src/section_02_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0
 </sub>

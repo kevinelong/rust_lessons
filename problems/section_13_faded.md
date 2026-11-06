@@ -37,5 +37,5 @@ The **structure is given and the decisions are missing**. Fill the blanks so the
 
 </details>
 
-<sub>Generated from `src/section_13_*.rs` by `cargo run --bin parsons` — rust_lessons 0.9.0
+<sub>Generated from `src/section_13_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0
 </sub>

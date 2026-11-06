@@ -50,4 +50,4 @@ pub fn track_average(quantity: u32, sides: u32, times: u32, rng: &mut Rng) -> Ve
 
 </details>
 
-<sub>Generated from `src/section_11_*.rs` by `cargo run --bin parsons` — rust_lessons 0.9.0</sub>
+<sub>Generated from `src/section_11_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0</sub>
