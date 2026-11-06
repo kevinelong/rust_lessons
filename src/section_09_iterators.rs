@@ -12,8 +12,8 @@
 
 //! # Diagram
 //!
-//! `docs/diagrams/iterator-pipeline.svg`: lazy stages on the left, the consuming stage
-//! that actually runs them on the right.
+//! `docs/diagrams/flow.md#iterator-laziness` (Mermaid): lazy stages on the left, the
+//! consuming stage that actually runs them on the right.
 //!
 
 /// The even numbers from 2 up to `n`, inclusive.

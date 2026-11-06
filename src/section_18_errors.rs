@@ -17,8 +17,8 @@
 
 //! # Diagram
 //!
-//! `docs/diagrams/question-mark-propagation.svg` follows an error up three frames and
-//! shows what the `?` skipped on the way.
+//! `docs/diagrams/flow.md#-propagation` (Mermaid sequence) follows an error up three
+//! frames and shows what the `?` skipped on the way.
 //!
 
 use std::fmt;

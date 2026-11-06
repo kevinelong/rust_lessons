@@ -102,13 +102,19 @@ Six concepts are structural rather than sequential, so each has a drawing: the t
 count rule over those parts) and cannot be written as one line of code or a two-column
 table.
 
+Two of the six are *sequences* rather than structures, and those are Mermaid — a
+`flowchart` and a `sequenceDiagram` — so they follow the reader's theme and survive in a
+text diff. The other four need arrowheads landing on specific boxes and cells, which
+Mermaid cannot place, so they are SVG. Mermaid strips angle brackets from labels, which
+is why the pipeline's consumer reads `.collect()`; the turbofish is in the lesson.
+
 | Diagram | Shows | Used by |
 |---|---|---|
 | `docs/diagrams/ownership.svg` | move, borrow and clone side by side, with the old name dead after a move | section 17 |
 | `docs/diagrams/borrow-rules.svg` | many `&`, or exactly one `&mut`, never both | sections 04, 17 |
 | `docs/diagrams/string-stack-heap.svg` | the three words a `String` keeps on the stack, the bytes it points at | section 04 |
-| `docs/diagrams/iterator-pipeline.svg` | lazy stages, and the consuming stage that finally runs them | section 09 |
-| `docs/diagrams/question-mark-propagation.svg` | an error leaving three frames early, and what the `?` skipped | section 18 |
+| `docs/diagrams/flow.md#iterator-laziness` | **Mermaid** `flowchart LR`: lazy stages, and the consuming stage that finally runs them | section 09 |
+| `docs/diagrams/flow.md#-propagation` | **Mermaid** `sequenceDiagram`: an error leaving three frames early, and what the `?` skipped | section 18 |
 | `docs/diagrams/match-exhaustiveness.svg` | why an arm per variant beats `_ =>`, and what E0004 looks like | section 06 |
 
 Diagrams that were considered and rejected: CRUD↔SQL (a 4×2 table, already written),
