@@ -133,6 +133,11 @@ that synthesise the audio and mux the MP4. Timing is narration-driven, so the vi
 re-derives itself when the prose changes. Details, verified output and publishing notes:
 [docs/video.md](docs/video.md).
 
+**Watch them:** the generated videos are published as release assets in
+[`rust-lessons-releases`](https://github.com/kevinelong/rust-lessons-releases/releases) —
+sections 01–04 so far, 1920×1080 with narration, verified by SHA-256. They are build
+output, so they live there and not here.
+
 A test guards the derivation: `every_section_has_prose_to_narrate` fails the build if a
 section stops producing spoken beats, because that would be a silent video rather than an
 error.
