@@ -27,6 +27,10 @@
 //! | [`section_14_networking`] | IP, DNS, URLs | 68–71 |
 //! | [`section_15_client_server`] | clients, servers, request and response | 73–76 |
 //! | [`section_16_databases`] | tables, DDL, CRUD | 79–84 |
+//!
+//! Four more sections cover what the deck never had to say, because no Python course
+//! needs to: [`section_17_ownership`], [`section_18_errors`],
+//! [`section_19_input_output`] and [`section_20_testing`] — see [`TRACK_B`].
 
 pub mod section_01_comments;
 pub mod section_02_variables;
@@ -44,6 +48,13 @@ pub mod section_13_structs;
 pub mod section_14_networking;
 pub mod section_15_client_server;
 pub mod section_16_databases;
+
+// Track B: what Rust requires that the deck never had to say.
+pub mod section_17_ownership;
+pub mod section_18_errors;
+pub mod section_19_input_output;
+pub mod section_20_testing;
+
 pub mod version;
 
 pub use version::VERSION;
@@ -66,4 +77,13 @@ pub const COURSE_MAP: &[(&str, &str)] = &[
     ("14", "Networks, IP, DNS and URLs"),
     ("15", "Clients and servers"),
     ("16", "Tables and SQL"),
+];
+
+/// Track B — the lessons the deck has no slide for, but a Rust course cannot ship
+/// without. These come after the deck's sixteen so the mapping stays honest.
+pub const TRACK_B: &[(&str, &str)] = &[
+    ("17", "Ownership and moves"),
+    ("18", "Errors: panic, Result and ?"),
+    ("19", "The keyboard and the disk"),
+    ("20", "Testing, and the red-green loop"),
 ];

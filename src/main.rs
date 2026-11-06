@@ -8,7 +8,7 @@
 use std::net::TcpListener;
 use std::process::ExitCode;
 
-use rust_lessons::{COURSE_MAP, VERSION};
+use rust_lessons::{COURSE_MAP, TRACK_B, VERSION};
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
@@ -30,7 +30,7 @@ fn main() -> ExitCode {
             serve(port)
         }
         Some(other) => match other.parse::<u8>() {
-            Ok(n) if (1..=16).contains(&n) => {
+            Ok(n) if (1..=20).contains(&n) => {
                 print_section(n as usize);
                 ExitCode::SUCCESS
             }
@@ -44,7 +44,7 @@ fn main() -> ExitCode {
 }
 
 fn usage() {
-    println!("usage: rust_lessons [1-16 | --version | serve [port]]");
+    println!("usage: rust_lessons [1-20 | --version | serve [port]]");
     println!("       with no argument, print the course map");
 }
 
@@ -52,6 +52,11 @@ fn print_map() {
     println!("rust_lessons {VERSION} — introduction to programming, in Rust");
     println!();
     for (n, title) in COURSE_MAP {
+        println!("  {n}  {title}");
+    }
+    println!();
+    println!("  track B — required by Rust, absent from the deck");
+    for (n, title) in TRACK_B {
         println!("  {n}  {title}");
     }
     println!();
@@ -79,12 +84,20 @@ fn lesson(n: u8) -> (&'static str, &'static str) {
         13 => ("Structs, methods and traits", "A struct holds properties, an impl holds methods, a trait is the shared contract."),
         14 => ("Networks, IP, DNS and URLs", "An address to reach a machine, a directory to find it by name, a URL to name a thing on it."),
         15 => ("Clients and servers", "One program listens, many connect. A request line, headers, a body; a status, headers, a body."),
+        20 => ("Testing", "`#[test]`, `assert_eq!`, `should_panic`, `ignore`; unit beside the code, integration in tests/."),
+        19 => ("The keyboard and the disk", "`read_line` on anything that can be read, `fs::read_to_string`, `?` to keep it one line."),
+        18 => ("Errors", "panic for bugs, Result for the world; `?` returns the error to who asked for it."),
+        17 => ("Ownership and moves", "One owner per value, freed at the end of its scope. `&` exists so you can avoid moving."),
         _ => ("Tables and SQL", "Tables, DDL to shape them, and CRUD — insert, select, update, delete — each with its SQL."),
     }
 }
 
 fn print_section(n: usize) {
-    let (nstr, title) = COURSE_MAP[n - 1];
+    let (nstr, title) = if n <= COURSE_MAP.len() {
+        COURSE_MAP[n - 1]
+    } else {
+        TRACK_B[n - 1 - COURSE_MAP.len()]
+    };
     let (heading, body) = lesson(n as u8);
     println!("{nstr} — {heading} ({title})");
     println!();

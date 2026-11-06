@@ -10,6 +10,12 @@
 //! is why `(1..).map(...).take(5)` terminates and `(1..).collect::<Vec<_>>()` does
 //! not.
 
+//! # Diagram
+//!
+//! `docs/diagrams/iterator-pipeline.svg`: lazy stages on the left, the consuming stage
+//! that actually runs them on the right.
+//!
+
 /// The even numbers from 2 up to `n`, inclusive.
 pub fn evens_up_to(n: u32) -> Vec<u32> {
     (1..=n).filter(|x| x % 2 == 0).collect()

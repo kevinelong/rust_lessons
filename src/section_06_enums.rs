@@ -8,6 +8,12 @@
 //! This is where the design instinct to use *a set of words instead of a magic
 //! number* starts: `Shake::Vanilla`, not `0`.
 
+//! # Diagram
+//!
+//! `docs/diagrams/match-exhaustiveness.svg` shows why an arm per variant, and not a
+//! wildcard, is what keeps a new variant from pricing itself at zero.
+//!
+
 /// The deck's ice-cream example, with a price attached to each flavour.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Shake {

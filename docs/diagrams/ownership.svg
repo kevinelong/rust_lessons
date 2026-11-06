@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 330" width="780" height="330" role="img" aria-label="Ownership: one owner per value. Move transfers the name, borrow keeps it, clone makes a second copy.">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#57606a"/>
+    </marker>
+    <style>
+      .card { fill: #ffffff; stroke: #d0d7de; stroke-width: 1.5; }
+      .t { fill: #1f2328; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+      .h { fill: #1f2328; font-family: system-ui, sans-serif; font-size: 15px; font-weight: 600; }
+      .s { fill: #57606a; font-family: system-ui, sans-serif; font-size: 12px; }
+      .box { fill: #f6f8fa; stroke: #8b949e; stroke-width: 1.2; }
+      .heap { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.2; }
+      .dead { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.2; }
+      .ln { stroke: #57606a; stroke-width: 1.4; fill: none; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="780" height="330" fill="#ffffff" fill-opacity="0.98" rx="10"/>
+  <text class="h" x="24" y="34">Ownership: one owner per value, freed when its owner goes out of scope</text>
+
+  <!-- panel 1: move -->
+  <rect class="card" x="20" y="56" width="236" height="250" rx="8"/>
+  <text class="s" x="36" y="82">move</text>
+  <text class="t" x="36" y="108">let s = String::from("hi");</text>
+  <rect class="box" x="36" y="122" width="34" height="28" rx="4"/><text class="t" x="50" y="141">s</text>
+  <path class="ln" marker-end="url(#arrow)" d="M 74 136 L 126 136"/>
+  <rect class="heap" x="130" y="122" width="56" height="28" rx="4"/><text class="t" x="146" y="141">"hi"</text>
+
+  <text class="t" x="36" y="186">let t = s;</text>
+  <rect class="dead" x="36" y="200" width="34" height="28" rx="4"/><text class="t" x="50" y="219">s</text>
+  <path d="M 38 202 L 68 226 M 68 202 L 38 226" stroke="#cf222e" stroke-width="1.6"/>
+  <rect class="box" x="130" y="200" width="34" height="28" rx="4"/><text class="t" x="144" y="219">t</text>
+  <text class="s" x="36" y="262">s is dead: using it is a compile</text>
+  <text class="s" x="36" y="278">error, not a bug at run time.</text>
+
+  <!-- panel 2: borrow -->
+  <rect class="card" x="272" y="56" width="236" height="250" rx="8"/>
+  <text class="s" x="288" y="82">borrow</text>
+  <text class="t" x="288" y="108">let r = &amp;s;</text>
+  <rect class="box" x="288" y="122" width="34" height="28" rx="4"/><text class="t" x="302" y="141">s</text>
+  <rect class="box" x="288" y="166" width="34" height="28" rx="4"/><text class="t" x="302" y="185">r</text>
+  <path class="ln" marker-end="url(#arrow)" d="M 305 164 L 305 154"/>
+  <path class="ln" marker-end="url(#arrow)" d="M 326 136 L 378 136"/>
+  <rect class="heap" x="382" y="122" width="56" height="28" rx="4"/><text class="t" x="398" y="141">"hi"</text>
+  <text class="s" x="288" y="222">Both names stay usable while</text>
+  <text class="s" x="288" y="238">the borrow lives. No copy of</text>
+  <text class="s" x="288" y="254">the bytes on the heap.</text>
+  <text class="t" x="288" y="284">r.len() == 2</text>
+
+  <!-- panel 3: clone -->
+  <rect class="card" x="524" y="56" width="236" height="250" rx="8"/>
+  <text class="s" x="540" y="82">clone</text>
+  <text class="t" x="540" y="108">let c = s.clone();</text>
+  <rect class="box" x="540" y="122" width="34" height="28" rx="4"/><text class="t" x="554" y="141">s</text>
+  <rect class="box" x="540" y="166" width="34" height="28" rx="4"/><text class="t" x="554" y="185">c</text>
+  <path class="ln" marker-end="url(#arrow)" d="M 578 136 L 626 136"/>
+  <rect class="heap" x="630" y="122" width="56" height="28" rx="4"/><text class="t" x="646" y="141">"hi"</text>
+  <path class="ln" marker-end="url(#arrow)" d="M 578 180 L 626 180"/>
+  <rect class="heap" x="630" y="166" width="56" height="28" rx="4"/><text class="t" x="646" y="185">"hi"</text>
+  <text class="s" x="540" y="222">A second allocation. Both</text>
+  <text class="s" x="540" y="238">owners free their own copy,</text>
+  <text class="s" x="540" y="254">so this one costs memory.</text>
+</svg>

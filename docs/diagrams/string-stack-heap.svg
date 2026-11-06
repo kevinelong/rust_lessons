@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320" width="780" height="320" role="img" aria-label="String versus str: a String is a pointer, length and capacity on the stack pointing at bytes on the heap; a str slice is a pointer and a length into existing bytes.">
+  <defs>
+    <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0969da"/>
+    </marker>
+    <style>
+      .h { fill: #1f2328; font-family: system-ui, sans-serif; font-size: 15px; font-weight: 600; }
+      .s { fill: #57606a; font-family: system-ui, sans-serif; font-size: 12px; }
+      .t { fill: #1f2328; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+      .stack { fill: #f6f8fa; stroke: #8b949e; stroke-width: 1.3; }
+      .heap { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.4; }
+      .cell { fill: #ffffff; stroke: #afb8c1; stroke-width: 1.1; }
+      .ln { stroke: #0969da; stroke-width: 1.5; fill: none; }
+      .lbl { fill: #57606a; font-family: system-ui, sans-serif; font-size: 11px; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="780" height="320" fill="#ffffff" fill-opacity="0.98" rx="10"/>
+  <text class="h" x="24" y="34">String owns bytes on the heap; &amp;str borrows some</text>
+
+  <text class="s" x="24" y="62">stack</text>
+  <text class="s" x="430" y="62">heap</text>
+
+  <!-- String: three words on the stack -->
+  <rect class="stack" x="24" y="72" width="330" height="104" rx="6"/>
+  <text class="t" x="38" y="94">let s = String::from("hi");</text>
+  <rect class="cell" x="38" y="106" width="86" height="26"/><text class="t" x="50" y="124">ptr</text>
+  <rect class="cell" x="124" y="106" width="86" height="26"/><text class="t" x="136" y="124">len 2</text>
+  <rect class="cell" x="210" y="106" width="86" height="26"/><text class="t" x="222" y="124">cap 8</text>
+  <text class="lbl" x="38" y="150">3 words on the stack</text>
+  <text class="lbl" x="38" y="166">capacity may exceed length</text>
+
+  <path class="ln" marker-end="url(#ar3)" d="M 124 132 C 200 180, 330 190, 424 168"/>
+  <rect class="heap" x="428" y="120" width="120" height="34" rx="5"/>
+  <text class="t" x="444" y="142">h</text><text class="t" x="462" y="142">i</text>
+  <text class="lbl" x="428" y="172">2 bytes, owned by s</text>
+
+  <!-- &str: pointer + length into existing bytes -->
+  <rect class="stack" x="24" y="196" width="330" height="104" rx="6"/>
+  <text class="t" x="38" y="218">let r: &amp;str = &amp;s[0..1];</text>
+  <rect class="cell" x="38" y="230" width="86" height="26"/><text class="t" x="50" y="248">ptr</text>
+  <rect class="cell" x="124" y="230" width="86" height="26"/><text class="t" x="136" y="248">len 1</text>
+  <text class="lbl" x="38" y="274">2 words, and no ownership</text>
+  <text class="lbl" x="38" y="290">of the bytes at all</text>
+
+  <path class="ln" marker-end="url(#ar3)" d="M 124 256 C 220 292, 330 250, 426 200"/>
+  <text class="lbl" x="428" y="196">same allocation, one byte wide</text>
+  <text class="lbl" x="428" y="214">copying r copies two numbers,</text>
+  <text class="lbl" x="428" y="232">never the text</text>
+</svg>

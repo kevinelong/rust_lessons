@@ -12,9 +12,14 @@
 //! * `String` is **owned** text you can grow. `String::from("x")`, `.push_str()`,
 //!   `format!`.
 //!
+
+//! # Diagram
+//!
+//! `docs/diagrams/string-stack-heap.svg` draws the two words a `String` keeps on the
+//! stack and the bytes it points at on the heap.
+//!
 //! Conversion is explicit and can fail, so `parse` returns a `Result`: text that
 //! is not a number is an error you must handle, not a silent `NaN`.
-
 /// Uppercase text with an exclamation mark — the deck's `twice()` example's cousin.
 pub fn shout(text: &str) -> String {
     format!("{}!", text.trim().to_uppercase())

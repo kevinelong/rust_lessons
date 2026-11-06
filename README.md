@@ -11,7 +11,7 @@ bare `cargo` install and a student can read every line of what it does.
 cargo run                     the course map
 cargo run -- 7                section 7's lesson text
 cargo run --example 07_vectors   section 7's code, running
-cargo test                    61 tests, every section
+cargo test                    81 tests; one long one is #[ignore]d
 cargo run -- serve            the section 15 server on 127.0.0.1:8765
 ```
 
@@ -36,6 +36,16 @@ cargo run -- serve            the section 15 server on 127.0.0.1:8765
 | 15 | Clients and servers | many consumers, one responder | 73–76 | `src/section_15_client_server.rs` | `cargo run --example 15_client_server` |
 | 16 | Tables and SQL | DDL, and CRUD — create, read, update, delete | 79–84 | `src/section_16_databases.rs` | `cargo run --example 16_databases` |
 
+**Track B — required by Rust, absent from the deck** (the deck has no slide for any of
+these, and `python_lessons` teaches them in files rather than slides):
+
+| # | Section | Why it is here | Code | Run it |
+|---|---|---|---|---|
+| 17 | Ownership and moves | `&` is taught in 04; without this the borrow has no reason | `src/section_17_ownership.rs` | `cargo run --example 17_ownership` |
+| 18 | Errors | `assert_try_except.py` in the Python course; two levels, `panic` and `Result` | `src/section_18_errors.rs` | `cargo run --example 18_errors` |
+| 19 | The keyboard and the disk | `interactive.py` and `09_file_input_and_output.py` in the Python course | `src/section_19_input_output.rs` | `cargo run --example 19_input_output` |
+| 20 | Testing | the Python course shipped `problems/` pairs; the JS cohorts a whole `tdd_*` family | `src/section_20_testing.rs` | `cargo run --example 20_testing` |
+
 `docs/course-plan.md` lays the same sixteen sections out as a ten-session course with
 timings, the way the earlier cohorts were scheduled.
 
@@ -52,6 +62,7 @@ examples/NN_topic.rs      the same lesson as a program you can run and change
 tests/curriculum.rs       the invariants of the course as a whole
 docs/course-plan.md       the ten-session plan
 docs/symbols.md           every symbol in the course: what it means, which section teaches it
+docs/diagrams/            six SVGs for the concepts prose handles badly
 ```
 
 Three deliberate choices:
@@ -84,12 +95,33 @@ These are added where the language makes them unavoidable, not as extra topics:
 | traits instead of class hierarchies | 13 | Alan Kay's "autonomous cells" without inheritance |
 | borrow-checked subprocesses-free networking | 15 | threads and sockets with no unsafe and no dependencies |
 
+## Diagrams
+
+Six concepts are structural rather than sequential, so each has a drawing: the test for
+"does this earn a diagram" was whether the idea is about parts in relationship (or a
+count rule over those parts) and cannot be written as one line of code or a two-column
+table.
+
+| Diagram | Shows | Used by |
+|---|---|---|
+| `docs/diagrams/ownership.svg` | move, borrow and clone side by side, with the old name dead after a move | section 17 |
+| `docs/diagrams/borrow-rules.svg` | many `&`, or exactly one `&mut`, never both | sections 04, 17 |
+| `docs/diagrams/string-stack-heap.svg` | the three words a `String` keeps on the stack, the bytes it points at | section 04 |
+| `docs/diagrams/iterator-pipeline.svg` | lazy stages, and the consuming stage that finally runs them | section 09 |
+| `docs/diagrams/question-mark-propagation.svg` | an error leaving three frames early, and what the `?` skipped | section 18 |
+| `docs/diagrams/match-exhaustiveness.svg` | why an arm per variant beats `_ =>`, and what E0004 looks like | section 06 |
+
+Diagrams that were considered and rejected: CRUD↔SQL (a 4×2 table, already written),
+operators and comparison tables (flat lookups), client/server (near-tautological once
+section 15's socket code is on the page), and the guess-the-number state machine (three
+states, easier to read as prose).
+
 ## Versioning
 
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and the symbol index made it **0.2.0** (minor: a feature, patch reset to 0).
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, and Track B plus the diagrams made it **0.3.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 
