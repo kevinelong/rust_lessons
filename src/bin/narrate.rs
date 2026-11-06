@@ -27,7 +27,7 @@ const SILENT_HOLD: f64 = 2.2;
 fn main() -> std::process::ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let Some(n) = args.first().and_then(|a| a.parse::<u8>().ok()) else {
-        eprintln!("usage: narrate <section 1-20>");
+        eprintln!("usage: narrate <section 1-20> [--voice NAME] [--speed F]");
         return std::process::ExitCode::from(2);
     };
     if !(1..=20).contains(&n) {
@@ -42,6 +42,11 @@ fn main() -> std::process::ExitCode {
             return std::process::ExitCode::from(1);
         }
     };
+    let voice = arg_value(&args, "--voice").unwrap_or_else(|| String::from(DEFAULT_VOICE));
+    let speed: f64 = arg_value(&args, "--speed")
+        .and_then(|v| v.parse().ok())
+        .unwrap_or(1.0);
+
     let beats = match lesson::beats(n) {
         Some(b) => b,
         None => {
@@ -71,6 +76,7 @@ fn main() -> std::process::ExitCode {
         }
     }
     fs::write(out.join("tts.ps1"), tts_ps1()).expect("write tts.ps1");
+    fs::write(out.join("tts.py"), tts_py(&voice, speed)).expect("write tts.py");
     fs::write(out.join("mux.ps1"), mux_ps1(&beats, n)).expect("write mux.ps1");
 
     println!("section {n:02}: {title}");
@@ -82,25 +88,29 @@ fn main() -> std::process::ExitCode {
     println!("  output: {}", out.display());
     println!();
     println!("next:");
-    println!("  powershell -NoProfile -File {}/tts.ps1", out.display());
+    println!("  {0} {1}/tts.py          # Kokoro voice \"{2}\" (needs kokoro-onnx)", venv_python(), out.display(), voice);
+    println!("  powershell -NoProfile -File {}/tts.ps1            # SAPI fallback, no dependencies", out.display());
     println!("  (screenshot each slide_NNN.html into slides/, then)");
     println!("  powershell -NoProfile -File {}/mux.ps1", out.display());
     std::process::ExitCode::SUCCESS
 }
 
 fn chapter_title(beats: &[Beat], n: u8) -> String {
-    beats
+    // The course map is authoritative: the prose may begin with a plain sentence (or,
+    // in section 4, with a "# Diagram" heading), and neither is the section's name.
+    let from_map = rust_lessons::COURSE_MAP
         .iter()
-        .find(|b| b.kind == Kind::Heading)
-        .map(|b| b.text.trim_start_matches('#').trim().to_string())
-        .unwrap_or_else(|| {
-            rust_lessons::COURSE_MAP
+        .chain(rust_lessons::TRACK_B.iter())
+        .find(|(num, _)| *num == format!("{n:02}"))
+        .map(|(_, t)| t.to_string());
+    from_map
+        .or_else(|| {
+            beats
                 .iter()
-                .chain(rust_lessons::TRACK_B.iter())
-                .find(|(num, _)| *num == format!("{n:02}"))
-                .map(|(_, t)| t.to_string())
-                .unwrap_or_else(|| format!("Section {n}"))
+                .find(|b| b.kind == Kind::Heading)
+                .map(|b| b.text.trim_start_matches('#').trim().to_string())
         })
+        .unwrap_or_else(|| format!("Section {n}"))
 }
 
 fn beats_json(beats: &[Beat]) -> String {
@@ -243,6 +253,83 @@ fn bullet_items(text: &str) -> String {
         .filter(|l| l.trim_start().starts_with("- ") || l.trim_start().starts_with("* "))
         .map(|l| format!("<li>{}</li>", inline(l.trim_start()[2..].trim())))
         .collect()
+}
+
+/// The voice this course narrates with.
+///
+/// Chosen by listening: `af_heart` beat all four British `bf_*` voices on the same
+/// sentence. Kokoro's voice names encode language and gender — `af_` American female,
+/// `bf_` British female, `am_`/`bm_` the male equivalents.
+const DEFAULT_VOICE: &str = "af_heart";
+
+/// `--voice NAME` or `--speed 0.9` from the arguments.
+fn arg_value(args: &[String], flag: &str) -> Option<String> {
+    args.iter()
+        .position(|a| a == flag)
+        .and_then(|i| args.get(i + 1))
+        .cloned()
+}
+
+/// The interpreter that has `kokoro-onnx` installed, if the conventional venv exists.
+fn venv_python() -> String {
+    let home = std::env::var("USERPROFILE").unwrap_or_default();
+    let candidate = format!("{home}\\.ttsvenv\\Scripts\\python.exe");
+    if std::path::Path::new(&candidate).exists() {
+        candidate
+    } else {
+        String::from("python")
+    }
+}
+
+/// A Python narration pass through Kokoro-82M (Apache-2.0).
+///
+/// The sibling of `tts.ps1`: same input directory, same output filenames, so `mux.ps1`
+/// cannot tell which one produced the audio. Kokoro needs `kokoro-onnx` and two model
+/// files; SAPI needs nothing. Neither is required by `cargo test`.
+fn tts_py(voice: &str, speed: f64) -> String {
+    format!(
+        r#"#!/usr/bin/env python3
+"""Narrate every narration/*.txt with Kokoro-82M.
+
+Same contract as tts.ps1: reads narration/NNN.txt, writes narration/NNN.wav, so
+mux.ps1 works either way. Needs kokoro-onnx plus the model files:
+
+    python -m pip install kokoro-onnx soundfile
+    set KOKORO_DIR  (defaults to %USERPROFILE%\kokoro)
+      kokoro-v1.0.onnx   310 MB
+      voices-v1.0.bin     27 MB
+
+Voice: {voice}  (af_ = American female, bf_ = British female, per Kokoro's naming)
+"""
+import glob
+import os
+import sys
+
+import soundfile as sf
+from kokoro_onnx import Kokoro
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+MODELS = os.environ.get("KOKORO_DIR", os.path.join(os.path.expanduser("~"), "kokoro"))
+VOICE = os.environ.get("KOKORO_VOICE", "{voice}")
+SPEED = float(os.environ.get("KOKORO_SPEED", "{speed}"))
+LANG = "en-us" if VOICE.startswith("a") else "en-gb"
+
+kokoro = Kokoro(os.path.join(MODELS, "kokoro-v1.0.onnx"), os.path.join(MODELS, "voices-v1.0.bin"))
+
+paths = sorted(glob.glob(os.path.join(HERE, "narration", "*.txt")))
+if not paths:
+    sys.exit("no narration/*.txt — run narrate first")
+
+for path in paths:
+    text = open(path, encoding="utf-8").read().strip()
+    if not text:
+        continue
+    out = os.path.splitext(path)[0] + ".wav"
+    samples, rate = kokoro.create(text, voice=VOICE, speed=SPEED, lang=LANG)
+    sf.write(out, samples, rate)
+    print("narrated", os.path.basename(out), f"{{len(samples) / rate:.2f}}s", f"voice={{VOICE}}")
+"#
+    )
 }
 
 fn tts_ps1() -> String {

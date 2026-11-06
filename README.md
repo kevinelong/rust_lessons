@@ -129,7 +129,8 @@ states, easier to read as prose).
 One source, four renderings — lesson prose, slides, narrated video now; a notebook
 (`evcxr_jupyter`) as a documented option. `cargo run --bin narrate -- N` turns a
 section's prose into beats, one HTML slide per beat, the narration text, and two scripts
-that synthesise the audio and mux the MP4. Timing is narration-driven, so the video
+that synthesise the audio (Kokoro-82M, voice `af_heart`; or Windows SAPI as a fallback)
+and mux the MP4. Timing is narration-driven, so the video
 re-derives itself when the prose changes. Details, verified output and publishing notes:
 [docs/video.md](docs/video.md).
 
@@ -147,7 +148,7 @@ error.
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0** — minor bumps for features, patch reset to 0 each time.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, and voice selection made it **0.5.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 

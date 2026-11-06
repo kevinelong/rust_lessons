@@ -30,7 +30,8 @@ powershell -NoProfile -File out/video/section_01/mux.ps1    # ffmpeg → section
 * `beats.json` — the parse, so any other renderer can consume it
 * `slide_NNN.html` — one self-contained dark slide per beat, 16:9, grayscale antialiasing
 * `narration/NNN.txt` — the words, markdown stripped
-* `tts.ps1` — `System.Speech` synthesis, `Rate = -1`, one WAV per beat
+* `tts.py` — **Kokoro-82M** synthesis (Apache-2.0), one WAV per beat — the preferred path
+* `tts.ps1` — `System.Speech` synthesis, `Rate = -1` — the fallback with no dependencies
 * `mux.ps1` — duration-driven assembly (below)
 
 ### Why narration drives the timing
@@ -50,10 +51,35 @@ Two constraints found by building it:
   twice (`Wsl/Service/E_UNEXPECTED`), so `mux.ps1` discovers `ffmpeg.exe` from `PATH`,
   then `$env:FFMPEG_DIR`, then `%USERPROFILE%\tools\ffmpeg-*\bin`.
 
+## The voice
+
+`af_heart`, chosen by listening. Kokoro's voice names encode language and gender —
+`af_` American female, `bf_` British female, `am_`/`bm_` the male equivalents — and on the
+same sentence `af_heart` beat all four British female voices (`bf_emma`, `bf_isabella`,
+`bf_alice`, `bf_lily`).
+
+    cargo run --bin narrate -- 1 --voice bf_emma --speed 0.95
+
+Kokoro needs `kokoro-onnx` plus two model files (310 MB + 27 MB, `KOKORO_DIR`, default
+`%USERPROFILE%\kokoro`). It runs on CPU here at RTF 0.15 — about 3 s of audio per beat
+per second of compute — so a twelve-beat section narrates in 15 s. The CUDA path exists
+but needs ~2–3 GB of onnxruntime-gpu and cuDNN, which this machine did not have free.
+
+SAPI remains as `tts.ps1` for anyone without the Python stack: same input directory, same
+output filenames, so `mux.ps1` cannot tell which produced the audio.
+
 ## Verified output
 
-Section 1: `1920×1080`, h264 + aac, **107.2 s**, 2.05 MB, ten beats, ten narration
-WAVs. Slides advance on narration boundaries, not on a fixed timer.
+| Section | Kokoro `af_heart` | SAPI `Zira` | Size |
+|---|---|---|---|
+| 01 | 1:25 | 1:47 | 1.79 MB |
+| 02 | 1:29 | 1:53 | 1.89 MB |
+| 03 | 1:00 | 1:23 | 1.22 MB |
+| 04 | 1:21 | 1:47 | 1.65 MB |
+
+`1920×1080`, h264 + aac at 24 kHz mono, max volume −2.0 dB, slides advancing on narration
+boundaries rather than a fixed timer. Kokoro delivers the same words in roughly 20–25 % less
+time than the SAPI voice.
 
 ## Publishing
 
