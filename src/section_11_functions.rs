@@ -5,6 +5,42 @@
 //! All of them live here, in Rust, and the tests at the bottom are the deck's
 //! acceptance criteria.
 //!
+//! # Anatomy of a function
+//!
+//! Read a signature left to right, and every token has exactly one job:
+//!
+//! ```text
+//! pub  fn  describe_dog  (name: &str, age: u8)  ->  String  {  format!(...)  }
+//! │    │   │              │                     │   │       │  │
+//! │    │   │              │                     │   │       │  └ body: an expression, whose value is returned
+//! │    │   │              │                     │   │       └ brace opens the body
+//! │    │   │              │                     │   └ the type of the returned value
+//! │    │   │              │                     └ arrow, read as "returns"
+//! │    │   │              └ parameter list: a pattern, a colon, a type, comma
+//! │    │   └ the name, in snake_case (section 01's rule)
+//! │    └ the keyword that starts a function
+//! └ visibility: `pub` makes it callable outside this module
+//! ```
+//!
+//! Three forms share that grammar, and the difference is only what is in the
+//! parentheses:
+//!
+//! | Form | Written | Called as | Has `self` |
+//! |---|---|---|---|
+//! | function | `fn describe(name: &str) -> String` | `describe("Rex")` | no |
+//! | associated function | `fn new(name: &str) -> Self` | `Dog::new("Rex")` | no |
+//! | method | `fn rename(&mut self, to: &str)` | `dog.rename("Rex")` | yes, borrowed |
+//!
+//! A function that returns nothing says so by returning `()`, which is written by
+//! omitting the arrow. A function that never returns at all has the return type
+//! `!`, the never type — useful for `panic!`-style helpers and for a loop that can
+//! only be left by a signal.
+//!
+//! The symbols in those signatures are introduced where they first appear and
+//! collected in one table in `docs/symbols.md`: `&` and `&mut` (borrow), `->`
+//! (returns), `::` (path), `|x|` (closure), `_` (deliberately unused), `!` (never
+//! type, and the marker that makes `println!` a macro rather than a function).
+//!
 //! A Rust function declares its parameters and its return type, and the body's
 //! last expression is the return value — no `return` needed unless you are leaving
 //! early. Arguments of `&str` and `&[i32]` are *borrowed*, which is the closest

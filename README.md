@@ -29,7 +29,7 @@ cargo run -- serve            the section 15 server on 127.0.0.1:8765
 | 08 | Maps | looking a value up by another value | 33–34 | `src/section_08_maps.rs` | `cargo run --example 08_maps` |
 | 09 | Ranges and iterators | sequences generated as you walk them | 35 | `src/section_09_iterators.rs` | `cargo run --example 09_iterators` |
 | 10 | Loops | `for`, `while`, repeat until done | 38–44 | `src/section_10_loops.rs` | `cargo run --example 10_loops` |
-| 11 | Functions | D.R.Y., arguments, returns; `min`, `max`, dice, `reverse_me` | 49–58 | `src/section_11_functions.rs` | `cargo run --example 11_functions` |
+| 11 | Functions | D.R.Y., arguments, returns; **anatomy of a function**; `min`, `max`, dice, `reverse_me` | 49–58 | `src/section_11_functions.rs` | `cargo run --example 11_functions`, `cargo run --example 11_anatomy_of_a_function` |
 | 12 | Capstone | guess the number — the first useful program | 60–62 | `src/section_12_capstone.rs` | `cargo run --example 12_capstone` |
 | 13 | Structs, methods, traits | objects as autonomous cells that talk | 63–67 | `src/section_13_structs.rs` | `cargo run --example 13_structs` |
 | 14 | Networks, IP, DNS, URLs | an address, a directory, a name for a thing | 68–71 | `src/section_14_networking.rs` | `cargo run --example 14_networking` |
@@ -51,6 +51,7 @@ src/section_NN_topic.rs   the lesson as documentation, plus the functions it tea
 examples/NN_topic.rs      the same lesson as a program you can run and change
 tests/curriculum.rs       the invariants of the course as a whole
 docs/course-plan.md       the ten-session plan
+docs/symbols.md           every symbol in the course: what it means, which section teaches it
 ```
 
 Three deliberate choices:
@@ -61,6 +62,10 @@ Three deliberate choices:
 * **Every example runs.** `cargo run --example 15_client_server` starts a real server on
   a kernel-assigned port, sends four real requests through it, and exits — so the
   networking lessons are executable rather than described.
+* **Symbols are taught where they are first needed, and indexed.** `&` arrives in
+  section 04 with `&str`, `|x|` in section 09 with closures, `&mut self` in section 13
+  with methods; `docs/symbols.md` is the single table that says which section owns which
+  symbol, so a student can look one up instead of hunting.
 * **Teaching text lives above the code it explains.** Each module's `//!` header is the
   lesson, written to be read aloud, and `cargo doc --open` renders it as notes.
 
@@ -84,7 +89,7 @@ These are added where the language makes them unavoidable, not as extra topics:
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository starts at **0.1.1**.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and the symbol index made it **0.2.0** (minor: a feature, patch reset to 0).
 
 ## Licence
 
