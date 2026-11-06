@@ -11,7 +11,8 @@ bare `cargo` install and a student can read every line of what it does.
 cargo run                     the course map
 cargo run -- 7                section 7's lesson text
 cargo run --example 07_vectors   section 7's code, running
-cargo test                    81 tests; one long one is #[ignore]d
+cargo test                    85 tests; one long one is #[ignore]d
+cargo run --bin narrate -- 1   generate section 1's slides, narration text and mux scripts
 cargo run -- serve            the section 15 server on 127.0.0.1:8765
 ```
 
@@ -62,7 +63,8 @@ examples/NN_topic.rs      the same lesson as a program you can run and change
 tests/curriculum.rs       the invariants of the course as a whole
 docs/course-plan.md       the ten-session plan
 docs/symbols.md           every symbol in the course: what it means, which section teaches it
-docs/diagrams/            six SVGs for the concepts prose handles badly
+docs/diagrams/            six diagrams: four SVG, two Mermaid
+docs/video.md             the format ladder and the narrated-video pipeline
 ```
 
 Three deliberate choices:
@@ -122,12 +124,25 @@ operators and comparison tables (flat lookups), client/server (near-tautological
 section 15's socket code is on the page), and the guess-the-number state machine (three
 states, easier to read as prose).
 
+## Formats
+
+One source, four renderings — lesson prose, slides, narrated video now; a notebook
+(`evcxr_jupyter`) as a documented option. `cargo run --bin narrate -- N` turns a
+section's prose into beats, one HTML slide per beat, the narration text, and two scripts
+that synthesise the audio and mux the MP4. Timing is narration-driven, so the video
+re-derives itself when the prose changes. Details, verified output and publishing notes:
+[docs/video.md](docs/video.md).
+
+A test guards the derivation: `every_section_has_prose_to_narrate` fails the build if a
+section stops producing spoken beats, because that would be a silent video rather than an
+error.
+
 ## Versioning
 
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, and Track B plus the diagrams made it **0.3.0** — minor bumps for features, patch reset to 0 each time.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 

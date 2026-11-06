@@ -55,6 +55,7 @@ pub mod section_18_errors;
 pub mod section_19_input_output;
 pub mod section_20_testing;
 
+pub mod lesson;
 pub mod version;
 
 pub use version::VERSION;

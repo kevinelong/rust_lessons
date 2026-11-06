@@ -78,3 +78,23 @@ fn every_section_answers() {
     assert_eq!(Response::ok("x").status, 200);
     assert_eq!(Table::new("t", &["a"]).len(), 0);
 }
+
+/// Every section must still produce narratable prose.
+///
+/// This is the drift guard for the derived formats: slides and the narrated video are
+/// generated from the lesson text, so a section whose prose disappears (or turns into
+/// nothing but code) would produce a silent video rather than a visible failure.
+#[test]
+fn every_section_has_prose_to_narrate() {
+    use rust_lessons::lesson;
+
+    let mut total = 0;
+    for n in 1..=20u8 {
+        let beats = lesson::beats(n).unwrap_or_else(|| panic!("section {n:02} has no beats"));
+        assert!(beats.len() >= 3, "section {n:02} has only {} beats", beats.len());
+        let spoken = beats.iter().filter(|b| lesson::needs_narration(b)).count();
+        assert!(spoken >= 1, "section {n:02} has nothing to say out loud");
+        total += beats.len();
+    }
+    assert!(total > 100, "20 sections should give more than 100 beats, got {total}");
+}
