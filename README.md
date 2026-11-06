@@ -14,6 +14,7 @@ cargo run --example 07_vectors   section 7's code, running
 cargo test                    85 tests; one long one is #[ignore]d
 cargo run --bin narrate -- 1   generate section 1's slides, narration text and mux scripts
 cargo run --bin notebook       generate all twenty Jupyter notebooks
+cargo run --bin parsons        generate the Parsons problems in problems/
 cargo run -- serve            the section 15 server on 127.0.0.1:8765
 ```
 
@@ -67,6 +68,8 @@ docs/symbols.md           every symbol in the course: what it means, which secti
 docs/diagrams/            six diagrams: four SVG, two Mermaid
 docs/video.md             the format ladder and the narrated-video pipeline
 docs/STATE.md             current state, decisions, defects found, open items
+docs/ROADMAP.md           the plan, phased, each phase with an observable result
+docs/research/            daily research notes: what was read, what it implies
 ```
 
 Three deliberate choices:
@@ -125,6 +128,18 @@ Diagrams that were considered and rejected: CRUD↔SQL (a 4×2 table, already wr
 operators and comparison tables (flat lookups), client/server (near-tautological once
 section 15's socket code is on the page), and the guess-the-number state machine (three
 states, easier to read as prose).
+
+## Practice
+
+The course has a practice artefact now: `problems/section_NN.md` is a **Parsons problem**
+per section — a real function from that section's module, shuffled into the wrong order,
+with the canonical answer collapsed behind a disclosure. Generated, not authored:
+`cargo run --bin parsons`.
+
+Why Parsons: it removes the blank-page cost while keeping the reasoning, and the literature
+puts it above writing-from-scratch for early practice. Sources and what they imply are in
+[docs/research/2026-11-06.md](docs/research/2026-11-06.md); the plan it drives is
+[docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Formats
 

@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build every target (lib, bins, examples, tests)
+        run: cargo build --all-targets --locked
+
+      - name: Run the tests (this is the grader)
+        run: cargo test --all-targets --locked
+
+      - name: Documentation must build clean
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --no-deps --locked
+
+      - name: The drift guards must be present
+        # A section that loses its prose, or its place in the map, fails here rather than
+        # producing a silent video later.
+        run: cargo test --test curriculum --locked
