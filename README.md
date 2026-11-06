@@ -65,6 +65,7 @@ docs/course-plan.md       the ten-session plan
 docs/symbols.md           every symbol in the course: what it means, which section teaches it
 docs/diagrams/            six diagrams: four SVG, two Mermaid
 docs/video.md             the format ladder and the narrated-video pipeline
+docs/STATE.md             current state, decisions, defects found, open items
 ```
 
 Three deliberate choices:
