@@ -30,3 +30,6 @@ target/
 *.pdb
 Cargo.lock.bak
 out/
+
+# notebook checkpoint copies
+notebooks/*_executed.ipynb

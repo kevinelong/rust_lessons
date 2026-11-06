@@ -9,12 +9,12 @@ lesson modules.
 | 0 | acceptance criteria | `cargo test` (85 tests) | no, it is the grader |
 | 1 | lesson prose | rustdoc `//!` + `///`, `docs/` | read |
 | 2 | slides | `cargo run --bin narrate -- N` → `out/video/section_NN/slide_*.html` | click |
-| 3 | notebook | `evcxr_jupyter` (Rust kernel) — not wired up yet | edit and run |
+| 3 | notebook | `cargo run --bin notebook` → `notebooks/section_NN.ipynb` | edit and run |
 | 4 | narrated video | the same `narrate` output, muxed | none |
 
-Levels 2 and 4 are implemented and verified. Level 3 is a documented option, not a
-promise: `evcxr_jupyter` 0.22.0 registers a real Rust kernel, but this repository has no
-`.ipynb` yet, so nothing here should be read as claiming one exists.
+All four are implemented and verified: 261 slides, 20 videos, and 20 notebooks that execute
+against the real Rust kernel (20/20 clean, outputs confirmed — e.g. section 11 prints the
+seeded dice histogram).
 
 ## Building a section's video
 

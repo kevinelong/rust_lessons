@@ -10,7 +10,7 @@ session; everything here is verifiable from the repository.
 | 0 | acceptance criteria | **done** | `cargo test` → 85 tests (81 unit, 4 integration), 1 `#[ignore]`d |
 | 1 | lesson prose | **done** | 62 tracked files; 20 sections in `src/section_*.rs` |
 | 2 | slides | **done** | `cargo run --bin narrate -- N` → 261 HTML slides across 20 sections |
-| 3 | notebook | **not built** | documented as the route (`evcxr_jupyter`), no `.ipynb` exists |
+| 3 | notebook | **done** | 20 `.ipynb` in `notebooks/`; **20/20 execute** against the Rust kernel |
 | 4 | narrated video | **done** | 20 MP4s, 26:59, 34.5 MB, published as `rust-lessons-releases` v0.6.0 |
 
 Published artefacts live outside this repository by design:
@@ -68,8 +68,10 @@ HTTP and screenshot each `slide_NNN.html` at 1600×900 into `slides/`.
 
 ## Open items
 
-1. **Notebook tier (level 3)** — `evcxr_jupyter` is the route; nothing is built. Do not
-   claim it exists.
+1. ~~Notebook tier~~ — built. `cargo run --bin notebook` writes one notebook per section;
+   cells load the crate via `:dep` and print real results. `evcxr_jupyter` **0.22.0 does not
+   build** against rustc 1.96 (its pinned `ra_ap_span` fails), so the kernel is **0.19.0**.
+   Execute with nbclient: `nbclient` + `jupyter-client`, kernel name `rust`.
 2. **YouTube** — needs OAuth (Data API v3) credentials this repo does not carry. The MP4s
    are upload-ready; a title/description sidecar is all that is missing.
 3. **Two Mermaid diagrams are not in the videos** — the four SVGs are. Rendering Mermaid
