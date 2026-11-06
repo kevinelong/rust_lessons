@@ -47,10 +47,17 @@ fn main() -> std::process::ExitCode {
             continue;
         };
         let scrambled = scramble(&lines, n as u64);
-        let path = out_dir.join(format!("section_{n:02}.md"));
+        let path = out_dir.join(format!("section_{n:02}_parsons.md"));
         fs::write(&path, render(n, &lines, &scrambled)).expect("write problem");
+
+        let faded_path = out_dir.join(format!("section_{n:02}_faded.md"));
+        fs::write(&faded_path, render_faded(n, &lines)).expect("write faded problem");
         written += 1;
-        println!("section {n:02}: {} lines -> {}", lines.len(), path.display());
+        println!(
+            "section {n:02}: {} lines -> {} + faded",
+            lines.len(),
+            path.display()
+        );
     }
     if !skipped.is_empty() {
         println!("no code to scramble in sections: {skipped:?}");
@@ -138,6 +145,81 @@ pub fn scramble(lines: &[String], seed: u64) -> Vec<String> {
     out
 }
 
+/// Indices to blank in a faded variant.
+///
+/// The rule is *decision points*, not a random third: a line is blanked when it binds a
+/// name (`let`), branches (`if`/`match`), or loops (`for`/`while`). Those are the places a
+/// solver has to know what must already exist — the subgoal. Structural braces, the
+/// signature, and expression tails stay visible so the shape of the answer is never lost.
+pub fn fade_indices(lines: &[String]) -> Vec<usize> {
+    let mut picked = Vec::new();
+    for (i, line) in lines.iter().enumerate() {
+        if i == 0 {
+            continue; // the signature is the anchor, never blanked
+        }
+        let t = line.trim_start();
+        if t.starts_with("let ")
+            || t.starts_with("if ")
+            || t.starts_with("} else if ")
+            || t.starts_with("for ")
+            || t.starts_with("while ")
+            || t.starts_with("match ")
+        {
+            picked.push(i);
+        }
+    }
+    picked
+}
+
+/// The faded rendering: blanks keep their indentation, so the block still reads as code.
+pub fn render_faded(n: u8, canonical: &[String]) -> String {
+    let blanks = fade_indices(canonical);
+    let mut block = String::new();
+    for (i, line) in canonical.iter().enumerate() {
+        if let Some(pos) = blanks.iter().position(|b| *b == i) {
+            let indent: String = line.chars().take_while(|c| c.is_whitespace()).collect();
+            block.push_str(&format!("{indent}// ______  (blank {})\n", pos + 1));
+        } else {
+            block.push_str(line);
+            block.push('\n');
+        }
+    }
+
+    let mut list = String::new();
+    for (k, i) in blanks.iter().enumerate() {
+        list.push_str(&format!(
+            "{}. `{}` — what has to exist before this line runs?\n",
+            k + 1,
+            canonical[*i].trim()
+        ));
+    }
+
+    let title = title_of(n);
+    let mut out = String::new();
+    out.push_str(&format!("# Faded Parsons problem — section {n:02}: {title}\n\n"));
+    out.push_str("The **structure is given and the decisions are missing**. Fill the blanks so the function compiles and behaves like the lesson's version. Each blank is a decision point: something has to exist before that line can run, and naming that is the exercise.\n\n");
+    out.push_str("```rust\n");
+    out.push_str(&block);
+    out.push_str("```\n\n## The blanks\n\n");
+    out.push_str(&list);
+    out.push_str("\n<details>\n<summary>Canonical order (do not peek first)</summary>\n\n```rust\n");
+    out.push_str(&canonical.join("\n"));
+    out.push_str(&format!(
+        "\n```\n\n</details>\n\n<sub>Generated from `src/section_{n:02}_*.rs` by `cargo run --bin parsons` — rust_lessons {}\n</sub>\n",
+        rust_lessons::VERSION
+    ));
+    out
+}
+
+fn title_of(n: u8) -> String {
+    rust_lessons::COURSE_MAP
+        .iter()
+        .chain(rust_lessons::TRACK_B.iter())
+        .find(|(num, _)| *num == format!("{n:02}"))
+        .map(|(_, t)| t.to_string())
+        .unwrap_or_else(|| format!("Section {n}"))
+}
+
 fn render(n: u8, canonical: &[String], scrambled: &[String]) -> String {
     let title = rust_lessons::COURSE_MAP
         .iter()
@@ -212,6 +294,32 @@ mod tests {
         assert_eq!(fns[1].len(), 7, "nested braces stay inside the body");
         assert!(fns[0].join("\n").contains("one();"));
         assert!(!fns.iter().flatten().any(|l| l.contains("not_this")), "tests are excluded");
+    }
+
+    #[test]
+    fn fading_keeps_the_shape_and_blanks_only_decisions() {
+        let canonical: Vec<String> = [
+            "pub fn f(n: u32) -> u32 {",
+            "    let mut total = 0;",
+            "    for i in 1..=n {",
+            "        total += i;",
+            "    }",
+            "    total",
+            "}",
+        ]
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
+        let blanks = fade_indices(&canonical);
+        assert_eq!(blanks, vec![1, 2], "the signature, body tail and braces stay");
+        let faded = render_faded(3, &canonical);
+        assert_eq!(
+            faded.matches("// ______").count(),
+            blanks.len(),
+            "one blank per decision, no more"
+        );
+        assert!(faded.contains("pub fn f(n: u32) -> u32 {"), "signature is kept");
+        assert!(faded.contains("    total"), "the answer tail is kept");
     }
 
     #[test]

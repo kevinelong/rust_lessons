@@ -14,7 +14,8 @@ cargo run --example 07_vectors   section 7's code, running
 cargo test                    85 tests; one long one is #[ignore]d
 cargo run --bin narrate -- 1   generate section 1's slides, narration text and mux scripts
 cargo run --bin notebook       generate all twenty Jupyter notebooks
-cargo run --bin parsons        generate the Parsons problems in problems/
+cargo run --bin parsons        generate the Parsons and faded problems (problems/)
+cargo run --bin quiz           generate the retrieval checks (problems/)
 cargo run -- serve            the section 15 server on 127.0.0.1:8765
 ```
 
@@ -131,10 +132,14 @@ states, easier to read as prose).
 
 ## Practice
 
-The course has a practice artefact now: `problems/section_NN.md` is a **Parsons problem**
-per section — a real function from that section's module, shuffled into the wrong order,
-with the canonical answer collapsed behind a disclosure. Generated, not authored:
-`cargo run --bin parsons`.
+`problems/` holds three generated practice artefacts per section — 60 files, none authored
+by hand:
+
+| File | Exercise | Generator |
+|---|---|---|
+| `section_NN_parsons.md` | the lines of a real function, out of order — reassemble them | `cargo run --bin parsons` |
+| `section_NN_faded.md` | structure given, **decision points blanked** (`let`/`if`/`for`/`match`) | `cargo run --bin parsons` |
+| `section_NN_quiz.md` | retrieval: up to five sentences with one term removed, answers collapsed | `cargo run --bin quiz` |
 
 Why Parsons: it removes the blank-page cost while keeping the reasoning, and the literature
 puts it above writing-from-scratch for early practice. Sources and what they imply are in

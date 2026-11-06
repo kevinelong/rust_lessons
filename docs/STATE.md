@@ -12,7 +12,7 @@ session; everything here is verifiable from the repository.
 | 2 | slides | **done** | `cargo run --bin narrate -- N` → 261 HTML slides; all six diagrams embedded as images |
 | 3 | notebook | **done** | 20 `.ipynb` in `notebooks/`; **20/20 execute** against the Rust kernel |
 | 4 | narrated video | **done** | 20 MP4s, 26:59, 34.8 MB, published as `rust-lessons-releases` v0.8.0 |
-| — | practice (Parsons) | **started 0.9.0** | `problems/section_NN.md`, 20/20 sections, generated |
+| — | practice | **0.10.0** | 60 generated files: Parsons, faded, retrieval — 20 sections each |
 
 Published artefacts live outside this repository by design:
 
@@ -88,8 +88,9 @@ HTTP and screenshot each `slide_NNN.html` at 1600×900 into `slides/`.
    `useMaxWidth: false` and screenshotting the card — Mermaid cannot be embedded as a file.
 4. **WSL image compaction** — the 47 GB `ext4.vhdx` needs `--allow-unsafe` or an elevated
    `diskpart compact vdisk`; left to Kevin.
-5. **Practice depth** — Parsons exist for all 20 sections; *faded* variants and retrieval
-   questions (roadmap items 2 and 3) do not. Nothing yet measures a learner's score.
+5. **Measurement** — practice artefacts exist (Parsons, faded, retrieval) but nothing
+   records a score. Section 14 yields only two retrieval questions; every section should
+   reach five before a learner can be assessed on it.
 6. **Completion reserve** — the 1M-token window is eaten by a ~307k completion reservation;
    no `maxTokens` key exists in `config.yml`, so this needs the provider's per-model schema
    confirmed before changing.
