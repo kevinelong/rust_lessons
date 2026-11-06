@@ -170,6 +170,99 @@ fn inline(text: &str) -> String {
     out.replace("**", "")
 }
 
+/// The words around a diagram reference, with the file paths removed.
+fn diagram_caption(text: &str) -> String {
+    let mut kept: Vec<String> = Vec::new();
+    for word in text.split_whitespace() {
+        if word.contains("docs/diagrams/") {
+            continue;
+        }
+        kept.push(word.trim_matches('`').to_string());
+    }
+    let caption = kept.join(" ").trim_matches(|c: char| c == ';' || c.is_whitespace()).to_string();
+    if caption.is_empty() {
+        String::new()
+    } else {
+        format!("<p class=\"caption\">{}</p>", inline(&caption))
+    }
+}
+
+/// Turn a diagram beat's text into `<img>` tags with the artwork inlined.
+///
+/// The lesson says which diagram it means, either as a file (`docs/diagrams/ownership.svg`)
+/// or as a Mermaid anchor in `docs/diagrams/flow.md`. Mermaid cannot be embedded as a file,
+/// so its two diagrams are baked to PNG beside the SVGs; `docs/STATE.md` records how.
+fn diagram_images(text: &str) -> Option<String> {
+    let mut found: Vec<&str> = Vec::new();
+    for token in text.split(['`', ' ', '\n', ',']) {
+        let token = token.trim();
+        if let Some(rest) = token.strip_prefix("docs/diagrams/") {
+            if let Some(name) = rest.strip_suffix(".svg") {
+                found.push(Box::leak(format!("docs/diagrams/{name}.svg").into_boxed_str()));
+            } else if rest.starts_with("flow.md") {
+                if rest.contains("iterator-laziness") {
+                    found.push("docs/diagrams/flow-iterator-laziness.png");
+                } else if rest.contains("propagation") {
+                    found.push("docs/diagrams/flow-question-mark.png");
+                }
+            }
+        }
+    }
+    found.dedup();
+    if found.is_empty() {
+        return None;
+    }
+    let mut out = String::new();
+    for path in found {
+        let Ok(bytes) = std::fs::read(path) else {
+            continue;
+        };
+        let mime = if path.ends_with(".svg") {
+            "image/svg+xml"
+        } else {
+            "image/png"
+        };
+        out.push_str(&format!(
+            "<img class=\"diagram\" alt=\"{}\" src=\"data:{};base64,{}\">",
+            path.rsplit('/').next().unwrap_or("diagram"),
+            mime,
+            base64(&bytes)
+        ));
+    }
+    if out.is_empty() {
+        None
+    } else {
+        Some(out)
+    }
+}
+
+/// Standard base64, so embedding an image needs no dependency.
+fn base64(bytes: &[u8]) -> String {
+    const ALPHABET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let mut out = String::with_capacity(bytes.len().div_ceil(3) * 4);
+    for chunk in bytes.chunks(3) {
+        let b = [
+            chunk[0],
+            *chunk.get(1).unwrap_or(&0),
+            *chunk.get(2).unwrap_or(&0),
+        ];
+        let n = ((b[0] as u32) << 16) | ((b[1] as u32) << 8) | b[2] as u32;
+        out.push(ALPHABET[(n >> 18) as usize & 63] as char);
+        out.push(ALPHABET[(n >> 12) as usize & 63] as char);
+        out.push(if chunk.len() > 1 {
+            ALPHABET[(n >> 6) as usize & 63] as char
+        } else {
+            '='
+        });
+        out.push(if chunk.len() > 2 {
+            ALPHABET[n as usize & 63] as char
+        } else {
+            '='
+        });
+    }
+    out
+}
+
 fn slide_html(index: usize, beats: &[Beat], title: &str, section: u8) -> String {
     let beat = &beats[index];
     let is_title = index == 0 && beat.kind == Kind::Prose && beat.text.trim_start().starts_with("Section");
@@ -188,7 +281,11 @@ fn slide_html(index: usize, beats: &[Beat], title: &str, section: u8) -> String 
         )
     } else { match beat.kind {
         Kind::Code => format!("<pre class=\"code\">{}</pre>", inline(&strip_fence(&beat.text))),
-        Kind::Table | Kind::Diagram => format!("<pre class=\"mono\">{}</pre>", inline(&beat.text)),
+        Kind::Table => format!("<pre class=\"mono\">{}</pre>", inline(&beat.text)),
+        Kind::Diagram => match diagram_images(&beat.text) {
+            Some(imgs) => format!("{imgs}{}", diagram_caption(&beat.text)),
+            None => format!("<pre class=\"mono\">{}</pre>", inline(&beat.text)),
+        },
         Kind::Bullets => format!("<ul>{}</ul>", bullet_items(&beat.text)),
         _ => format!("<p>{}</p>", inline(&beat.text)),
     } };
@@ -213,6 +310,8 @@ fn slide_html(index: usize, beats: &[Beat], title: &str, section: u8) -> String 
   pre.code {{ font-size:21px; line-height:1.5; margin:0; padding:22px 26px; background:#161b22;
               border:1px solid #30363d; border-radius:10px; white-space:pre-wrap; }}
   pre.mono {{ font-size:16px; line-height:1.45; margin:0; color:#c9d1d9; white-space:pre-wrap; }}
+  p.caption {{ font-size:19px; color:#8b949e; margin:14px 0 0; max-width:34em; }}
+  img.diagram {{ display:block; max-width:100%; max-height:560px; margin:10px 0; border-radius:8px; background:#ffffff; }}
   code {{ color:#79c0ff; }}
   footer {{ position:fixed; bottom:22px; right:28px; font-family: system-ui, sans-serif;
             color:#57606a; font-size:15px; }}

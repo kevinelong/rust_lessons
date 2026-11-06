@@ -33,3 +33,6 @@ out/
 
 # notebook checkpoint copies
 notebooks/*_executed.ipynb
+
+# throwaway bake page
+docs/diagrams/_bake.html

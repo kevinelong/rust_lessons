@@ -117,7 +117,7 @@ pub fn split_beats(prose: &str) -> Vec<Beat> {
             Kind::Table
         } else if first.starts_with("- ") || first.starts_with("* ") {
             Kind::Bullets
-        } else if first.contains("docs/diagrams/") {
+        } else if text.contains("docs/diagrams/") {
             Kind::Diagram
         } else {
             Kind::Prose

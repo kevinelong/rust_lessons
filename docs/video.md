@@ -99,5 +99,5 @@ alone 20 of them) does not belong in git — the same mistake as the 45 MB Power
   voices; a human track would need a different `tts.ps1` step and nothing else.
 * Slides are static — no cursor, no typing animation. That is a deliberate consequence
   of narration-driven timing: an animation would have to be re-timed per voice.
-* Two of the six diagrams are Mermaid (`docs/diagrams/flow.md`) and therefore are **not**
-  in the video yet; the four SVGs are.
+* All six diagrams are in the slides and the video: the four SVGs are embedded directly and
+  the two Mermaid ones are baked to PNG first (see `docs/STATE.md` for the bake recipe).
