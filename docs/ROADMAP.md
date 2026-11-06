@@ -43,8 +43,10 @@ generated rather than authored.
 
 ## Phase 2 — comprehension support
 
-4. **Subgoal labels** in sections 07, 08, 11, 16 — the procedural ones. *Done when* each
-   procedure's steps are named in both the prose and the example file.
+4. ~~Subgoal labels~~ — **done in 0.12.0.** Sections 07, 08, 11 and 16 now open with a
+   "Subgoals" block naming three or four steps, guarded by a test so they cannot be dropped.
+   Fixing it exposed two rendering defects: headings printed as a literal `# Heading`, and a
+   heading alone on a slide; headings are now merged into the content they introduce.
 5. ~~Section 21: reading compiler errors~~ — **done in 0.11.0.** Five errors compiled with
    `rustc 1.96.0`, stderr recorded verbatim into `docs/compiler-errors.md` (E0308, E0382,
    E0499, E0004, E0061), and the corrected form of each is a compiling function with a test.

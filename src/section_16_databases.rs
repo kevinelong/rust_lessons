@@ -1,5 +1,15 @@
 //! Section 16 — tables and SQL.
 //!
+//! # Subgoals
+//!
+//! 1. **Declare the shape.** Columns and their types, before any row exists — the DDL is the
+//!    decision, the rows are consequences.
+//! 2. **Name the key.** Which column identifies a row is what makes `update` and `delete`
+//!    safe rather than sweeping.
+//! 3. **Pick the operation, not the SQL.** Create, read, update, delete — then the statement
+//!    follows, which is why each method here also prints its SQL.
+//! 4. **Say what an empty result means.** No rows matching is `Ok(vec![])`, not an error;
+//!    a wrong column name *is* one.
 //! The deck's last three slides: relational databases speak SQL, tables are created
 //! with DDL and changed with DML, and applications do four things with them —
 //! **C**reate, **R**ead, **U**pdate, **D**elete, the nickname **CRUD**.

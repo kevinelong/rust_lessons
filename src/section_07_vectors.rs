@@ -1,5 +1,17 @@
 //! Section 7 — vectors: the list, in Rust.
 //!
+//! # Subgoals
+//!
+//! Solving anything with a vector is the same four moves. Name them before writing code —
+//! the labels are what the evidence says transfers (see `docs/research/2026-11-06.md`).
+//!
+//! 1. **Decide the element type.** `Vec<i32>` and `Vec<String>` fail differently; the type
+//!    is the first decision, not an afterthought.
+//! 2. **Choose the shape of the answer.** `min`/`max` have no answer for an empty list, so
+//!    they return `Option`; `sum` does, so it returns a number. Decide this before looping.
+//! 3. **Fold over the elements.** One traversal, one accumulator (or one running extreme).
+//! 4. **Return without surprising the caller.** Do not mutate an input you were loaned;
+//!    `sorted_ascending` copies before it sorts for exactly this reason.
 //! A list is a sequence of values, written `[v1, v2, v3]` in the deck's Python.
 //! In Rust a `Vec<T>` is the growable version of that (`[T; N]` is a fixed-size
 //! array, and slices `&[T]` are borrowed views of either).

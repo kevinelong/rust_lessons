@@ -11,7 +11,7 @@ session; everything here is verifiable from the repository.
 | 1 | lesson prose | **done** | 21 sections in `src/section_*.rs`; `SECTION_COUNT` is the single bound every generator uses |
 | 2 | slides | **done** | 277 HTML slides across 21 sections; all six diagrams embedded as images |
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
-| 4 | narrated video | **done** | 21 MP4s, 29:43, 38.5 MB — publishing as `v0.11.0` |
+| 4 | narrated video | **done, one version behind** | 21 MP4s, 32:57, 44.7 MB rendered locally; published release is `v0.11.0` (29:43). Nine sections carry 0.12.0 footers, twelve carry 0.11.0 — a wholesale regeneration ships with the next milestone rather than per-prose-edit |
 | — | practice | **0.10.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each |
 
 Published artefacts live outside this repository by design:
@@ -66,6 +66,13 @@ powershell -NoProfile -File out/video/section_07/mux.ps1     # MP4
 
 The screenshot pass between `tts` and `mux` is the one manual step: serve `out/video` over
 HTTP and screenshot each `slide_NNN.html` at 1600×900 into `slides/`.
+
+## Known lag, on purpose
+
+The videos are not republished after every prose edit: a full regeneration is 21
+sections × (narration + 277 screenshots + mux) ≈ 13 minutes, so it is batched at milestones.
+The prose, slides, notebooks and practice files are always current; the published videos
+say which version they are.
 
 ## Research and plan
 

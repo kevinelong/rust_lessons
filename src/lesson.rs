@@ -159,7 +159,26 @@ pub fn split_beats(prose: &str) -> Vec<Beat> {
     if !block.is_empty() {
         push(&mut beats, &block);
     }
-    beats
+
+    // A heading is a label for what follows, so it travels with it: a slide (or a video
+    // beat) that says only "Subgoals" wastes the reader's attention. Merging here keeps the
+    // heading in the narration and in the notebook while giving the slide content to show.
+    let mut merged: Vec<Beat> = Vec::new();
+    let mut pending: Option<Beat> = None;
+    for beat in beats {
+        match pending.take() {
+            Some(mut head) => {
+                head.text = format!("{}\n\n{}", head.text.trim_end(), beat.text);
+                merged.push(head);
+            }
+            None if beat.kind == Kind::Heading => pending = Some(beat),
+            None => merged.push(beat),
+        }
+    }
+    if let Some(head) = pending {
+        merged.push(head);
+    }
+    merged
 }
 
 /// Strip markdown the speaker should not read: backticks, emphasis, list markers.

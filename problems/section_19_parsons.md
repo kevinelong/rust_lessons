@@ -42,4 +42,4 @@ pub fn write_report(path: &Path, counts: &HashMap<String, usize>) -> io::Result<
 
 </details>
 
-<sub>Generated from `src/section_19_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0</sub>
+<sub>Generated from `src/section_19_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0</sub>

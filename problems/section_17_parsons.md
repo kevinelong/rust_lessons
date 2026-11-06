@@ -36,4 +36,4 @@ the skill this exercise trains, not the typing.
 
 </details>
 
-<sub>Generated from `src/section_17_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0</sub>
+<sub>Generated from `src/section_17_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0</sub>

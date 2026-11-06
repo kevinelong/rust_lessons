@@ -28,5 +28,5 @@ pub fn parse_sum(a: &str, b: &str) -> Option<i64> {
 
 </details>
 
-<sub>Generated from `src/section_04_*.rs` by `cargo run --bin parsons` — rust_lessons 0.10.0
+<sub>Generated from `src/section_04_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0
 </sub>

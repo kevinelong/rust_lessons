@@ -1,5 +1,15 @@
 //! Section 8 — maps: looking a value up by another value.
 //!
+//! # Subgoals
+//!
+//! 1. **Name the key type.** The key must be `Hash + Eq`; that is why `String` works and
+//!    `f64` does not, and it is a decision made before any code.
+//! 2. **Decide what a missing key means.** `get` returns `Option`; counting wants a default
+//!    (`unwrap_or` or `entry(...).or_insert`). Choose, do not guess.
+//! 3. **Choose insert-or-update deliberately.** `entry` for accumulate-in-place,
+//!    `insert` only when overwriting is really intended.
+//! 4. **Make the result order deterministic.** A `HashMap` has no order, so any answer a
+//!    learner compares must be sorted first — `most_common` breaks ties alphabetically.
 //! The deck's dictionary: you look up a definition using the word as the key.
 //! In Rust that is `HashMap<K, V>` from `std::collections`.
 //!

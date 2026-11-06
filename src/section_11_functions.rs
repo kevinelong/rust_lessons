@@ -1,5 +1,15 @@
 //! Section 11 — functions.
 //!
+//! # Subgoals
+//!
+//! 1. **Write the signature from the question, not from the body.** What goes in, what comes
+//!    out, and can it fail (`Option`/`Result`) — the deck's exercises are decided here.
+//! 2. **Choose the ownership of each parameter.** `&str`/`&[i32]` when borrowing is enough;
+//!    by value only when the function keeps it.
+//! 3. **Write the body as one traversal.** `min`/`max`/`roll` each walk their input once.
+//! 4. **State the acceptance case.** Every exercise in this section has a test that names
+//!    the boundary (empty input, all faces, non-ASCII text) — that test is the definition of
+//!    done, not an optional extra.
 //! The deck's D.R.Y. slide, then the six exercises that make it real: `min`, `max`,
 //! `roll`, `get_average_roll`, `trackAverage`, `chart_average` and `reverse_me`.
 //! All of them live here, in Rust, and the tests at the bottom are the deck's

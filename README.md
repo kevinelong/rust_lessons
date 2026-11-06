@@ -29,16 +29,16 @@ cargo run -- serve            the section 15 server on 127.0.0.1:8765
 | 04 | Strings and conversion | text, numbers, converting between them | 11–16 | `src/section_04_strings.rs` | `cargo run --example 04_strings` |
 | 05 | Booleans and conditionals | comparison, branching on true/false | 19, 45–47 | `src/section_05_conditionals.rs` | `cargo run --example 05_conditionals` |
 | 06 | Enums | a type whose value is one of a named set | 23 | `src/section_06_enums.rs` | `cargo run --example 06_enums` |
-| 07 | Vectors | sequences: create, index, push, iterate | 26–30 | `src/section_07_vectors.rs` | `cargo run --example 07_vectors` |
-| 08 | Maps | looking a value up by another value | 33–34 | `src/section_08_maps.rs` | `cargo run --example 08_maps` |
+| 07 | Vectors | sequences: create, index, push, iterate; **subgoals** | 26–30 | `src/section_07_vectors.rs` | `cargo run --example 07_vectors` |
+| 08 | Maps | looking a value up by another value; **subgoals** | 33–34 | `src/section_08_maps.rs` | `cargo run --example 08_maps` |
 | 09 | Ranges and iterators | sequences generated as you walk them | 35 | `src/section_09_iterators.rs` | `cargo run --example 09_iterators` |
 | 10 | Loops | `for`, `while`, repeat until done | 38–44 | `src/section_10_loops.rs` | `cargo run --example 10_loops` |
-| 11 | Functions | D.R.Y., arguments, returns; **anatomy of a function**; `min`, `max`, dice, `reverse_me` | 49–58 | `src/section_11_functions.rs` | `cargo run --example 11_functions`, `cargo run --example 11_anatomy_of_a_function` |
+| 11 | Functions | D.R.Y., arguments, returns; **anatomy of a function**; **subgoals**; `min`, `max`, dice, `reverse_me` | 49–58 | `src/section_11_functions.rs` | `cargo run --example 11_functions`, `cargo run --example 11_anatomy_of_a_function` |
 | 12 | Capstone | guess the number — the first useful program | 60–62 | `src/section_12_capstone.rs` | `cargo run --example 12_capstone` |
 | 13 | Structs, methods, traits | objects as autonomous cells that talk | 63–67 | `src/section_13_structs.rs` | `cargo run --example 13_structs` |
 | 14 | Networks, IP, DNS, URLs | an address, a directory, a name for a thing | 68–71 | `src/section_14_networking.rs` | `cargo run --example 14_networking` |
 | 15 | Clients and servers | many consumers, one responder | 73–76 | `src/section_15_client_server.rs` | `cargo run --example 15_client_server` |
-| 16 | Tables and SQL | DDL, and CRUD — create, read, update, delete | 79–84 | `src/section_16_databases.rs` | `cargo run --example 16_databases` |
+| 16 | Tables and SQL | DDL, and CRUD — create, read, update, delete; **subgoals** | 79–84 | `src/section_16_databases.rs` | `cargo run --example 16_databases` |
 
 **Track B — required by Rust, absent from the deck** (the deck has no slide for any of
 these, and `python_lessons` teaches them in files rather than slides). Section 21's five
@@ -173,7 +173,7 @@ error.
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0**, the notebook tier **0.7.0**, diagrams embedded in slides and video **0.8.0**, practice artefacts **0.10.0**, and compiler-error literacy **0.11.0** — minor bumps for features, patch reset to 0 each time.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0**, the notebook tier **0.7.0**, diagrams embedded in slides and video **0.8.0**, practice artefacts **0.10.0**, compiler-error literacy **0.11.0**, and subgoal labels **0.12.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 

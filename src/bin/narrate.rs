@@ -286,6 +286,15 @@ fn slide_html(index: usize, beats: &[Beat], title: &str, section: u8) -> String 
             Some(imgs) => format!("{imgs}{}", diagram_caption(&beat.text)),
             None => format!("<pre class=\"mono\">{}</pre>", inline(&beat.text)),
         },
+        Kind::Heading => {
+            let (head, rest) = beat.text.split_once("\n\n").unwrap_or((beat.text.as_str(), ""));
+            let heading = inline(head.trim_start_matches('#').trim());
+            if rest.trim().is_empty() {
+                format!("<h2>{heading}</h2>")
+            } else {
+                format!("<h2>{heading}</h2><p>{}</p>", inline(rest.trim()))
+            }
+        }
         Kind::Bullets => format!("<ul>{}</ul>", bullet_items(&beat.text)),
         _ => format!("<p>{}</p>", inline(&beat.text)),
     } };
@@ -303,7 +312,7 @@ fn slide_html(index: usize, beats: &[Beat], title: &str, section: u8) -> String 
   p.kicker {{ font-family: system-ui, sans-serif; color:#8b949e; font-size:22px; margin:0 0 16px; }}
   header {{ font-family: system-ui, sans-serif; color:#8b949e; font-size:19px; margin-bottom:30px;
             display:flex; justify-content:space-between; }}
-  h2 {{ font-family: system-ui, sans-serif; font-size:34px; margin:0 0 22px; font-weight:640; }}
+  h2 {{ font-family: system-ui, sans-serif; font-size:36px; margin:0 0 22px; font-weight:640; color:#e6edf3; }}
   p {{ font-size:24px; line-height:1.55; margin:0; max-width:26em; }}
   ul {{ font-size:22px; line-height:1.6; margin:0; padding-left:1.1em; }}
   li {{ margin-bottom:.35em; }}
