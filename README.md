@@ -16,6 +16,8 @@ cargo run --bin narrate -- 1   generate section 1's slides, narration text and m
 cargo run --bin notebook       generate all twenty Jupyter notebooks
 cargo run --bin parsons        generate the Parsons and faded problems (problems/)
 cargo run --bin quiz           generate the retrieval checks (problems/)
+cargo run --bin book           write the mdBook chapters (book/src/)
+mdbook serve book              read the course as a book (after: mdbook build book)
 cargo run -- serve            the section 15 server on 127.0.0.1:8765
 ```
 
@@ -133,6 +135,15 @@ operators and comparison tables (flat lookups), client/server (near-tautological
 section 15's socket code is on the page), and the guess-the-number state machine (three
 states, easier to read as prose).
 
+## As a book
+
+`cargo run --bin book && mdbook serve book` renders the same prose as an mdBook: one
+chapter per section (23 chapters in `book/src/`, generated and committed). `mdbook test`
+compiles the book's `rust` block — and that check was verified not to be vacuous: breaking
+the block fails the test with `E0277`. The chapters are
+generated from `src/section_*.rs`, so editing a lesson updates the book, the slides, the
+notebook, the practice problems and the video script.
+
 ## Practice
 
 `problems/` holds three generated practice artefacts per section — 60 files, none authored
@@ -173,7 +184,7 @@ error.
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0**, the notebook tier **0.7.0**, diagrams embedded in slides and video **0.8.0**, practice artefacts **0.10.0**, compiler-error literacy **0.11.0**, and subgoal labels **0.12.0** — minor bumps for features, patch reset to 0 each time.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0**, the notebook tier **0.7.0**, diagrams embedded in slides and video **0.8.0**, practice artefacts **0.10.0**, compiler-error literacy **0.11.0**, subgoal labels **0.12.0**, and the mdBook edition **0.13.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 

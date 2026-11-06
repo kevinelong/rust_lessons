@@ -55,8 +55,11 @@ generated rather than authored.
 
 ## Phase 3 — delivery
 
-7. **mdbook edition** — the same module prose as a browsable book, with `mdbook test`
-   verifying code blocks. *Done when* the book builds and its tests run in CI.
+7. ~~mdbook edition~~ — **done in 0.13.0.** `cargo run --bin book` writes `book/src/*.md` from
+   the module prose;
+   `mdbook build book` renders a site and `mdbook test book` compiles the `rust` blocks.
+   *Done when* the book builds from a clean tree. Not in CI yet: mdbook is a 2 minute
+   `cargo install` and the chapters are generated, so a failing build is a local signal.
 8. ~~CI~~ — **added**, `.github/workflows/ci.yml`: build all targets, test, `cargo doc` with
    `-D warnings`, and the curriculum drift guards, on every push. *Hardened when* a red test
    has actually blocked a merge.

@@ -12,6 +12,7 @@ session; everything here is verifiable from the repository.
 | 2 | slides | **done** | 277 HTML slides across 21 sections; all six diagrams embedded as images |
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
 | 4 | narrated video | **done, one version behind** | 21 MP4s, 32:57, 44.7 MB rendered locally; published release is `v0.11.0` (29:43). Nine sections carry 0.12.0 footers, twelve carry 0.11.0 — a wholesale regeneration ships with the next milestone rather than per-prose-edit |
+| — | book (mdBook) | **0.13.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
 | — | practice | **0.10.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each |
 
 Published artefacts live outside this repository by design:

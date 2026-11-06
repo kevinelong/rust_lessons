@@ -36,3 +36,6 @@ notebooks/*_executed.ipynb
 
 # throwaway bake page
 docs/diagrams/_bake.html
+
+# mdbook build output (the chapters in book/src/ are generated and committed)
+book/book/

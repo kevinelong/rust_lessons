@@ -1,0 +1,16 @@
+[book]
+title = "Introduction to Programming, in Rust"
+authors = ["Kevin Ernest Long"]
+language = "en"
+multilingual = false
+src = "src"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/kevinelong/rust_lessons"
+edit-url-template = "https://github.com/kevinelong/rust_lessons/edit/main/book/src/{path}"
+
+[build]
+# The chapters are generated; this file and book/src/*.md are the inputs.
+build-dir = "book"
