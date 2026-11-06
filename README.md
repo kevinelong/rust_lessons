@@ -136,8 +136,8 @@ re-derives itself when the prose changes. Details, verified output and publishin
 
 **Watch them:** the generated videos are published as release assets in
 [`rust-lessons-releases`](https://github.com/kevinelong/rust-lessons-releases/releases) —
-sections 01–04 so far, 1920×1080 with narration, verified by SHA-256. They are build
-output, so they live there and not here.
+**all twenty sections, 26:59**, 1920×1080 with narration, verified by SHA-256. They are
+build output, so they live there and not here.
 
 A test guards the derivation: `every_section_has_prose_to_narrate` fails the build if a
 section stops producing spoken beats, because that would be a silent video rather than an
@@ -148,7 +148,7 @@ error.
 One constant, `VERSION` in `src/version.rs`, is the only place the version is written;
 `tests/curriculum.rs` asserts that `Cargo.toml` agrees with it. The rule is
 major.minor.patch: patch for a bug fix, minor for a feature, major only for a published
-release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, and voice selection made it **0.5.0** — minor bumps for features, patch reset to 0 each time.
+release. This repository started at **0.1.1**; the anatomy-of-a-function lesson and symbol index made it **0.2.0**, Track B plus the diagrams made it **0.3.0**, and the video generator made it **0.4.0**, voice selection **0.5.0**, and covering all twenty sections **0.6.0** — minor bumps for features, patch reset to 0 each time.
 
 ## Licence
 

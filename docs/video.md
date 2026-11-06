@@ -70,12 +70,13 @@ output filenames, so `mux.ps1` cannot tell which produced the audio.
 
 ## Verified output
 
-| Section | Kokoro `af_heart` | SAPI `Zira` | Size |
-|---|---|---|---|
-| 01 | 1:25 | 1:47 | 1.79 MB |
-| 02 | 1:29 | 1:53 | 1.89 MB |
-| 03 | 1:00 | 1:23 | 1.22 MB |
-| 04 | 1:21 | 1:47 | 1.65 MB |
+`cargo run --bin narrate -- N` for N in 1..20, then `tts.py`, a screenshot pass, then
+`mux.ps1` — 0 mux failures across the set.
+
+All twenty sections, 26:59 in total, 34.5 MB of video: 261 slides and 249 narration WAVs.
+The four sections that also exist in the SAPI release run 20–25 % shorter with Kokoro
+(`section_01` 1:25 against 1:47). Per-section lengths are in the release notes of
+`rust-lessons-releases`.
 
 `1920×1080`, h264 + aac at 24 kHz mono, max volume −2.0 dB, slides advancing on narration
 boundaries rather than a fixed timer. Kokoro delivers the same words in roughly 20–25 % less
