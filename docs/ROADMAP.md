@@ -63,7 +63,10 @@ generated rather than authored.
 8. ~~CI~~ — **added**, `.github/workflows/ci.yml`: build all targets, test, `cargo doc` with
    `-D warnings`, and the curriculum drift guards, on every push. *Hardened when* a red test
    has actually blocked a merge.
-9. **Release automation** — regenerate videos and attach them on a tag rather than by hand.
+9. ~~Release automation~~ — **done in 0.14.0.** `tools/release-videos.ps1` runs the whole batch:
+   narrate → Kokoro narration → headless-Chrome screenshots → ffmpeg mux → SHA256SUMS →
+   `gh release create`. It refuses to mux a section with no narration, which is the failure
+   that produced silent videos twice.
 
 ## Phase 4 — measurement
 

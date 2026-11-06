@@ -27,7 +27,10 @@ const SILENT_HOLD: f64 = 2.2;
 fn main() -> std::process::ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let Some(n) = args.first().and_then(|a| a.parse::<u8>().ok()) else {
-        eprintln!("usage: narrate <section 1-20> [--voice NAME] [--speed F]");
+        eprintln!(
+            "usage: narrate <section 1-{}> [--voice NAME] [--speed F]",
+            rust_lessons::SECTION_COUNT
+        );
         return std::process::ExitCode::from(2);
     };
     if !(1..=rust_lessons::SECTION_COUNT).contains(&n) {
