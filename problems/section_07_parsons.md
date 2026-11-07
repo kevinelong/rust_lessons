@@ -36,4 +36,4 @@ pub fn range_as_vector(n: u32) -> Vec<u32> {
 
 </details>
 
-<sub>Generated from `src/section_07_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0</sub>
+<sub>Generated from `src/section_07_*.rs` by `cargo run --bin parsons` — rust_lessons 0.17.0</sub>

@@ -1,6 +1,6 @@
 # 10 — Loops
 
-<sub>rust_lessons 0.16.0 · source: `src/section_10_*.rs` · run: `cargo run --example 10_loops`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_10_*.rs` · run: `cargo run --example 10_loops`</sub>
 
 Section 10 — loops.
 

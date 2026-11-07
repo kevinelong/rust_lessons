@@ -1,6 +1,6 @@
 # 09 — Ranges and iterators
 
-<sub>rust_lessons 0.16.0 · source: `src/section_09_*.rs` · run: `cargo run --example 09_iterators`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_09_*.rs` · run: `cargo run --example 09_iterators`</sub>
 
 Section 9 — ranges and iterators.
 

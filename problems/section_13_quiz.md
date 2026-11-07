@@ -20,4 +20,4 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 </details>
 
-<sub>Generated from `src/section_13_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>
+<sub>Generated from `src/section_13_*.rs` by `cargo run --bin quiz` — rust_lessons 0.17.0</sub>

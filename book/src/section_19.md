@@ -1,6 +1,6 @@
 # 19 — The keyboard and the disk
 
-<sub>rust_lessons 0.16.0 · source: `src/section_19_*.rs` · run: `cargo run --example 19_input_output`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_19_*.rs` · run: `cargo run --example 19_input_output`</sub>
 
 Section 19 — the keyboard and the disk.
 

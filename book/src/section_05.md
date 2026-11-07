@@ -1,6 +1,6 @@
 # 05 — Booleans and conditionals
 
-<sub>rust_lessons 0.16.0 · source: `src/section_05_*.rs` · run: `cargo run --example 05_conditionals`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_05_*.rs` · run: `cargo run --example 05_conditionals`</sub>
 
 Section 5 — booleans and conditionals.
 

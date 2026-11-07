@@ -1,6 +1,6 @@
 # 20 — Testing, and the red-green loop
 
-<sub>rust_lessons 0.16.0 · source: `src/section_20_*.rs` · run: `cargo run --example 20_testing`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_20_*.rs` · run: `cargo run --example 20_testing`</sub>
 
 Section 20 — testing, the way the course has been graded all along.
 

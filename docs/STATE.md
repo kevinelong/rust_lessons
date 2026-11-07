@@ -1,6 +1,6 @@
 # State — rust_lessons
 
-Written 2026-11-05, at v0.6.0; handoff entry point is `CONTINUE-HERE.md` at the repository root. Read this first if you are picking the project up in a new
+Written 2026-11-05 at v0.6.0, updated 2026-11-07 at v0.17.0; handoff entry point is `CONTINUE-HERE.md` at the repository root. Read this first if you are picking the project up in a new
 session; everything here is verifiable from the repository.
 
 ## What exists
@@ -14,6 +14,7 @@ session; everything here is verifiable from the repository.
 | 4 | narrated video | **done** | 21 MP4s + 21 SRT at 0.15.0, published as `v0.15.0` (46.7 MB, 43 assets); cues verified to end within 0.0 s of their video |
 | — | book (mdBook) | **0.13.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
 | — | practice | **0.16.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each; retrieval floor is four per section (101 items), asserted by `cargo test` |
+| — | recorded session | **0.17.0** | `fixtures/session-2026-11-07-synthetic.json` — 8 attempts over sections 01–03, 102.4 s on task, one wrong-then-right pair; read by `rust_lessons::session`, asserted by `tests/session_fixture.rs` (7 tests) |
 
 Published artefacts live outside this repository by design:
 
@@ -40,6 +41,13 @@ Published artefacts live outside this repository by design:
   `%USERPROFILE%\tools\ffmpeg-*`.
 * **One version constant**, asserted against `Cargo.toml` by a test. 0.1.1 → 0.6.0: every
   bump was a feature, so minor, with patch reset.
+* **A session is JSON, read with `serde`/`serde_json`** — the crate's only dependency, both
+  already in the local registry cache so `cargo test --offline` builds. Hand-rolling a JSON
+  reader to keep the dependency count at zero would have put a parser in the path of every
+  score; the schema is versioned (`schema: 1`) so a future session is refused, not half-read.
+* **Correctness is derived, not stored.** An attempt carries `answer` and `expected`; whether
+  it was right is `answer` compared to `expected`. A fixture that could assert its own verdict
+  could contradict its own text, and the wrong-then-right pair would no longer prove anything.
 
 ## Defects found by building it (all fixed)
 
@@ -56,6 +64,7 @@ Published artefacts live outside this repository by design:
 
 ```bash
 cargo test                                    # the grader
+cargo test --test session_fixture              # the recorded session loads and its numbers hold
 cargo run                                     # course map
 cargo run -- 7                                # one section's lesson text
 cargo run --example 07_vectors                # the lesson, running
@@ -128,10 +137,14 @@ see `docs/research/2026-11-06.md`.
    `useMaxWidth: false` and screenshotting the card — Mermaid cannot be embedded as a file.
 4. **WSL image compaction** — the 47 GB `ext4.vhdx` needs `--allow-unsafe` or an elevated
    `diskpart compact vdisk`; left to Kevin.
-5. ~~Measurement~~ — **unblocked in 0.16.0, not yet built.** Practice artefacts exist
-   (Parsons, faded, retrieval) and every section now holds at least four retrieval items, so
-   nothing on the input side blocks a score. Nothing yet records one: scoring a session is
-   `phase4-scoring` in `docs/PLAN.json`, whose fixture task comes first.
+5. **Measurement** — input side built, scoring not yet. Practice artefacts exist (Parsons,
+   faded, retrieval), every section holds at least four retrieval items (0.16.0), and there is
+   now one **recorded session as data** (0.17.0): `fixtures/session-2026-11-07-synthetic.json`,
+   read by `rust_lessons::session` from a path or a string, validated on load, and asserted
+   number by number in `tests/session_fixture.rs`. It is synthetic — written, not sat — so it
+   proves the reader and the schema, never a person's learning. The next task is
+   `phase4-scoring` in `docs/PLAN.json`: score that fixture on correctness, time and
+   retrieval-versus-recognition per section.
 6. ~~Section 14 has two retrieval questions~~ — **fixed in 0.16.0.** Sections 12, 14 and 17
    were given the sentences they were missing (a URL's four fields and default ports, DNS
    record types, private ranges; the narrowing range; cloning as the third consequence of

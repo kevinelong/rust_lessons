@@ -5,8 +5,72 @@ Started: 2026-11-07 08:12
 
 ## What this turn changed
 
+- `fixtures/session-2026-11-07-synthetic.json` (new, data): one synthetic session, 8 attempts
+  over sections 01-03, answers + timings + one wrong-then-right pair (s01-q2 answered "var",
+  then "let"). Synthetic on purpose: `"synthetic": true` and `"learner": "synthetic-fixture"`,
+  so a score read off it can never be mistaken for a person's.
+- `src/session.rs` (new, lib): `Session` / `Attempt` / `Mode`, schema constant `SCHEMA = 1`,
+  `Session::from_json_str` (text) and `Session::load` (path), `validate()`, `sections()`,
+  `attempts_for()`. Correctness is *derived* (`Attempt::is_correct`) from answer vs expected,
+  never stored, so the data cannot claim a verdict its own text contradicts. Comparison:
+  trim, drop surrounding backticks, collapse whitespace; case and inner spacing matter,
+  because section 01 teaches that `Total` and `total` are two names.
+- `src/lib.rs`: `pub mod session;`.
+- `tests/session_fixture.rs` (new, 7 tests): loads the fixture from text and from path,
+  asserts the exact numbers, the pair, and that each prompt is real (retrieval answers must be
+  the ones `problems/section_NN_quiz.md` gives; recognition answers must be a permutation of
+  that section's Parsons lines).
+- `Cargo.toml`: `serde` + `serde_json`, the crate's only dependency, both already in the local
+  registry cache so `cargo test --offline` builds. Version 0.16.0 -> 0.17.0 (feature, minor).
+- Regenerated at 0.17.0, so no artefact claims the old build: `book/src/*.md` (23) and
+  `problems/*.md` (63). Diff checked: every changed line in those two directories is a version
+  string, nothing else (`git diff book/ problems/ | grep -E "^[+-][^+-]" | grep -vc "0\.1[67]\.0"`
+  -> 0).
+- Docs: `README.md` (one paragraph - a session is data before it is a score),
+  `docs/STATE.md` (new artefact row, two decisions, open item 5, one command),
+  `CONTINUE-HERE.md` (version line, test count, next action 3), `docs/PLAN.json` (done).
+
 ## What was measured
+
+- `cargo test --offline`: 124 tests, 123 passed, 1 `#[ignore]`d, 0 failed. `--offline` is the
+  point: no network is needed to build or to read a session.
+- `mdbook build book && mdbook test book`: both pass after regeneration.
+- Non-vacuity, three ways, each proven by doctoring the fixture, running the test, and
+  reverting the doctor:
+  1. `"ms": 36000` -> `36001`: `the_fixture_numbers_are_pinned_for_scoring` failed with
+     "total time on task, left: 102401, right: 102400".
+  2. Deleting the attempt-2 row: `the_fixture_holds_exactly_one_wrong_then_right_pair` failed
+     with "exactly one item was retried, found []" (and the load/count tests failed with 7 vs 8).
+  3. `expected` of s03-q3 -> "3 * 4 + 2": `every_retrieval_answer_is_the_one_the_section_quiz_gives`
+     failed with "section 03 question 3 does not answer `3 * 4 + 2`", and the pinned retrieval
+     count dropped 4 -> 3.
+- Loader refusal, asserted in the suite: a zero duration, an unknown schema, a section outside
+  1..=21, and an attempt number that skips are all errors, not warnings (a zeroed timing would
+  otherwise average in as instant recall).
 
 ## Not done, and why
 
+- No scorer, no table, no overall figure: that is `phase4-scoring`, the next task. This turn
+  only guarantees the input exists, parses, and cannot lie about itself.
+- No real learner session recorded. Recording one needs a person; the fixture is explicitly
+  synthetic so nothing here can be quoted as a learning measurement.
+- The fixture covers three sections and eight attempts, deliberately small: enough for both
+  modes, a failure, a retry and a correct answer, small enough to read in one screen and to
+  assert exactly.
+- `docs/RESUME.md` and `docs/LINEAGE-PLAN.md`, named in the brief, do not exist in this
+  repository; the state note is `docs/STATE.md` plus the root `CONTINUE-HERE.md`, and the
+  evidence for this turn is written there (and in `docs/PLAN.json`).
+
 ## What is now fragile
+
+- `tests/session_fixture.rs` cross-checks the fixture against `problems/*.md`, so regenerating
+  the practice artefacts *can* legitimately break it: if section 01's question 2 stops asking
+  for `let`, the fixture must be updated in the same commit. That is the point of the check,
+  but it means the next prose edit near those questions is a two-file change.
+- The fixture pins total time (102400 ms) and per-mode counts. Any future edit to the fixture
+  must update the test in the same commit, by design; a scorer that "just roughly matches"
+  will fail it.
+- `serde`/`serde_json` are now dependencies. They are cached locally, so offline builds work
+  here; a machine without that cache would need network for the first build.
+- `book/src/*` and `problems/*` were regenerated wholesale. If a later turn edits lesson prose
+  without regenerating, the artefacts will claim 0.17.0 while saying something older.

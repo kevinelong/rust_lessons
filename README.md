@@ -184,6 +184,12 @@ The retrieval check has a floor: `cargo test` asserts every section yields at le
 scorable items (101 items over 21 sections: seventeen at five, four at four), because a
 section with three cannot be scored — one wrong answer would move its mark by a third.
 
+A session is data before it is a score. `fixtures/session-2026-11-07-synthetic.json` is one
+recorded session — answers, timings, and one item answered wrong and then right — read by
+`rust_lessons::session` and asserted number by number in `tests/session_fixture.rs`, with no
+window and no network. It is synthetic: written, not sat, so it can test a scoring rule but
+can never be evidence that anyone learned anything.
+
 Why Parsons: it removes the blank-page cost while keeping the reasoning, and the literature
 puts it above writing-from-scratch for early practice. Sources and what they imply are in
 [docs/research/2026-11-06.md](docs/research/2026-11-06.md); the plan it drives is

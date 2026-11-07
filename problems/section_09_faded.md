@@ -34,5 +34,5 @@ pub fn running_totals(values: &[i64]) -> Vec<i64> {
 
 </details>
 
-<sub>Generated from `src/section_09_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0
+<sub>Generated from `src/section_09_*.rs` by `cargo run --bin parsons` — rust_lessons 0.17.0
 </sub>

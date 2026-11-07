@@ -1,6 +1,6 @@
 # 01 — Comments and identifiers
 
-<sub>rust_lessons 0.16.0 · source: `src/section_01_*.rs` · run: `cargo run --example 01_comments`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_01_*.rs` · run: `cargo run --example 01_comments`</sub>
 
 Section 1 — code is written for people.
 

@@ -1,6 +1,6 @@
 # 13 — Structs, methods and traits
 
-<sub>rust_lessons 0.16.0 · source: `src/section_13_*.rs` · run: `cargo run --example 13_structs`</sub>
+<sub>rust_lessons 0.17.0 · source: `src/section_13_*.rs` · run: `cargo run --example 13_structs`</sub>
 
 Section 13 — structs, methods and traits.
 
