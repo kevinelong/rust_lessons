@@ -48,7 +48,7 @@ param(
     [string]$Repo = "C:\Users\kevin\rust_lessons",
     [string]$Omp = "C:\Users\kevin\.local\bin\omp.exe",
     [string]$Remote = "origin",
-    [string]$Main = "master",
+    [string]$Main = "main",
     [string]$WorkRoot = "",
     [int]$MaxPending = 16,
     [string]$Worker = 'w1',
