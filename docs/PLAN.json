@@ -33,12 +33,14 @@
                   },
                   {
                       "id":  "phase4-scoring",
-                      "status":  "running",
+                      "status":  "done",
                       "origin":  "human",
                       "title":  "Score a session: per-section correctness, time to answer, retrieval versus recognition",
                       "acceptance":  "Scoring reads the fixture and prints or returns a table with those three axes per section, plus an overall figure; a test asserts the numbers for the fixture exactly. This is roadmap phase 4\u0027s completion criterion, quoted in the STATE note when done.",
                       "owner":  "pm1",
-                      "claimed":  "2026-11-07 08:43"
+                      "claimed":  "2026-11-07 08:43",
+                      "finished":  "2026-11-07",
+                      "note":  "0.18.0. src/scoring.rs: score(&Session) -> Score gives every section a Tally for all tries plus separate retrieval and recognition tallies, mean and total time, items alongside tries; the overall figure is a SectionScore('overall') so one formula computes both. src/bin/score.rs prints the table (fixture by default, any path accepted, exit 2 when the loader refuses a session). tests/session_scoring.rs (7 tests) pins the fixture exactly: 01 items 3 / tries 4 / 2 right / 50.0% / 13.4 s mean / 53.7 s; 02 2/2/1/50.0%/4.7/9.4 with recognition '-'; 03 2/2/2/100.0%/19.6/39.3; overall 7/8/5/62.5%/12.8/102.4, retrieval 4/6 (66.7%), recognition 1/2 (50.0%), and each rendered row token by token. Non-vacuous: doctoring one recorded answer to 'let x = 5;' moved section 02 to 0/2 and the overall to 4/8 (50.0%) in a throwaway run, and a test asserts it. Untested mode is None printed as '-', never 0.0%, because zero of zero is unknown. Decision: tries printed beside items so a retry is visible rather than hidden in a denominator. cargo test: 137 tests, 136 passed, 1 ignored; docs quote phase 4's criterion in docs/STATE.md open item 5."
                   },
                   {
                       "id":  "reading-claims-audit",
