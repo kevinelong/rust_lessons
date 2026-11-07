@@ -76,6 +76,7 @@ docs/diagrams/            six diagrams: four SVG, two Mermaid
 docs/video.md             the format ladder and the narrated-video pipeline
 docs/STATE.md             current state, decisions, defects found, open items
 docs/ROADMAP.md           the plan, phased, each phase with an observable result
+docs/REVIEW.md            three bounded review tasks — start here if you want to review
 docs/reading.md           further reading per section: one source to go deeper, one to disagree
 docs/research/            daily research notes: what was read, what it implies
 ```
@@ -136,6 +137,13 @@ Diagrams that were considered and rejected: CRUD↔SQL (a 4×2 table, already wr
 operators and comparison tables (flat lookups), client/server (near-tautological once
 section 15's socket code is on the page), and the guess-the-number state machine (three
 states, easier to read as prose).
+
+## Reviewing it
+
+[`docs/REVIEW.md`](docs/REVIEW.md) is the review packet: three tasks of 20–30 minutes each
+(Rust accuracy on §01–11, a beginner read of §01–03, an appeal pass on one video), each with the
+specific claims to attack and two worked examples of what counts as a finding. The code is
+verified; the teaching is not.
 
 ## Where to go next
 

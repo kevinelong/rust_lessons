@@ -81,6 +81,14 @@ A full run is ~12 minutes (21 sections: narration, 277 screenshots, mux). It ref
 section with no narration — the failure that silently produced 2.2 s slides twice before it
 was caught by comparing durations.
 
+## Review
+
+`docs/REVIEW.md` is the packet to hand a volunteer: three bounded tasks, the five claims most
+likely to be wrong, and the rule that "this would mislead a beginner because…" is the useful
+report. Nothing has been sent to anyone yet — the venues and what each is good for are recorded
+here rather than in a plan: past cohorts for beginner reaction, `users.rust-lang.org` code review
+for idiom accuracy, Rust-Edu for the pedagogy claims, WebAIM-class communities for accessibility.
+
 ## Sourcing
 
 `docs/reading.md` carries every section's primary source and an alternate take, each labelled
