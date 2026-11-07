@@ -1,0 +1,12 @@
+# A Subgoals block travels with the labelled example that justifies it - subgoal-example-pairing
+
+Task: subgoal-example-pairing
+Started: 2026-11-07 09:54
+
+## What this turn changed
+
+## What was measured
+
+## Not done, and why
+
+## What is now fragile
