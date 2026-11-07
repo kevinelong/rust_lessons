@@ -1,0 +1,12 @@
+# A source is marked read only where the note holds the evidence - reading-claims-audit
+
+Task: reading-claims-audit
+Started: 2026-11-07 09:18
+
+## What this turn changed
+
+## What was measured
+
+## Not done, and why
+
+## What is now fragile
