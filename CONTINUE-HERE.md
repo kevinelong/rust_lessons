@@ -27,18 +27,19 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 | | |
 |---|---|
-| Last commit | `c6a1e7b` — prose and videos at 0.14.1 |
-| Working tree | **uncommitted**: the 0.15.0 captions feature (code, script wiring, docs, version bump) |
-| Running | a full batch: `tools/release-videos.ps1 -Sections all -Tag v0.15.0` — regenerates 21 videos + 21 SRT tracks and publishes |
+| Last commit | see `git log`; HEAD carries 0.15.0 with captions |
+| Working tree | clean |
+| Videos | **21 MP4s + 21 SRT tracks at 0.15.0**, published as `v0.15.0` (46.7 MB, 43 assets) |
 | Tests | 110 passing |
-| If the reboot killed the batch | rerun the exact command above; it is idempotent and takes ~14 minutes |
+| Batch | finished 2026-11-07: `tools/release-videos.ps1 -Sections all -Tag v0.15.0`, 823 s |
 
 **First two things to do after a reboot:**
 
-1. `cd C:/Users/kevin/rust_lessons && git status` — if the 0.15.0 work is still uncommitted,
-   commit it; the batch only writes `out/` (git-ignored).
-2. `gh release list --repo kevinelong/rust-lessons-releases | head -3` — if `v0.15.0` is absent,
-   the batch died mid-publish; rerun it.
+1. `cd C:/Users/kevin/rust_lessons && git status && cargo test` — the tree should be clean and
+   110 tests should pass; if not, something is half-applied.
+2. `gh release list --repo kevinelong/rust-lessons-releases | head -3` — expect `v0.15.0` as
+   latest. If it is missing or lacks `.srt` assets, rerun
+   `powershell -NoProfile -File tools/release-videos.ps1 -Sections all -Tag v0.15.0` (~14 min).
 
 ## Next three actions, in order
 

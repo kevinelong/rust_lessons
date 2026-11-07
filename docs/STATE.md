@@ -11,7 +11,7 @@ session; everything here is verifiable from the repository.
 | 1 | lesson prose | **done** | 21 sections in `src/section_*.rs`; `SECTION_COUNT` is the single bound every generator uses |
 | 2 | slides | **done** | 277 HTML slides across 21 sections; all six diagrams embedded as images |
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
-| 4 | narrated video | **done** | 21 MP4s + 21 SRT tracks at 0.15.0, published as `v0.15.0`; regenerated and published by `tools/release-videos.ps1` in one command |
+| 4 | narrated video | **done** | 21 MP4s + 21 SRT at 0.15.0, published as `v0.15.0` (46.7 MB, 43 assets); cues verified to end within 0.0 s of their video |
 | — | book (mdBook) | **0.13.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
 | — | practice | **0.10.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each |
 
