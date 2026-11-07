@@ -44,12 +44,21 @@
                   },
                   {
                       "id":  "reading-claims-audit",
-                      "status":  "running",
+                      "status":  "done",
                       "origin":  "human",
                       "title":  "A source is marked read only where the note holds the evidence",
                       "acceptance":  "For each of the five load-bearing sources in docs/reading.md, record page or quote evidence per claim and flip skimmed to read only where that evidence exists; fix the two known citation errors with their evidence; a test asserts every \u0027read\u0027 entry has at least one quoted line.",
                       "owner":  "pm1",
-                      "claimed":  "2026-11-07 09:18"
+                      "claimed":  "2026-11-07 09:18",
+                      "finished":  "2026-11-07",
+                      "note":  "0.19.0. docs/reading.md now has five evidence blocks (E1-E5), each stating the page range actually looked at and quoting the source: Ericson et al. 2022 read (pp. 1-9 of 44), Haynes-Magyar 2025 read (abstract-S4.4), Margulieux & Catrambone 2016 read (pp. 58-67), Joentausta & Hellas 2018 skimmed and Kalyuga et al. 2003 skimmed - both paywalled for a stated reason, so the column still discriminates 3 read / 2 skimmed. Two known citation errors fixed with evidence (C1 wrong year 2026-\u003eITiCSE-WGR 2022, quoted from the paper\u0027s own first page and the CrossRef record; C2 the overstated outperforms-writing-from-scratch claim, replaced by what the review says: \u0027no large scale attempts at replication to verify these claims\u0027, S1 p. 2) plus a third found this turn (C3 Joentausta & Hellas cited as the faded-Parsons source; it studies subgoal labels with 9-10-year-olds in LightBot, so the row now cites Weinman, Fox & Hearst, CHI 2021). Test: tests/curriculum.rs::every_read_source_has_a_quoted_line - every row marked read must carry an [En] tag resolving to a block whose Status is read, holding a Seen locator and at least one blockquote of 40+ characters, and it refuses a register that is all read or none. Non-vacuous twice: deleting E3\u0027s quoted lines failed with \u0027E3 is marked read and holds no quoted line - a title is not evidence\u0027, and stripping a row\u0027s tag failed with \u0027row says read but carries no evidence tag\u0027; both restored. cargo test: 138 tests, 137 passing, 1 ignored. Reading changed one claim, not just footnotes: Margulieux & Catrambone found a labelled text alone did not help, so the Subgoals blocks in 07, 08, 11 and 16 are justified only beside a labelled example - queued as subgoal-example-pairing."
+                  },
+                  {
+                      "id":  "subgoal-example-pairing",
+                      "status":  "pending",
+                      "origin":  "worker",
+                      "title":  "A Subgoals block travels with the labelled example that justifies it",
+                      "acceptance":  "Margulieux & Catrambone (2016, docs/reading.md E3) found subgoal labels in expository text improved problem solving only when a worked example carried the same labels; a labelled text alone did not. Sections 07, 08, 11 and 16 carry a Subgoals block, so each needs a worked example whose steps repeat those subgoal names (or the block stops citing the finding). A test asserts that a section naming subgoals also names them inside an example, and is proven non-vacuous by removing one section's labelled example."
                   }
               ]
 }

@@ -2,11 +2,63 @@
 
 Task: reading-claims-audit
 Started: 2026-11-07 09:18
+Finished: 2026-11-07 (0.19.0)
 
 ## What this turn changed
 
+- docs/reading.md: restructured around five evidence blocks. Each block states the page range
+  actually looked at, quotes the source verbatim with a locator, and says what the source does
+  and does not support. Status column now carries an evidence tag ([E1]-[E5]) per entry.
+  - E1 Ericson et al. 2022 (Parsons review): read, pp. 1-9 of 44.
+  - E2 Haynes-Magyar 2025 (arXiv:2512.22407): read, abstract through S4.4.
+  - E3 Margulieux & Catrambone 2016 (Learning and Instruction 42:58-71): read, pp. 58-67.
+  - E4 Joentausta & Hellas 2018 (SIGCSE): skimmed, abstract only - ACM full text 403.
+  - E5 Kalyuga et al. 2003 (Educational Psychologist 38(1)): skimmed, abstract only - UNSW
+    record is "metadata only access".
+  - Result: 3 read / 2 skimmed, so the column discriminates rather than flipping everything.
+- The teaching-design table gained a fifth row (K-3 / younger learners) and a correct primary
+  for the faded-Parsons row.
+- New "Corrections" section: C1 wrong year, C2 overstated claim (both the known errors, now
+  with the evidence that settles them), C3 found this turn - Joentausta & Hellas cited for
+  faded Parsons when it studies subgoal labels with 9-10-year-olds in LightBot.
+- tests/curriculum.rs: `every_read_source_has_a_quoted_line`, which is the acceptance test.
+- Version 0.19.0 (feature: a new checked guarantee), book/src regenerated at that version.
+- docs/STATE.md (sourcing, decisions, commands, open item 8, test count), docs/REVIEW.md,
+  README.md, CONTINUE-HERE.md, docs/research/2026-11-07.md brought to the same facts.
+- PLAN.json: this task done; one worker-origin task appended (subgoal-example-pairing).
+
 ## What was measured
+
+- `cargo test` - 138 tests, 137 passing, 1 ignored (was 137 / 136 / 1). New test present and green.
+- `cargo test --test curriculum` - 8 tests pass, including the new one.
+- Non-vacuity, probe 1: deleted E3's four quoted lines, ran
+  `cargo test --test curriculum every_read_source_has_a_quoted_line` ->
+  "E3 is marked read and holds no quoted line - a title is not evidence". Restored.
+- Non-vacuity, probe 2: removed the [E3] tag from the section-11 row -> "row says read but
+  carries no evidence tag, so nothing backs it: | 11 Functions | ...". Restored.
+- `cargo run --bin book` -> 21 chapters regenerated, every one carries 0.19.0 (grep -c).
+- Sources verified live on 2026-11-07: CrossRef (year/venue for E1, E2's DOI, E3's DOI,
+  Joentausta DOI, Kalyuga DOI, Weinman CHI 2021), arXiv API + PDF for E2, authors' PDFs for
+  E1 and E3, OpenAlex abstract index for E4 and E5.
 
 ## Not done, and why
 
+- E4 and E5 stay `skimmed`. Their full texts are paywalled: ACM Digital Library returned
+  HTTP 403 to every full-text URL (including ones marked "Free access"), and the UNSW record
+  for Kalyuga et al. says "metadata only access". Quoting a title would be the exact failure
+  this page exists to prevent, so the abstract is quoted and the access failure is written
+  down. Flipping either needs institutional access, not another search.
+- Did not regenerate videos/slides/notebooks: the prose of the sections is unchanged.
+
 ## What is now fragile
+
+- The test reads docs/reading.md by heading convention: a block must start with "### E<n>",
+  carry "- Status:" and "- Seen:", and quote with "> " lines of 40+ characters. Reformatting
+  the register without those markers fails the test - which is intended, but it means an
+  editor must keep the block shape.
+- "Read" for E1 is pp. 1-9 of 44. The review's findings sections (S4 onward) are not read; the
+  block says so, and the claim it supports was chosen to fit what was read. A future claim
+  about results would need S4 before it could use [E1].
+- The finding that bites is outside this task: Margulieux & Catrambone's gain needed a labelled
+  worked example, not just labelled text, so the Subgoals blocks in sections 07, 08, 11 and 16
+  are justified only beside such an example. Queued as `subgoal-example-pairing`.
