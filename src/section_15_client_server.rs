@@ -4,8 +4,12 @@
 //! the one program that answers them, and the request/response pair is the whole
 //! contract between them.
 //!
-//! This section is a working HTTP/1.0 server and client in about a hundred lines of
-//! `std`, no dependencies. That is deliberate: sockets, a request line, headers and
+//! This section is a small HTTP/1.0 server and client in about a hundred lines of `std`, no
+//! dependencies. It reads the **request line and headers** and answers them; it does not read
+//! a request body, so a `POST` with a payload is answered on the strength of its path alone,
+//! and an unknown method on a known path returns 404 rather than the 405 it deserves. Both are
+//! noted where they happen — a server that is honest about its subset is more useful to read
+//! than one that is described as complete. That is deliberate: sockets, a request line, headers and
 //! a body are small enough to read in full, and once you have seen them a framework
 //! is a convenience rather than a mystery.
 
@@ -117,6 +121,17 @@ impl Response {
 /// This stands in for the router a framework would give you — and it is the exact
 /// place the deck says the interesting design lives.
 pub fn route(request: &Request) -> Response {
+    let known = ["/", "/time", "/courses", "/health"];
+    if request.method != "GET" && known.contains(&request.path.as_str()) {
+        // A known path with the wrong method is 405, not 404: the difference is the whole
+        // reason status codes exist, and the AI review that flagged the 404 caught it.
+        return Response {
+            status: 405,
+            reason: "Method Not Allowed",
+            body: String::from("this server only speaks GET"),
+            content_type: "text/plain; charset=utf-8",
+        };
+    }
     match (request.method.as_str(), request.path.as_str()) {
         ("GET", "/") => Response::ok("rust_lessons server: try /time or /courses"),
         ("GET", "/time") => Response::json(r#"{"epoch":"whenever you asked"}"#),
@@ -220,7 +235,12 @@ mod tests {
         assert_eq!(route(&req("GET", "/health")).body, "ok");
         assert_eq!(route(&req("GET", "/courses")).content_type, "application/json");
         assert_eq!(route(&req("GET", "/nope")).status, 404);
-        assert_eq!(route(&req("POST", "/health")).status, 404);
+        assert_eq!(
+            route(&req("POST", "/health")).status,
+            405,
+            "known path, wrong method is 405 (the 404 was a real defect)"
+        );
+        assert_eq!(route(&req("GET", "/nope")).status, 404);
     }
 
     #[test]

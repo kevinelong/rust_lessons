@@ -81,6 +81,14 @@ A full run is ~12 minutes (21 sections: narration, 277 screenshots, mux). It ref
 section with no narration — the failure that silently produced 2.2 s slides twice before it
 was caught by comparing durations.
 
+## AI review: a lint, not a jury
+
+Two independent subagent reviews agreed on all five claims — because per-call model selection is
+off, so both were the *same* model wearing different hats. Correlated reviewers do not average
+into truth. Use them for grounded, checkable findings (a claim to verify against the compiler, a
+socket to test, a sentence to quote), never as a crowd. One review produced the §04 `'static`
+correction and the 404→405 fix; its RST prediction did not reproduce.
+
 ## Review
 
 `docs/REVIEW.md` is the packet to hand a volunteer: three bounded tasks, the five claims most

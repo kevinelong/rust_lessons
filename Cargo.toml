@@ -1,6 +1,6 @@
 [package]
 name = "rust_lessons"
-version = "0.14.0"
+version = "0.14.1"
 edition = "2021"
 description = "Introduction to programming, taught in Rust: the same lessons as the Python, Java and JavaScript courses"
 license-file = "LICENSE.md"
