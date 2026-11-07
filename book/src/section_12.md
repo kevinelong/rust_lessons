@@ -1,6 +1,6 @@
 # 12 — Capstone: guess the number
 
-<sub>rust_lessons 0.12.0 · source: `src/section_12_*.rs` · run: `cargo run --example 12_capstone`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_12_*.rs` · run: `cargo run --example 12_capstone`</sub>
 
 Section 12 — capstone: guess the number.
 
@@ -12,6 +12,10 @@ stays in `examples/12_capstone.rs`.
 The shape is a small state machine: a secret, a count of attempts, and a
 `guess` method that returns whether the guess was low, high or exact. The tests
 at the bottom play whole games without a keyboard.
+
+The range only ever shrinks: `remaining_range` returns the smallest and largest value
+still possible, and each miss moves one end inward, so a game that is played sensibly
+cannot go on forever.
 
 One game of guess-the-number.
 

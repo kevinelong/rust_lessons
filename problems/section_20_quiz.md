@@ -2,7 +2,7 @@
 
 Answer from memory before looking. Each question comes from a sentence in the lesson, with one term removed.
 
-1. The **____** course ships `problems/` pairs and this repository carries a whole `tdd` family in the JavaScript cohorts — so the tooling deserves a lesson of its own rather than being something students absorb by osmosis.
+1. The **____** course ships `problems/` pairs and this repository carries a whole `tdd_*` family in the JavaScript cohorts — so the tooling deserves a lesson of its own rather than being something students absorb by osmosis.
 
 2. Unit tests live beside the code they test (**____** inside the module) and can reach private functions.
 
@@ -15,7 +15,7 @@ Answer from memory before looking. Each question comes from a sentence in the le
 <details>
 <summary>Answers</summary>
 
-1. `pythonlessons`
+1. `python_lessons`
 2. `#[cfg(test)] mod tests`
 3. `tests/curriculum.rs`
 4. `text`
@@ -23,4 +23,4 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 </details>
 
-<sub>Generated from `src/section_20_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_20_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

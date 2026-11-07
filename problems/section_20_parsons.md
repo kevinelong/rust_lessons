@@ -42,4 +42,4 @@ pub fn longest_collatz(candidates: impl IntoIterator<Item = u64>) -> (u64, u32) 
 
 </details>
 
-<sub>Generated from `src/section_20_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_20_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0</sub>

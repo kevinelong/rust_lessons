@@ -10,7 +10,7 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 4. In Rust **____** can also carry a value out of a `loop`, which is how you write "search until you find it" without a flag variable.
 
-5. FizzBuzz, the exercise every course uses: multiples of 3 say `Fizz`, of 5 say `Buzz`, of both say **____**, everything else is the number as text.
+5. The index of the first value over the limit, found with `loop` + **____**.
 
 <details>
 <summary>Answers</summary>
@@ -19,8 +19,8 @@ Answer from memory before looking. Each question comes from a sentence in the le
 2. `loop`
 3. `continue`
 4. `break`
-5. `FizzBuzz`
+5. `break value`
 
 </details>
 
-<sub>Generated from `src/section_10_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_10_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

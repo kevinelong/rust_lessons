@@ -15,12 +15,12 @@ Answer from memory before looking. Each question comes from a sentence in the le
 <details>
 <summary>Answers</summary>
 
-1. `+ - /`
+1. `+ - * /`
 2. `&& / || / !`
-3. `2 + 3 4`
-4. `a + b c`
-5. `(a + b) c`
+3. `2 + 3 * 4`
+4. `a + b * c`
+5. `(a + b) * c`
 
 </details>
 
-<sub>Generated from `src/section_03_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_03_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

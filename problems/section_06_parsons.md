@@ -36,4 +36,4 @@ pub fn half_of(n: i64) -> Option<i64> {
 
 </details>
 
-<sub>Generated from `src/section_06_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_06_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0</sub>

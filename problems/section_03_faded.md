@@ -34,5 +34,5 @@ pub fn operator_table() -> [(&'static str, &'static str, &'static str); 5] {
 
 </details>
 
-<sub>Generated from `src/section_03_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0
+<sub>Generated from `src/section_03_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0
 </sub>

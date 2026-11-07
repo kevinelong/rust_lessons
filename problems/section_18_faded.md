@@ -46,5 +46,5 @@ pub fn line_total(item: &str, quantity: i64) -> Result<u64, OrderError> {
 
 </details>
 
-<sub>Generated from `src/section_18_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0
+<sub>Generated from `src/section_18_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0
 </sub>

@@ -50,5 +50,5 @@ pub fn get_status(addr: std::net::SocketAddr, path: &str) -> std::io::Result<u16
 
 </details>
 
-<sub>Generated from `src/section_15_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0
+<sub>Generated from `src/section_15_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0
 </sub>

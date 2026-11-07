@@ -4,7 +4,7 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 1. Section 18 — errors: **____**, `panic!`, `Result` and `?`.
 
-2. `pythonlessons` teaches this as **____**; the deck itself has no slide for it.
+2. `python_lessons` teaches this as **____**; the deck itself has no slide for it.
 
 3. A domain error, written out — the Rust answer to a `try`/**____**.
 
@@ -16,11 +16,11 @@ Answer from memory before looking. Each question comes from a sentence in the le
 <summary>Answers</summary>
 
 1. `assert`
-2. `asserttryexcept.py`
+2. `assert_try_except.py`
 3. `except ValueError`
 4. `quantity`
-5. `collect::<Result<Vec<>, >>()`
+5. `collect::<Result<Vec<_>, _>>()`
 
 </details>
 
-<sub>Generated from `src/section_18_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_18_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

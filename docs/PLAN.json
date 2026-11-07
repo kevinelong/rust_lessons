@@ -11,12 +11,14 @@
     "tasks":  [
                   {
                       "id":  "retrieval-coverage",
-                      "status":  "running",
+                      "status":  "done",
                       "origin":  "human",
                       "title":  "Every section has enough retrieval items to be scored",
                       "acceptance":  "Section 14 yields only two retrieval questions today, so it cannot be scored. Generate retrieval items for every section, assert a minimum of four per section in cargo test, and prove the assertion is not vacuous by removing one item and watching it fail.",
                       "owner":  "pm1",
-                      "claimed":  "2026-11-07 07:14"
+                      "claimed":  "2026-11-07 07:14",
+                      "finished":  "2026-11-07",
+                      "note":  "0.16.0. All 21 sections now yield 4 or 5 retrieval items (101 total; seventeen at five, four at four: 05, 12, 13, 15) - section 14 went 2 -> 5, section 17 3 -> 5, section 12 stayed 4 with a genuine item. MIN_QUESTIONS = 4 is one constant read by the generator and by the new test every_section_has_enough_retrieval_items_to_be_scored, which also asserts a blank per prompt, no answer visible elsewhere in the prompt, and no answer asked twice; the binary exits 1 when a section is under the floor. Non-vacuous: deleting section 05's truthiness sentence failed the test with 'section 05 yields only 3 retrieval items, below the floor of 4' and made the generator exit 1; the sentence was restored. The test found two shipping defects: emphasis stripping removed underscores inside code spans (dns_query was offered as dnsquery) and a prompt could print its own answer (section 10's FizzBuzz item). cargo test 112 tests, 111 pass, 1 ignored; mdbook build and mdbook test pass on the regenerated chapters."
                   },
                   {
                       "id":  "measurement-fixture",

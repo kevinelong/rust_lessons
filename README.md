@@ -171,14 +171,18 @@ notebook, the practice problems and the video script.
 
 ## Practice
 
-`problems/` holds three generated practice artefacts per section — 60 files, none authored
+`problems/` holds three generated practice artefacts per section — 63 files, none authored
 by hand:
 
 | File | Exercise | Generator |
 |---|---|---|
 | `section_NN_parsons.md` | the lines of a real function, out of order — reassemble them | `cargo run --bin parsons` |
 | `section_NN_faded.md` | structure given, **decision points blanked** (`let`/`if`/`for`/`match`) | `cargo run --bin parsons` |
-| `section_NN_quiz.md` | retrieval: up to five sentences with one term removed, answers collapsed | `cargo run --bin quiz` |
+| `section_NN_quiz.md` | retrieval: four to five sentences with one term removed, answers collapsed | `cargo run --bin quiz` |
+
+The retrieval check has a floor: `cargo test` asserts every section yields at least four
+scorable items (101 items over 21 sections: seventeen at five, four at four), because a
+section with three cannot be scored — one wrong answer would move its mark by a third.
 
 Why Parsons: it removes the blank-page cost while keeping the reasoning, and the literature
 puts it above writing-from-scratch for early practice. Sources and what they imply are in

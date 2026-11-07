@@ -8,6 +8,10 @@
 //! The shape is a small state machine: a secret, a count of attempts, and a
 //! `guess` method that returns whether the guess was low, high or exact. The tests
 //! at the bottom play whole games without a keyboard.
+//!
+//! The range only ever shrinks: `remaining_range` returns the smallest and largest value
+//! still possible, and each miss moves one end inward, so a game that is played sensibly
+//! cannot go on forever.
 
 use std::cmp::Ordering;
 

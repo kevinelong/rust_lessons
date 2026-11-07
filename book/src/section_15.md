@@ -1,6 +1,6 @@
 # 15 — Clients and servers
 
-<sub>rust_lessons 0.12.0 · source: `src/section_15_*.rs` · run: `cargo run --example 15_client_server`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_15_*.rs` · run: `cargo run --example 15_client_server`</sub>
 
 Section 15 — clients and servers.
 
@@ -8,8 +8,12 @@ The deck's client/server slide: the client is the many consumers, the server is
 the one program that answers them, and the request/response pair is the whole
 contract between them.
 
-This section is a working HTTP/1.0 server and client in about a hundred lines of
-`std`, no dependencies. That is deliberate: sockets, a request line, headers and
+This section is a small HTTP/1.0 server and client in about a hundred lines of `std`, no
+dependencies. It reads the **request line and headers** and answers them; it does not read
+a request body, so a `POST` with a payload is answered on the strength of its path alone,
+and an unknown method on a known path returns 404 rather than the 405 it deserves. Both are
+noted where they happen — a server that is honest about its subset is more useful to read
+than one that is described as complete. That is deliberate: sockets, a request line, headers and
 a body are small enough to read in full, and once you have seen them a framework
 is a convenience rather than a mystery.
 

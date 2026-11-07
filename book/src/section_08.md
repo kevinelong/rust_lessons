@@ -1,6 +1,6 @@
 # 08 — Maps: lookup by key
 
-<sub>rust_lessons 0.12.0 · source: `src/section_08_*.rs` · run: `cargo run --example 08_maps`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_08_*.rs` · run: `cargo run --example 08_maps`</sub>
 
 Section 8 — maps: looking a value up by another value.
 

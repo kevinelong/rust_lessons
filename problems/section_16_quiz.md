@@ -17,10 +17,10 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 1. `Vec`
 2. `CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL, author TEXT)`
-3. `SELECT FROM t WHERE column = value`
+3. `SELECT * FROM t WHERE column = value`
 4. `UPDATE t SET col = ? WHERE key = ?`
 5. `DELETE FROM t WHERE col = ?`
 
 </details>
 
-<sub>Generated from `src/section_16_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_16_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

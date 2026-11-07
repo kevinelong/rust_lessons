@@ -27,10 +27,10 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 | | |
 |---|---|
-| Last commit | see `git log`; HEAD carries 0.15.0 with captions |
+| Last commit | see `git log`; HEAD carries 0.16.0, the retrieval floor |
 | Working tree | clean |
 | Videos | **21 MP4s + 21 SRT tracks at 0.15.0**, published as `v0.15.0` (46.7 MB, 43 assets) |
-| Tests | 110 passing |
+| Tests | 112: 111 passing, 1 `#[ignore]`d |
 | Batch | finished 2026-11-07: `tools/release-videos.ps1 -Sections all -Tag v0.15.0`, 823 s |
 
 **First two things to do after a reboot:**
@@ -48,8 +48,11 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 2. **Read the five load-bearing sources properly** (Parsons review, Haynes-Magyar, Margulieux,
    Joentausta & Hellas, Kalyuga) and change `skimmed` → `read` in `docs/reading.md` where earned.
    Right now **nothing is marked read**, and two citation errors were already found.
-3. **Phase 4, measurement.** Section 14 yields only two retrieval questions, so it cannot be
-   scored. Nothing in the course measures a learner, and the course says so.
+3. **Phase 4, measurement.** ~~Section 14 yields only two retrieval questions, so it cannot be
+   scored.~~ **Unblocked in 0.16.0:** every section now yields at least four retrieval items
+   (101 over 21), asserted by `cargo test` and proven non-vacuous. What is still missing is
+   the scoring itself — `measurement-fixture` then `phase4-scoring` in `docs/PLAN.json`.
+   Nothing in the course measures a learner, and the course says so.
 
 ## Environment facts a cold start needs
 

@@ -13,7 +13,7 @@ session; everything here is verifiable from the repository.
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
 | 4 | narrated video | **done** | 21 MP4s + 21 SRT at 0.15.0, published as `v0.15.0` (46.7 MB, 43 assets); cues verified to end within 0.0 s of their video |
 | — | book (mdBook) | **0.13.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
-| — | practice | **0.10.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each |
+| — | practice | **0.16.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each; retrieval floor is four per section (101 items), asserted by `cargo test` |
 
 Published artefacts live outside this repository by design:
 
@@ -128,10 +128,17 @@ see `docs/research/2026-11-06.md`.
    `useMaxWidth: false` and screenshotting the card — Mermaid cannot be embedded as a file.
 4. **WSL image compaction** — the 47 GB `ext4.vhdx` needs `--allow-unsafe` or an elevated
    `diskpart compact vdisk`; left to Kevin.
-5. **Measurement** — practice artefacts exist (Parsons, faded, retrieval) but nothing
-   records a score. Section 14 yields only two retrieval questions; every section should
-   reach five before a learner can be assessed on it.
-6. **Section 14 has two retrieval questions**, not five — it cannot be scored yet.
+5. ~~Measurement~~ — **unblocked in 0.16.0, not yet built.** Practice artefacts exist
+   (Parsons, faded, retrieval) and every section now holds at least four retrieval items, so
+   nothing on the input side blocks a score. Nothing yet records one: scoring a session is
+   `phase4-scoring` in `docs/PLAN.json`, whose fixture task comes first.
+6. ~~Section 14 has two retrieval questions~~ — **fixed in 0.16.0.** Sections 12, 14 and 17
+   were given the sentences they were missing (a URL's four fields and default ports, DNS
+   record types, private ranges; the narrowing range; cloning as the third consequence of
+   ownership, and the compiler error a move produces). Every section now yields four or five
+   items, 101 in total, and `every_section_has_enough_retrieval_items_to_be_scored` fails if
+   any section drops below four. The assertion was proven non-vacuous by deleting one prose
+   sentence from section 05, which failed it with "section 05 yields only 3 retrieval items".
 7. **Completion reserve** — the 1M-token window is eaten by a ~307k completion reservation;
    no `maxTokens` key exists in `config.yml`, so this needs the provider's per-model schema
    confirmed before changing.

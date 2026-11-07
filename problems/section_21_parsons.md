@@ -38,4 +38,4 @@ pub fn price(shake: &str) -> Option<u32> {
 
 </details>
 
-<sub>Generated from `src/section_21_*.rs` by `cargo run --bin parsons` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_21_*.rs` by `cargo run --bin parsons` — rust_lessons 0.16.0</sub>

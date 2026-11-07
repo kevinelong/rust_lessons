@@ -1,6 +1,6 @@
 # 04 — Strings, numbers and conversion
 
-<sub>rust_lessons 0.12.0 · source: `src/section_04_*.rs` · run: `cargo run --example 04_strings`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_04_*.rs` · run: `cargo run --example 04_strings`</sub>
 
 Section 4 — strings, numbers, and converting between them.
 
@@ -11,8 +11,11 @@ calculate with.
 Rust splits what other languages call "a string" in two, and it is worth the
 trouble to learn early:
 
-* `&str` is **borrowed** text — a view into someone else's characters, the
-  type of a string literal. Cheap to pass around, cannot be changed.
+* `&str` is **borrowed** text — a view into characters someone else owns. For a string
+  literal such as `"hi"`, the owner is the compiled binary: the view lives for the whole
+  program (`&'static str`), which is why literals need no lifetime of their own. What
+  "borrowed" *means* — and how a borrow differs from a move — is section 17; here it is
+  only a name for "a view, not the text itself".
 * `String` is **owned** text you can grow. `String::from("x")`, `.push_str()`,
   `format!`.
 

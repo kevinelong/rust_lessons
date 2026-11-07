@@ -17,10 +17,10 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 1. `Vec<String>`
 2. `Option`
-3. `sortedascending`
+3. `sorted_ascending`
 4. `[v1, v2, v3]`
 5. `Vec<T>`
 
 </details>
 
-<sub>Generated from `src/section_07_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_07_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

@@ -1,6 +1,6 @@
 # 14 — Networks, IP, DNS and URLs
 
-<sub>rust_lessons 0.12.0 · source: `src/section_14_*.rs` · run: `cargo run --example 14_networking`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_14_*.rs` · run: `cargo run --example 14_networking`</sub>
 
 Section 14 — networks, IP, DNS and URLs.
 
@@ -12,6 +12,16 @@ Nothing here opens a socket — that is section 15. This section parses and
 validates, because parsing is where beginners meet the difference between what
 they meant and what they wrote: a missing port, a `/path` that is empty, a
 hostname that is really an address.
+
+A URL is four fields here rather than one string: the scheme picks the default port,
+so `https` alone tells a client to dial 443 and an omitted port is not missing
+information.
+
+A hostname is not an address. The `dns_query` helper answers what will be asked and as
+which record type, because one name can resolve to an IPv4 answer or to an IPv6 one and
+the caller has to know which arrived. Private ranges such as `192.168` route only
+inside a LAN, so a request to one from the public internet times out rather than
+failing loudly.
 
 The parts of a URL, spelled out rather than stringly-typed.
 

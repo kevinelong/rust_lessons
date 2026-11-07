@@ -40,6 +40,11 @@ generated rather than authored.
    blanking the longest backticked term in a sentence of the lesson, answers collapsed.
    Two failed attempts are recorded in the code comments: splitting on `.` broke inside
    `**bold**`, and treating a line as a sentence broke because the prose is hard-wrapped.
+   **Floor added in 0.16.0:** every section now yields at least four, so every section can
+   be scored — section 14 yielded two until sections 12, 14 and 17 gained sentences worth
+   asking about, and the same turn fixed two generator defects that the new test exposed
+   (underscores were stripped inside code spans, so `dns_query` was offered as an answer as
+   `dnsquery`; and a prompt could print its own answer, as section 10's did).
 
 ## Phase 2 — comprehension support
 

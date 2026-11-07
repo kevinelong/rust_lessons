@@ -1,6 +1,6 @@
 # 03 — Operators and expressions
 
-<sub>rust_lessons 0.12.0 · source: `src/section_03_*.rs` · run: `cargo run --example 03_operators`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_03_*.rs` · run: `cargo run --example 03_operators`</sub>
 
 Section 3 — operators and expressions.
 

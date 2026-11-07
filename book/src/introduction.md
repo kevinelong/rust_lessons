@@ -1,6 +1,6 @@
 # Introduction
 
-This is the 0.12.0 edition of a course that teaches beginning programming in Rust,
+This is the 0.16.0 edition of a course that teaches beginning programming in Rust,
 lesson for lesson from a Python deck of 85 slides. The same lessons also exist as slides,
 Jupyter notebooks and narrated video — all generated from the text you are reading, so they
 cannot drift from it.

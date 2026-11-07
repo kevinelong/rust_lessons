@@ -2,7 +2,7 @@
 
 Answer from memory before looking. Each question comes from a sentence in the lesson, with one term removed.
 
-1. In Rust we write names in `snakecase` — `totalprice`, not `TotalPrice` or **____**.
+1. In Rust we write names in `snake_case` — **____**, not `TotalPrice` or `total price`.
 
 2. An identifier may contain letters, digits and underscores, but may not start with a digit, and it may not be a keyword such as **____** or `fn`.
 
@@ -15,12 +15,12 @@ Answer from memory before looking. Each question comes from a sentence in the le
 <details>
 <summary>Answers</summary>
 
-1. `total price`
+1. `total_price`
 2. `let`
-3. `/ ... /`
+3. `/* ... */`
 4. `name`
 5. `Total`
 
 </details>
 
-<sub>Generated from `src/section_01_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_01_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

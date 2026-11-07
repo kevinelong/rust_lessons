@@ -2,11 +2,108 @@
 
 Task: retrieval-coverage
 Started: 2026-11-07 07:13
+Finished: 2026-11-07 (branch plan/retrieval-coverage, version 0.16.0)
 
 ## What this turn changed
 
+The generator was right; three sections were thin. Section 14 yielded 2 items, section 17
+three, section 12 four. Retrieval items are mined from the lesson's own sentences, so the fix
+is better prose, not a looser generator - and the new test found two generator defects that
+had been shipping bad questions.
+
+1. `src/bin/quiz.rs`
+   - `MIN_QUESTIONS = 4`, the single constant the binary and the test both read; the binary
+     now prints any section under it and exits 1 instead of printing a note and exiting 0.
+   - New test `every_section_has_enough_retrieval_items_to_be_scored` replaces the old
+     `every_section_offers_a_retrieval_check`, which only asserted `>= 15` sections had any
+     items - an assertion that could not notice section 14. The new one asserts, per section:
+     `>= MIN_QUESTIONS`, `<= MAX_QUESTIONS`, a blank in every prompt, the answer not visible
+     elsewhere in the prompt, and no answer asked twice.
+   - Defect fixed: emphasis stripping removed every `_`, including inside code spans, so
+     section 14's answer was offered as `dnsquery` and section 12's as
+     `examples/12capstone.rs`. New `strip_emphasis` keeps code spans verbatim; regression
+     test `an_underscore_inside_a_code_span_survives_emphasis_stripping`.
+   - Defect fixed: a prompt could print its own answer. Section 10 opened "FizzBuzz, the
+     exercise every course uses: ... `FizzBuzz`", so the blank handed back the term it was
+     asking for; section 12's best item had `guess` visible later in the same sentence. A
+     candidate is now skipped when the answer survives anywhere else in the prompt, and the
+     answer is marked seen only when a question is actually produced, so a later sentence can
+     still ask it cleanly. `contains_word` does this word-bounded: the naive substring test
+     reported a leak on the answer `let` inside the word "letters".
+2. Prose, so the sections have something worth asking about:
+   - `src/section_14_networking.rs`: a URL is four fields and the scheme picks the default
+     port (`https` -> 443); `dns_query` returns the name with its record type; `192.168`
+     ranges are private and a request from outside the LAN times out. 2 -> 5 items.
+   - `src/section_17_ownership.rs`: cloning is named as the third consequence of ownership
+     beside move and copy, plus the compiler error a move produces (`rustc` reports "use of
+     moved value"). 3 -> 5 items. "avoid doing either" became "avoid doing any of that",
+     because there are now three.
+   - `src/section_12_capstone.rs`: the range only shrinks, and `remaining_range` is what says
+     how. 4 -> 4 items (one genuine 4th replaced the leaked one the fix dropped).
+3. Regenerated every derived artefact from prose: `problems/` (63 files), `book/src/`
+   (23 chapters), `notebooks/` (21). They were stale at 0.12.0, which is why the diff touches
+   many files with a version footer.
+4. Version 0.15.0 -> **0.16.0** (feature: a new asserted floor), `Cargo.toml` and
+   `src/version.rs`.
+5. Docs: `README.md` practice table (63 files, four-to-five items, the 101-item total),
+   `docs/ROADMAP.md` phase 1 item 3, `docs/STATE.md` practice row and open items 5 and 6,
+   `CONTINUE-HERE.md` next-action 3, test count and last-commit rows.
+
 ## What was measured
+
+`cargo run --bin quiz` after the changes - every section, four or five items each:
+
+    section 01: 5    section 08: 5    section 15: 4
+    section 02: 5    section 09: 5    section 16: 5
+    section 03: 5    section 10: 5    section 17: 5
+    section 04: 5    section 11: 5    section 18: 5
+    section 05: 4    section 12: 4    section 19: 5
+    section 06: 5    section 13: 4    section 20: 5
+    section 07: 5    section 14: 5    section 21: 5
+
+21 sections, 101 items: seventeen at five, four at four (`05`, `12`, `13`, `15`). Before this
+turn: section 14 = 2, section 17 = 3 - 93 items, two sections unscorable.
+
+**The floor is not vacuous.** Deleting section 05's truthiness sentence ("There is no
+truthiness - `if count { }` is an error, and `if count > 0 { }` is the fix.") and running
+`cargo test --bin quiz`:
+
+    thread 'tests::every_section_has_enough_retrieval_items_to_be_scored' panicked at src\bin\quiz.rs:284:13:
+    section 05 yields only 3 retrieval items, below the floor of 4
+    test result: FAILED. 3 passed; 1 failed
+
+and `cargo run --bin quiz` on the same state printed
+`sections below the 4-question floor: [(5, 3)]` and exited 1. The sentence was restored;
+`git diff src/section_05_conditionals.rs` is empty.
+
+Full suite after restoring: `cargo test` -> 112 tests, 111 pass, 1 `#[ignore]`d, 0 failed
+(10 targets; the quiz target runs 4 tests). `cargo clippy --bin quiz` -> no warning from
+`quiz.rs`. `mdbook build book` and `mdbook test book` both pass on the regenerated chapters.
 
 ## Not done, and why
 
+- Phase 4 scoring itself. This task removed the input-side blocker only; scoring a session is
+  `measurement-fixture` then `phase4-scoring` in `docs/PLAN.json`, which this turn must not
+  start.
+- Nothing was published, nothing pushed, no release touched. Videos are untouched at 0.15.0,
+  so `docs/STATE.md` level 4 still reads 0.15.0 while the crate is 0.16.0 - a regeneration and
+  a release batch are a separate decision.
+- Section 05 and 13 still sit at four rather than five. They are scoreable; raising them means
+  writing more prose, and four is the asserted contract.
+
 ## What is now fragile
+
+- The floor is a *per-section* assertion on generated output, so it is sensitive to prose
+  edits anywhere in a 4-item section (`05`, `12`, `13`, `15`) and to any future tightening of
+  `sentences()` or `best_code_span()`. That is the intent, but the failure message names the
+  section and the count so the repair is obvious.
+- The answer-leak rule is word-bounded, so it still cannot see a leak that is a strict
+  substring inside a longer token: `Fizz` would not be flagged inside "FizzBuzz". No current
+  section depends on that, and the generator picks one span per sentence, so the exposure is
+  narrow - but it is a known hole rather than a proven absence.
+- Generated artefacts (`problems/`, `book/src/`, `notebooks/`) carry the version in a footer,
+  so every version bump dirties all 107 of them. That is why a 5-line prose change shows up as
+  a 112-file diff; do not read it as a large change.
+- `MAX_QUESTIONS` is still 5 and the leak rule can silently drop a section's best sentence, as
+  it did for section 12. A section can therefore lose an item without anyone noticing until it
+  crosses the floor - the count printed by `cargo run --bin quiz` is the thing to read.

@@ -12,8 +12,10 @@
 //!   transfers ownership. The old name is dead; using it is an error.
 //! * **Copying**: small fixed-size types (`i32`, `f64`, `bool`, `char`, a fixed-size
 //!   array of them) are `Copy`, so passing them copies and the original stays usable.
+//! * **Cloning**: `clone()` is the explicit way to keep both values, and nothing does it
+//!   for you — it costs an allocation, which is exactly why `&` exists.
 //!
-//! `&` exists to avoid doing either: borrow instead of move, and keep the value.
+//! `&` exists to avoid doing any of that: borrow instead of move, and keep the value.
 
 //! # Diagrams
 //!
@@ -22,6 +24,10 @@
 //!
 
 /// Take ownership of a `String` and give it back, so the lesson can show the hand-over.
+///
+/// A move that goes wrong is caught at the point of use: `rustc` reports "use of moved
+/// value" and names both the move and the later read, so nothing has to be found at
+/// runtime.
 pub fn take_then_return(text: String) -> String {
     // Leaving the function alone would drop `text`. Returning it moves it out.
     text

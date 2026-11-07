@@ -17,10 +17,10 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 1. `Hash + Eq`
 2. `Option<&V>`
-3. `entry(...).orinsert(0)`
-4. `countwordinstances`
+3. `entry(...).or_insert(0)`
+4. `count_word_instances`
 5. `The`
 
 </details>
 
-<sub>Generated from `src/section_08_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_08_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

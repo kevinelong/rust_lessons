@@ -2,7 +2,7 @@
 
 Answer from memory before looking. Each question comes from a sentence in the lesson, with one term removed.
 
-1. `pythonlessons` carries `interactive.py`, **____** and a `data.txt` to read; the deck's slides never cover either.
+1. `python_lessons` carries `interactive.py`, **____** and a `data.txt` to read; the deck's slides never cover either.
 
 2. stdin — **____**, one line at a time, `Ok(0)` meaning end of input.
 
@@ -15,12 +15,12 @@ Answer from memory before looking. Each question comes from a sentence in the le
 <details>
 <summary>Answers</summary>
 
-1. `09fileinputandoutput.py`
-2. `std::io::stdin().readline(&mut buffer)?`
-3. `std::fs::readtostring(path)?`
+1. `09_file_input_and_output.py`
+2. `std::io::stdin().read_line(&mut buffer)?`
+3. `std::fs::read_to_string(path)?`
 4. `Result`
 5. `reader`
 
 </details>
 
-<sub>Generated from `src/section_19_*.rs` by `cargo run --bin quiz` — rust_lessons 0.12.0</sub>
+<sub>Generated from `src/section_19_*.rs` by `cargo run --bin quiz` — rust_lessons 0.16.0</sub>

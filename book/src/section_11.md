@@ -1,6 +1,6 @@
 # 11 — Functions
 
-<sub>rust_lessons 0.12.0 · source: `src/section_11_*.rs` · run: `cargo run --example 11_anatomy_of_a_function`</sub>
+<sub>rust_lessons 0.16.0 · source: `src/section_11_*.rs` · run: `cargo run --example 11_anatomy_of_a_function`</sub>
 
 Section 11 — functions.
 
