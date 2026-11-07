@@ -89,7 +89,7 @@ fn every_section_has_prose_to_narrate() {
     use rust_lessons::lesson;
 
     let mut total = 0;
-    for n in 1..=20u8 {
+    for n in 1..=rust_lessons::SECTION_COUNT {
         let beats = lesson::beats(n).unwrap_or_else(|| panic!("section {n:02} has no beats"));
         assert!(beats.len() >= 3, "section {n:02} has only {} beats", beats.len());
         let spoken = beats.iter().filter(|b| lesson::needs_narration(b)).count();
@@ -97,4 +97,55 @@ fn every_section_has_prose_to_narrate() {
         total += beats.len();
     }
     assert!(total > 100, "20 sections should give more than 100 beats, got {total}");
+}
+
+/// The four procedural sections must name their subgoals.
+///
+/// Margulieux's replicated result is that subgoal labels in expository text improve later
+/// problem solving; that only holds if the labels survive editing. Sections 07, 08, 11 and
+/// 16 are the procedural ones — a section that loses its "Subgoals" steps fails here.
+#[test]
+fn procedural_sections_name_their_subgoals() {
+    for n in [7u8, 8, 11, 16] {
+        let beats = rust_lessons::lesson::beats(n).expect("beats");
+        let text = beats
+            .iter()
+            .map(|b| b.text.as_str())
+            .collect::<Vec<_>>()
+            .join("\n")
+            .to_lowercase();
+        assert!(text.contains("subgoals"), "section {n:02} lost its subgoal labels");
+        let steps = text.matches("**").count() / 2;
+        assert!(steps >= 3, "section {n:02} names only {steps} subgoals");
+    }
+}
+
+/// Every section must appear in the further-reading register.
+///
+/// The register is the answer to "where do I go past this lesson", and it decays silently:
+/// a new section ships and nobody adds sources. This test makes the gap visible.
+#[test]
+fn every_section_has_further_reading() {
+    let register = std::fs::read_to_string("docs/reading.md").expect("docs/reading.md exists");
+    for n in 1..=rust_lessons::SECTION_COUNT {
+        let row = format!("\n| {n:02} ");
+        assert!(
+            register.contains(&row),
+            "section {n:02} has no row in docs/reading.md"
+        );
+    }
+}
+
+/// Each row must offer more than one line of thought, and every row must name its depth.
+#[test]
+fn reading_rows_state_how_deeply_the_source_was_read() {
+    let register = std::fs::read_to_string("docs/reading.md").expect("docs/reading.md exists");
+    let rows: Vec<&str> = register.lines().filter(|l| l.starts_with("| ") && l.contains("**")).collect();
+    assert!(rows.len() >= 20, "expected the by-section table, found {} rows", rows.len());
+    for row in rows {
+        assert!(
+            row.contains("read**") || row.contains("skimmed**") || row.contains("named**"),
+            "row does not state its depth: {row}"
+        );
+    }
 }

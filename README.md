@@ -76,6 +76,7 @@ docs/diagrams/            six diagrams: four SVG, two Mermaid
 docs/video.md             the format ladder and the narrated-video pipeline
 docs/STATE.md             current state, decisions, defects found, open items
 docs/ROADMAP.md           the plan, phased, each phase with an observable result
+docs/reading.md           further reading per section: one source to go deeper, one to disagree
 docs/research/            daily research notes: what was read, what it implies
 ```
 
@@ -135,6 +136,17 @@ Diagrams that were considered and rejected: CRUD↔SQL (a 4×2 table, already wr
 operators and comparison tables (flat lookups), client/server (near-tautological once
 section 15's socket code is on the page), and the guess-the-number state machine (three
 states, easier to read as prose).
+
+## Where to go next
+
+[docs/reading.md](docs/reading.md) gives every section a primary source and an **alternate
+take** — the same material argued differently — with the depth each was read to (`named`,
+`skimmed`, `read`). It exists because a citation that only proves a point is half a citation:
+the learner who wants to go further, or to disagree, needs somewhere to go.
+
+The strongest entry there is the **expertise reversal effect**: scaffolding that helps novices
+can *harm* learners who already program. That is the honest case against this course for
+anyone who is not a beginner.
 
 ## As a book
 

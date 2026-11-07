@@ -81,6 +81,16 @@ A full run is ~12 minutes (21 sections: narration, 277 screenshots, mux). It ref
 section with no narration — the failure that silently produced 2.2 s slides twice before it
 was caught by comparing durations.
 
+## Sourcing
+
+`docs/reading.md` carries every section's primary source and an alternate take, each labelled
+with how deeply it was read. **Nothing is yet marked `read`** — the register says so in its own
+last line, because a claim resting on a skimmed paper is one paper-deep, and a claim resting on
+a named one is a guess.
+
+Two citation errors were found and corrected on 2026-11-06 (a wrong year, an overstated claim);
+see `docs/research/2026-11-06.md`.
+
 ## Research and plan
 
 * `docs/research/YYYY-MM-DD.md` — daily notes: what was read, what it implies, what was
