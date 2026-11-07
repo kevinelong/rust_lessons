@@ -49,7 +49,7 @@ pub type Cue = (usize, f64, f64, String);
 /// Build the cue list and the SRT body.
 ///
 /// Beats without narration are silent for `SILENT_HOLD`; they get no cue, because the slide
-/// itself is showing that content and a caption reading "[code]" would be noise.
+/// itself is showing that content and a caption reading `\[code\]` would be noise.
 pub fn build(n: u8, beats: &[Beat], dir: &PathBuf) -> (String, Vec<Cue>) {
     let _ = n;
     let mut cues: Vec<Cue> = Vec::new();

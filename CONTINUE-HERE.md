@@ -72,6 +72,10 @@ Everything is inside the repository, under `docs/` — nothing important is in `
   polling one model several times — correlated, not independent.
 * `git add -A` in a repo where another process is writing will sweep its files in. Here the only
   writer is `out/`, which is ignored.
+* **`cargo test` does not run `cargo doc`.** A doc comment containing `[something]` is parsed as
+  an intra-doc link, and CI's `RUSTDOCFLAGS=-D warnings` fails on it — which is how a green local
+  `cargo test` shipped a red CI. Run `RUSTDOCFLAGS=-D warnings cargo doc --no-deps` before
+  pushing anything that touches `///` or `//!`.
 
 ## What this project can and cannot claim
 
