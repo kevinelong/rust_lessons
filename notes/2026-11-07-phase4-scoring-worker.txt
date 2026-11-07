@@ -1,0 +1,12 @@
+# Score a session: per-section correctness, time to answer, retrieval versus recognition - phase4-scoring
+
+Task: phase4-scoring
+Started: 2026-11-07 08:43
+
+## What this turn changed
+
+## What was measured
+
+## Not done, and why
+
+## What is now fragile

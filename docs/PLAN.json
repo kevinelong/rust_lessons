@@ -29,14 +29,16 @@
                       "owner":  "pm1",
                       "claimed":  "2026-11-07 08:12",
                       "finished":  "2026-11-07",
-                      "note":  "0.17.0. fixtures/session-2026-11-07-synthetic.json: 8 attempts over sections 01-03, 102400 ms on task, retrieval 4/6 and recognition 1/2, and one wrong-then-right pair (s01-q2 attempt 1 answer 'var', attempt 2 'let'). src/session.rs loads it from a string or a path, versioned schema 1, and derives correctness from answer-vs-expected instead of storing a verdict; validate() refuses an unknown schema, a section the course does not have, an attempt that does not run 1,2,3 per item, and a zero duration. tests/session_fixture.rs asserts the numbers above exactly, the pair, and that every retrieval answer is the one problems/section_NN_quiz.md gives and every recognition answer is a permutation of that section's Parsons lines. Non-vacuous, each proven by doctoring the fixture and reverting: ms 36000 -> 36001 failed 'total time on task' 102401 vs 102400; deleting the retry row failed 'exactly one item was retried, found []'; expected '2 + 3 * 4' -> '3 * 4 + 2' failed 'section 03 question 3 does not answer'. cargo test: 124 tests, 123 pass, 1 ignored. No UI, no network: the only dependency is serde/serde_json, already cached, so cargo test --offline builds."
+                      "note":  "0.17.0. fixtures/session-2026-11-07-synthetic.json: 8 attempts over sections 01-03, 102400 ms on task, retrieval 4/6 and recognition 1/2, and one wrong-then-right pair (s01-q2 attempt 1 answer \u0027var\u0027, attempt 2 \u0027let\u0027). src/session.rs loads it from a string or a path, versioned schema 1, and derives correctness from answer-vs-expected instead of storing a verdict; validate() refuses an unknown schema, a section the course does not have, an attempt that does not run 1,2,3 per item, and a zero duration. tests/session_fixture.rs asserts the numbers above exactly, the pair, and that every retrieval answer is the one problems/section_NN_quiz.md gives and every recognition answer is a permutation of that section\u0027s Parsons lines. Non-vacuous, each proven by doctoring the fixture and reverting: ms 36000 -\u003e 36001 failed \u0027total time on task\u0027 102401 vs 102400; deleting the retry row failed \u0027exactly one item was retried, found []\u0027; expected \u00272 + 3 * 4\u0027 -\u003e \u00273 * 4 + 2\u0027 failed \u0027section 03 question 3 does not answer\u0027. cargo test: 124 tests, 123 pass, 1 ignored. No UI, no network: the only dependency is serde/serde_json, already cached, so cargo test --offline builds."
                   },
                   {
                       "id":  "phase4-scoring",
-                      "status":  "pending",
+                      "status":  "running",
                       "origin":  "human",
                       "title":  "Score a session: per-section correctness, time to answer, retrieval versus recognition",
-                      "acceptance":  "Scoring reads the fixture and prints or returns a table with those three axes per section, plus an overall figure; a test asserts the numbers for the fixture exactly. This is roadmap phase 4\u0027s completion criterion, quoted in the STATE note when done."
+                      "acceptance":  "Scoring reads the fixture and prints or returns a table with those three axes per section, plus an overall figure; a test asserts the numbers for the fixture exactly. This is roadmap phase 4\u0027s completion criterion, quoted in the STATE note when done.",
+                      "owner":  "pm1",
+                      "claimed":  "2026-11-07 08:43"
                   },
                   {
                       "id":  "reading-claims-audit",
