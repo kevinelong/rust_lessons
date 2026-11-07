@@ -1,0 +1,12 @@
+# Every section has enough retrieval items to be scored - retrieval-coverage
+
+Task: retrieval-coverage
+Started: 2026-11-07 07:13
+
+## What this turn changed
+
+## What was measured
+
+## Not done, and why
+
+## What is now fragile

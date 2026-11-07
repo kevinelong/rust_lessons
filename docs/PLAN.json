@@ -1,0 +1,41 @@
+{
+    "why":  "A machine-readable ledger so an unattended driver can take one task at a time, prove progress, and stop. Roadmap phase 4 (measurement) is the only unbuilt level; these tasks build it in the order that makes the next decision cheaper.",
+    "rules":  [
+                  "One task per run, on its own branch plan/\u003cid\u003e; the driver merges to master, the session never does.",
+                  "A task is done only when its acceptance is asserted by a test, a check, or a recorded measurement.",
+                  "A batch without a commit, or a session that does not record a result, is blocked - silence is failure.",
+                  "cargo test must pass on the branch AND after the merge.",
+                  "Never publish: no gh release, no push to rust-lessons-releases, nothing that leaves the machine.",
+                  "Nothing in out/ or book/book/ is hand-edited - both regenerate."
+              ],
+    "tasks":  [
+                  {
+                      "id":  "retrieval-coverage",
+                      "status":  "pending",
+                      "origin":  "human",
+                      "title":  "Every section has enough retrieval items to be scored",
+                      "acceptance":  "Section 14 yields only two retrieval questions today, so it cannot be scored. Generate retrieval items for every section, assert a minimum of four per section in cargo test, and prove the assertion is not vacuous by removing one item and watching it fail."
+                  },
+                  {
+                      "id":  "measurement-fixture",
+                      "status":  "pending",
+                      "origin":  "human",
+                      "title":  "A synthetic learner session as data, so scoring can be tested without a person",
+                      "acceptance":  "One fixture session (answers, timings, a wrong-then-right pair) checked into the repository as data, loaded by a test, with no UI and no network. It is the input phase 4 scoring is written against."
+                  },
+                  {
+                      "id":  "phase4-scoring",
+                      "status":  "pending",
+                      "origin":  "human",
+                      "title":  "Score a session: per-section correctness, time to answer, retrieval versus recognition",
+                      "acceptance":  "Scoring reads the fixture and prints or returns a table with those three axes per section, plus an overall figure; a test asserts the numbers for the fixture exactly. This is roadmap phase 4\u0027s completion criterion, quoted in the STATE note when done."
+                  },
+                  {
+                      "id":  "reading-claims-audit",
+                      "status":  "pending",
+                      "origin":  "human",
+                      "title":  "A source is marked read only where the note holds the evidence",
+                      "acceptance":  "For each of the five load-bearing sources in docs/reading.md, record page or quote evidence per claim and flip skimmed to read only where that evidence exists; fix the two known citation errors with their evidence; a test asserts every \u0027read\u0027 entry has at least one quoted line."
+                  }
+              ]
+}
