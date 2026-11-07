@@ -1,6 +1,6 @@
 # Introduction
 
-This is the 0.19.0 edition of a course that teaches beginning programming in Rust,
+This is the 0.20.0 edition of a course that teaches beginning programming in Rust,
 lesson for lesson from a Python deck of 85 slides. The same lessons also exist as slides,
 Jupyter notebooks and narrated video — all generated from the text you are reading, so they
 cannot drift from it.
@@ -18,7 +18,7 @@ cat problems/section_07_quiz.md     # answer from memory first
 
 ## What is verified, and what is not
 
-The code in the chapters is compiled by `cargo test` (103 tests). Chapters also quote code as
+The code in the chapters is compiled by `cargo test`. Chapters also quote code as
 `text` on purpose — it is there to be read, and it is already compiled elsewhere. The one
 `rust` block below exists so that `mdbook test` compiles something rather than passing while
 checking nothing.

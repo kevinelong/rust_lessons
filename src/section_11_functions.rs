@@ -10,6 +10,34 @@
 //! 4. **State the acceptance case.** Every exercise in this section has a test that names
 //!    the boundary (empty input, all faces, non-ASCII text) — that test is the definition of
 //!    done, not an optional extra.
+//!
+//! # Worked example — the longest word in a sentence
+//!
+//! "Which word is the longest?" is four decisions before it is a line of code, and
+//! each one removes a way of getting it wrong.
+//!
+//! 1. **Write the signature from the question, not from the body.** In: a sentence.
+//!    Out: one word. Can it fail: yes, `""` holds no word — so `Option<&str>`.
+//!    That signature is the answer; the body only fills it in.
+//! 2. **Choose the ownership of each parameter.** `&str` borrows the caller's
+//!    text, and the returned word borrows from it too — it is a slice of the
+//!    sentence, so nothing is copied and no lifetime has to be written down.
+//! 3. **Write the body as one traversal.** `split_whitespace` walks the text once,
+//!    and `max_by_key` keeps the longest of what it saw. No second pass, no
+//!    intermediate `Vec` of words.
+//! 4. **State the acceptance case.** The boundary cases are the test: `""` gives
+//!    `None`, and a tie goes to the last word reached — `"ab cd"` gives `"cd"` —
+//!    which is written down here instead of discovered later.
+//!
+//! ```text
+//! fn longest_word(text: &str) -> Option<&str> {
+//!     text.split_whitespace().max_by_key(|w| w.len())
+//! }
+//! println!("{:?}", longest_word("the quick red fox")); // Output: Some("quick")
+//! println!("{:?}", longest_word("ab cd"));             // Output: Some("cd")
+//! println!("{:?}", longest_word(""));                  // Output: None
+//! ```
+//!
 //! The deck's D.R.Y. slide, then the six exercises that make it real: `min`, `max`,
 //! `roll`, `get_average_roll`, `trackAverage`, `chart_average` and `reverse_me`.
 //! All of them live here, in Rust, and the tests at the bottom are the deck's

@@ -8,9 +8,9 @@ Answer from memory before looking. Each question comes from a sentence in the le
 
 3. Do not mutate an input you were loaned; **____** copies before it sorts for exactly this reason.
 
-4. A list is a sequence of values, written **____** in the deck's Python.
+4. Everything in a vector is the same type. **____** does not compile; use an enum when the values differ in kind.
 
-5. In Rust a **____** is the growable version of that (`[T; N]` is a fixed-size array, and slices `&[T]` are borrowed views of either).
+5. Indexing past the end panics, so prefer `.get(i)` when the index comes from outside your own code — it returns **____** instead of crashing.
 
 <details>
 <summary>Answers</summary>
@@ -18,9 +18,9 @@ Answer from memory before looking. Each question comes from a sentence in the le
 1. `Vec<String>`
 2. `Option`
 3. `sorted_ascending`
-4. `[v1, v2, v3]`
-5. `Vec<T>`
+4. `vec![1, "two"]`
+5. `Option<&T>`
 
 </details>
 
-<sub>Generated from `src/section_07_*.rs` by `cargo run --bin quiz` — rust_lessons 0.17.0</sub>
+<sub>Generated from `src/section_07_*.rs` by `cargo run --bin quiz` — rust_lessons 0.20.0</sub>

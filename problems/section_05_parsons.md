@@ -48,4 +48,4 @@ pub fn classify(score: u32) -> &'static str {
 
 </details>
 
-<sub>Generated from `src/section_05_*.rs` by `cargo run --bin parsons` — rust_lessons 0.17.0</sub>
+<sub>Generated from `src/section_05_*.rs` by `cargo run --bin parsons` — rust_lessons 0.20.0</sub>

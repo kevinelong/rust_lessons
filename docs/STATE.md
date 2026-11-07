@@ -7,16 +7,17 @@ session; everything here is verifiable from the repository.
 
 | Level | Artefact | Status | Evidence |
 |---|---|---|---|
-| 0 | acceptance criteria | **done** | `cargo test` → 138 tests (137 passing, 1 `#[ignore]`d) |
+| 0 | acceptance criteria | **done** | `cargo test` → 139 tests (138 passing, 1 `#[ignore]`d) |
 | 1 | lesson prose | **done** | 21 sections in `src/section_*.rs`; `SECTION_COUNT` is the single bound every generator uses |
 | 2 | slides | **done** | 277 HTML slides across 21 sections; all six diagrams embedded as images |
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
 | 4 | narrated video | **done** | 21 MP4s + 21 SRT at 0.15.0, published as `v0.15.0` (46.7 MB, 43 assets); cues verified to end within 0.0 s of their video |
-| — | book (mdBook) | **0.13.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
+| — | book (mdBook) | **0.20.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
 | — | practice | **0.16.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each; retrieval floor is four per section (101 items), asserted by `cargo test` |
 | — | scoring | **0.18.0** | `rust_lessons::scoring` scores a session on correctness, time to answer and retrieval-versus-recognition per section, plus an overall row; `cargo run --bin score` prints it; `tests/session_scoring.rs` (7 tests) pins the fixture's numbers exactly |
 | — | recorded session | **0.17.0** | `fixtures/session-2026-11-07-synthetic.json` — 8 attempts over sections 01–03, 102.4 s on task, one wrong-then-right pair; read by `rust_lessons::session`, asserted by `tests/session_fixture.rs` (7 tests) |
 | — | sourcing register | **0.19.0** | `docs/reading.md` — five load-bearing sources with page ranges and quoted lines; 3 `read`, 2 `skimmed`; every `read` entry is checked by `every_read_source_has_a_quoted_line` |
+| — | subgoal pairing | **0.20.0** | §07, §08, §11 and §16 each carry a `# Worked example` whose steps repeat their subgoal labels, each ending in an observed `Output:`; `subgoals_travel_with_a_worked_example` fails if a labelled block loses its example, proven non-vacuous twice |
 
 Published artefacts live outside this repository by design:
 
@@ -65,6 +66,21 @@ Published artefacts live outside this repository by design:
   block nothing cites. The two directions matter equally: a test that only checked "quotes
   exist" would pass on a file where every entry was flipped to `read`, which is why it also
   refuses a register that is all `read` or all not.
+* **A label travels with the example that earns it.** E3's gain came from labelled text *and* a
+  worked example carrying the same labels, so the **Subgoals** block in §07, §08, §11 and §16 now
+  sits above a `# Worked example` whose steps repeat those labels word for word, and each example
+  ends in an `Output:` line that was run. `subgoals_travel_with_a_worked_example` fails on a
+  labelled block with no example, or on an example that renames a step; the requirement that the
+  example quotes code and states an output is what stops "repeating the labels" from being a
+  second copy of the block.
+* **A worked example is not a quiz item.** The retrieval generator takes the first five scorable
+  sentences in document order, so the examples — which come first and are the most code-dense
+  prose in the section — pushed §16's SQL questions out of its quiz entirely on first
+  regeneration. `questions_for` now skips a `# Worked example` block up to the next `#` heading,
+  which is also why each example is followed by one. Sections 08, 11 and 16 came back byte-
+  identical apart from the version footer; §07's items 4–5 are now its two compiler-rule bullets
+  (`vec![1, "two"]`, `Option<&T>`) instead of `[v1, v2, v3]` and `Vec<T>`, because a heading
+  merges with the paragraph beneath it and the quiz only harvests Prose and Bullets beats.
 * **Paywalled sources stay `skimmed` and say why.** Joentausta & Hellas and Kalyuga had only
   abstracts reachable (ACM 403, UNSW "metadata only access"), so their blocks hold an abstract
   quote and a line naming the access failure. Quoting a title would have let the register claim
@@ -157,10 +173,12 @@ Three citation errors are corrected with their evidence, in `docs/reading.md` §
 
 What the reading changed in the argument, rather than just in the footnote: E3's own results say
 a labelled text did not independently help ("subgoal labels in the text did not independently
-improve performance"); only text **and** a worked example carrying the same labels did. The
-**Subgoals** blocks in §07, §08, §11 and §16 are therefore justified only where a labelled
-example sits beside them, and E2 is a nine-participant perception study, which is why the course
-still claims nothing about learning.
+improve performance"); only text **and** a worked example carrying the same labels did. So from
+**0.20.0** each **Subgoals** block in §07, §08, §11 and §16 carries a `# Worked example` whose
+four steps repeat its labels and end in an observed `Output:` — the condition the finding was
+tested under, asserted by `subgoals_travel_with_a_worked_example` rather than promised in prose.
+E2 is a nine-participant perception study, which is why the course still claims nothing about
+learning.
 
 ## Research and plan
 

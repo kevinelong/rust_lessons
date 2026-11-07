@@ -44,5 +44,5 @@ pub fn count_vowels(text: &str) -> usize {
 
 </details>
 
-<sub>Generated from `src/section_10_*.rs` by `cargo run --bin parsons` — rust_lessons 0.17.0
+<sub>Generated from `src/section_10_*.rs` by `cargo run --bin parsons` — rust_lessons 0.20.0
 </sub>

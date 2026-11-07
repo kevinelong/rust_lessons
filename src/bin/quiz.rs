@@ -78,12 +78,23 @@ pub struct Question {
 }
 
 /// Pull questions out of the prose beats, in document order, deduplicated by answer.
+///
+/// A `# Worked example` block is skipped: it is a sequence of steps to follow, not a
+/// definition to recall, and letting it count against [`MAX_QUESTIONS`] pushed sections
+/// 07, 08, 11 and 16's own definitions — the SQL each operation corresponds to, the
+/// `panic!` that needs the never type — out of their quizzes entirely. The block ends at
+/// the next `#` heading, so a section that adds an example must also head what follows it;
+/// a `cargo run --bin quiz` diff shows the day one does not.
 pub fn questions_for(beats: &[Beat]) -> Vec<Question> {
     let mut seen: HashSet<String> = HashSet::new();
     let mut out = Vec::new();
+    let mut in_example = false;
 
     for beat in beats {
-        if !matches!(beat.kind, Kind::Prose | Kind::Bullets) {
+        if beat.kind == Kind::Heading {
+            in_example = beat.text.trim_start().starts_with("# Worked example");
+        }
+        if in_example || !matches!(beat.kind, Kind::Prose | Kind::Bullets) {
             continue;
         }
         for line in sentences(&beat.text) {

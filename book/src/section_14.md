@@ -1,6 +1,6 @@
 # 14 — Networks, IP, DNS and URLs
 
-<sub>rust_lessons 0.19.0 · source: `src/section_14_*.rs` · run: `cargo run --example 14_networking`</sub>
+<sub>rust_lessons 0.20.0 · source: `src/section_14_*.rs` · run: `cargo run --example 14_networking`</sub>
 
 Section 14 — networks, IP, DNS and URLs.
 

@@ -1,6 +1,6 @@
 # 16 — Tables and SQL
 
-<sub>rust_lessons 0.19.0 · source: `src/section_16_*.rs` · run: `cargo run --example 16_databases`</sub>
+<sub>rust_lessons 0.20.0 · source: `src/section_16_*.rs` · run: `cargo run --example 16_databases`</sub>
 
 Section 16 — tables and SQL.
 
@@ -14,6 +14,43 @@ Section 16 — tables and SQL.
    follows, which is why each method here also prints its SQL.
 4. **Say what an empty result means.** No rows matching is `Ok(vec![])`, not an error;
    a wrong column name *is* one.
+
+# Worked example — a books table through all four operations
+
+"Track books, and change one when it is reissued." The four moves are the four
+decisions, in the order a schema is actually designed.
+
+1. **Declare the shape.** Three columns, named and typed, before a row exists:
+   `id`, `title`, `author`. That declaration *is* the table, and it is what the
+   printed DDL says back.
+2. **Name the key.** `id` identifies a row, so `update_where` and `delete_where`
+   take the key column: one row changes, and nothing sweeps the table by
+   accident.
+3. **Pick the operation, not the SQL.** Insert, select, update, delete — and each
+   method also prints the statement it stands for, so the SQL follows the
+   decision instead of driving it.
+4. **Say what an empty result means.** A select that matches nothing is `Ok(0)`
+   rows and stays `Ok`; a column that does not exist is the error, and it says
+   which column was asked for:
+
+```text
+let mut books = Table::new("books", &["id", "title", "author"]);
+println!("{}", books.ddl());
+// Output: CREATE TABLE books (id, title, author);
+books.insert(&["1", "The Dispossessed", "Le Guin"]).unwrap();
+books.insert(&["2", "The Left Hand of Darkness", "Le Guin"]).unwrap();
+println!("{}", books.update_sql("id", "title"));
+// Output: UPDATE books SET title = ? WHERE id = ?;
+println!("{:?}", books.update_where("id", "1", "title", "The Dispossessed (1974)"));
+// Output: Ok(1)
+println!("{:?}", books.select_where("author", "Nobody").map(|r| r.len()));
+// Output: Ok(0)
+println!("{:?}", books.select_where("isbn", "1").unwrap_err());
+// Output: "books has no column named isbn"
+```
+
+# SQL, DDL and DML
+
 The deck's last three slides: relational databases speak SQL, tables are created
 with DDL and changed with DML, and applications do four things with them —
 **C**reate, **R**ead, **U**pdate, **D**elete, the nickname **CRUD**.

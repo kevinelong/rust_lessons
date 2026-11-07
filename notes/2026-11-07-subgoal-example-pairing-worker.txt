@@ -2,11 +2,92 @@
 
 Task: subgoal-example-pairing
 Started: 2026-11-07 09:54
+Finished: 2026-11-07 (0.20.0)
 
 ## What this turn changed
 
+- `src/section_07_vectors.rs`, `08_maps.rs`, `11_functions.rs`, `16_databases.rs`: each now
+  carries a `# Worked example` immediately under its Subgoals block, with one numbered step per
+  subgoal repeating the label word for word, and a final fenced block whose last line is the
+  `Output:` actually printed by the code. The problems: the spread of a list of scores (07), the
+  most common word and its count (08), the longest word in a sentence (11), a books table through
+  insert/select/update/delete (16). Also fixed in passing: item 4 of each Subgoals list ran
+  straight into the following paragraph for want of a blank `//!` line, so the list swallowed it.
+- Each example is followed by a new level-1 heading (`# From the deck's list to Rust's Vec`,
+  `# From the deck's dictionary to HashMap`, `# SQL, DDL and DML`; 11 already had
+  `# Anatomy of a function`). They introduce the prose they precede, and they delimit the block
+  for the quiz generator.
+- `tests/curriculum.rs`: `subgoals_travel_with_a_worked_example` scans every section for a
+  `# Subgoals` block, reads its numbered bold labels, and requires a `# Worked example` region
+  (heading up to the next level-1 heading) that repeats every label, quotes code and states an
+  output. Two helpers, `subgoal_labels` and `heading_region`. It also asserts it saw exactly four
+  sections, so the scan itself cannot go vacuous.
+- `src/bin/quiz.rs`: `questions_for` skips a `# Worked example` block up to the next `#` heading.
+  Without it the example - first and the most code-dense prose in the section - filled
+  `MAX_QUESTIONS` and §16 lost all five of its SQL questions.
+- `src/bin/book.rs`: the generated book's intro claimed "cargo test (103 tests)"; the number is
+  gone rather than corrected, because it drifts every turn.
+- Regenerated `book/src` (21 chapters), `notebooks/` (21), `problems/` (63) at 0.20.0.
+- Docs: STATE (table row, two decisions, sourcing paragraph), CONTINUE-HERE (version, 139 tests,
+  item 2 resolved), ROADMAP item 4, research 2026-11-07 (implication 1 resolved; the generated
+  faded-artefact question partly answered), README (test count, four section rows, the pairing
+  test, version history to 0.20.0).
+- Version 0.19.0 -> 0.20.0 (a feature: minor, patch reset).
+
 ## What was measured
+
+- `cargo test`: 139 tests, 138 passing, 1 `#[ignore]`d. The new test is one of them;
+  `cargo test --test curriculum` runs 9 and passes 9.
+- Non-vacuous, twice, on the real tree:
+  1. renaming §16's `# Worked example` heading to `# Example` failed with
+     "section 16 names subgoals and carries no worked example, so the labels have nothing to
+     travel with";
+  2. restoring it and renaming the example's step 2 from `Name the key` to `Pick the key` failed
+     with "section 16: subgoal `Name the key.` is never repeated in the worked example".
+  Both were restored before the commit.
+- The examples' printed outputs were run, not written from memory: a scratch example printed
+  `Some(6) None`, `Some(("the", 3))`, `0`, `Some(("a", 1))`, `Some("quick")`, `Some("cd")`,
+  `None`, `CREATE TABLE books (id, title, author);`, `Ok(1)`, `Ok(2)`, `Ok(2)`, `Ok(0)`,
+  `"books has no column named isbn"`, `Ok(1)`, `Ok(0)`,
+  `UPDATE books SET title = ? WHERE id = ?;`. The scratch file was deleted; the fences are
+  `text` so `mdbook test` ignores them, and the `Output:` lines are what that run printed.
+- `mdbook build book` + `mdbook test book` pass. `RUSTDOCFLAGS="-D warnings" cargo doc --no-deps`
+  is clean, which matters because the new prose lives in `//!` docs.
+- `cargo run --bin narrate -- 7` renders 18 beats, 16 narrated, and slide_003.html is
+  "Worked example — the spread of a list of scores"; the narration text carries
+  "Decide the element type". So the example reaches slides, video script and notebook, not just
+  rustdoc.
+- Quiz regeneration, measured by diff: sections 08, 11 and 16 are byte-identical to 0.17.0 apart
+  from the version footer. Section 07's items 4-5 are now its two compiler-rule bullets
+  (`vec![1, "two"]`, `Option<&T>`) instead of `[v1, v2, v3]` and `Vec<T>` - because a heading
+  merges with the paragraph beneath it (`lesson::split_beats`) and the quiz only harvests Prose
+  and Bullets beats. Recorded in STATE rather than hidden.
 
 ## Not done, and why
 
+- The faded Parsons artefacts do not carry the subgoal labels. `parsons` builds them from the
+  module's functions, not from prose, so repeating the labels there is a generator change with a
+  real cost (two copies of the labels in the learner's path). Written up as partly answered in
+  `docs/research/2026-11-07.md`.
+- No measurement of whether the pairing helps anyone. The course still claims nothing about
+  learning; this task made the text match the condition the cited finding was tested under, and
+  nothing more.
+- Videos were not re-rendered. The prose changed, so the 21 MP4s at 0.15.0 no longer match the
+  text word for word; `tools/release-videos.ps1` regenerates them, and publishing is Kevin's
+  decision, not a worker's.
+
 ## What is now fragile
+
+- The quiz's worked-example skip ends at the next `#` heading. An example with no heading after it
+  would swallow every later item in that section, silently. A `cargo run --bin quiz` diff is the
+  check that catches it; the quiz floor of four items may not.
+- `subgoals_travel_with_a_worked_example` pins `checked == 4`. Adding a fifth procedural section
+  fails the test until the number and the acceptance text are revisited - deliberate, but it will
+  read as a surprise to whoever adds that section.
+- The `Output:` lines are checked by the test for presence only; nobody asserts they still match
+  the code. The examples are quoted as `text`, so the compiler does not read them either. A change
+  to `Table`, `word_counts` or the standard library's `max_by_key` tie rule would leave a stale
+  output line in the prose.
+- §07's worked example prints `Some(6) None` for a `-`-free input; if a later edit makes `spread`
+  return `0` for an empty list, the prose promise ("never a 0 that reads as a real gap") and the
+  code diverge and only a reader notices.

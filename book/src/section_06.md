@@ -1,6 +1,6 @@
 # 06 — Enums: making your own type
 
-<sub>rust_lessons 0.19.0 · source: `src/section_06_*.rs` · run: `cargo run --example 06_enums`</sub>
+<sub>rust_lessons 0.20.0 · source: `src/section_06_*.rs` · run: `cargo run --example 06_enums`</sub>
 
 Section 6 — enums: making your own type from a fixed set of values.
 

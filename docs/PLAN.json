@@ -55,12 +55,14 @@
                   },
                   {
                       "id":  "subgoal-example-pairing",
-                      "status":  "running",
+                      "status":  "done",
                       "origin":  "worker",
                       "title":  "A Subgoals block travels with the labelled example that justifies it",
                       "acceptance":  "Margulieux \u0026 Catrambone (2016, docs/reading.md E3) found subgoal labels in expository text improved problem solving only when a worked example carried the same labels; a labelled text alone did not. Sections 07, 08, 11 and 16 carry a Subgoals block, so each needs a worked example whose steps repeat those subgoal names (or the block stops citing the finding). A test asserts that a section naming subgoals also names them inside an example, and is proven non-vacuous by removing one section\u0027s labelled example.",
                       "owner":  "pm1",
-                      "claimed":  "2026-11-07 09:54"
+                      "claimed":  "2026-11-07 09:54",
+                      "finished":  "2026-11-07",
+                      "note":  "0.20.0. Sections 07, 08, 11 and 16 each carry a '# Worked example' under the Subgoals block whose numbered steps repeat the labels word for word (spread of a list; most common word; longest word; a books table through CRUD) and end in an Output: line that was printed by running the code. tests/curriculum.rs::subgoals_travel_with_a_worked_example extracts the bold labels from any '# Subgoals' block and requires a '# Worked example' region (heading to next level-1 heading) that repeats every one, quotes code and states an output, and asserts it saw exactly four sections. Proven non-vacuous twice on the branch: renaming section 16's heading failed with 'section 16 names subgoals and carries no worked example', and renaming its step 2 failed with 'subgoal Name the key. is never repeated in the worked example'; both restored. cargo test: 139 (138 passing, 1 ignored); mdbook build+test pass; RUSTDOCFLAGS=-D warnings cargo doc clean. Adding the examples filled the retrieval generator's first-five cap and wiped section 16's SQL questions, so questions_for now skips a '# Worked example' block to the next heading - sections 08, 11 and 16 came back byte-identical, section 07's items 4-5 became its two compiler-rule bullets; both prose and all derived artefacts (book, notebooks, problems) regenerate at 0.20.0. Videos not re-rendered; faded Parsons artefacts still carry no labels (recorded in docs/research/2026-11-07.md)."
                   }
               ]
 }

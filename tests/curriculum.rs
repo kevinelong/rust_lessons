@@ -120,6 +120,102 @@ fn procedural_sections_name_their_subgoals() {
     }
 }
 
+/// A Subgoals block only holds where a worked example repeats its labels.
+///
+/// Margulieux & Catrambone (2016) measured a gain from subgoal labels in expository text
+/// only where a worked example carried the same labels; a labelled text on its own did not
+/// help (`docs/reading.md` [E3]). So a section that names subgoals has to ship the example
+/// as well as the block — and it has to be an *example*: it quotes code and states what
+/// that code printed, or repeating the labels is only a second copy of the block.
+#[test]
+fn subgoals_travel_with_a_worked_example() {
+    use rust_lessons::lesson;
+
+    let mut checked = 0;
+    for n in 1..=rust_lessons::SECTION_COUNT {
+        let Some(beats) = lesson::beats(n) else {
+            continue;
+        };
+        let text = beats
+            .iter()
+            .map(|b| b.text.as_str())
+            .collect::<Vec<_>>()
+            .join("\n");
+        let Some(labels) = subgoal_labels(&text) else {
+            continue;
+        };
+        checked += 1;
+
+        let example = heading_region(&text, "# Worked example").unwrap_or_else(|| {
+            panic!(
+                "section {n:02} names subgoals and carries no worked example, so the labels \
+                 have nothing to travel with"
+            )
+        });
+        assert!(
+            example.contains("```"),
+            "section {n:02}: the worked example quotes no code"
+        );
+        assert!(
+            example.to_lowercase().contains("output"),
+            "section {n:02}: the worked example states no output, so nobody ran it"
+        );
+        for label in &labels {
+            assert!(
+                example.contains(label.as_str()),
+                "section {n:02}: subgoal `{label}` is never repeated in the worked example"
+            );
+        }
+    }
+
+    assert_eq!(
+        checked, 4,
+        "the four procedural sections name subgoals, so four should have been checked"
+    );
+}
+
+/// The bold labels of a `# Subgoals` block, in order; `None` when the section has none.
+fn subgoal_labels(text: &str) -> Option<Vec<String>> {
+    let block = heading_region(text, "# Subgoals")?;
+    let mut labels = Vec::new();
+    for line in block.lines() {
+        let line = line.trim();
+        if !line.starts_with(|c: char| c.is_ascii_digit()) || !line[1..].starts_with(". ") {
+            continue;
+        }
+        let Some(open) = line.find("**").map(|i| i + 2) else {
+            continue;
+        };
+        if let Some(close) = line[open..].find("**").map(|i| i + open) {
+            labels.push(line[open..close].to_string());
+        }
+    }
+    assert!(
+        !labels.is_empty(),
+        "the Subgoals block names no numbered step"
+    );
+    Some(labels)
+}
+
+/// The text from a level-one `heading` line to the next level-one heading, heading excluded.
+fn heading_region<'a>(text: &'a str, heading: &str) -> Option<&'a str> {
+    let mut start: Option<usize> = None;
+    let mut cursor = 0usize;
+    for line in text.split_inclusive('\n') {
+        let trimmed = line.trim_start();
+        match start {
+            Some(s) if trimmed.starts_with("# ") => return Some(&text[s..cursor]),
+            Some(_) => {}
+            None if trimmed.starts_with(heading) => {
+                start = Some(cursor + (line.len() - trimmed.len()));
+            }
+            None => {}
+        }
+        cursor += line.len();
+    }
+    start.map(|s| &text[s..])
+}
+
 /// Every section must appear in the further-reading register.
 ///
 /// The register is the answer to "where do I go past this lesson", and it decays silently:

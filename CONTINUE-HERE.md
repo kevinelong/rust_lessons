@@ -27,16 +27,16 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 | | |
 |---|---|
-| Last commit | see `git log`; HEAD carries 0.19.0, the checked reading register |
+| Last commit | see `git log`; HEAD carries 0.20.0, the subgoal labels paired with their worked examples |
 | Working tree | clean |
 | Videos | **21 MP4s + 21 SRT tracks at 0.15.0**, published as `v0.15.0` (46.7 MB, 43 assets) |
-| Tests | 138: 137 passing, 1 `#[ignore]`d |
+| Tests | 139: 138 passing, 1 `#[ignore]`d |
 | Batch | finished 2026-11-07: `tools/release-videos.ps1 -Sections all -Tag v0.15.0`, 823 s |
 
 **First two things to do after a reboot:**
 
 1. `cd C:/Users/kevin/rust_lessons && git status && cargo test` — the tree should be clean and
-   138 tests should pass (137 plus one `#[ignore]`d); if not, something is half-applied.
+   139 tests should pass (138 plus one `#[ignore]`d); if not, something is half-applied.
 2. `gh release list --repo kevinelong/rust-lessons-releases | head -3` — expect `v0.15.0` as
    latest. If it is missing or lacks `.srt` assets, rerun
    `powershell -NoProfile -File tools/release-videos.ps1 -Sections all -Tag v0.15.0` (~14 min).
@@ -52,7 +52,11 @@ Everything is inside the repository, under `docs/` — nothing important is in `
    `skimmed` means. Three citation errors are corrected with their evidence. What is left is
    institutional access, and the one finding that changes a claim: Margulieux & Catrambone found
    a labelled text did **not** help on its own — only text plus a worked example carrying the
-   same labels did — so a **Subgoals** block needs a labelled example beside it.
+   same labels did — so a **Subgoals** block needs a labelled example beside it. **Done in
+   0.20.0:** §07, §08, §11 and §16 each carry a `# Worked example` whose steps repeat that
+   section's subgoal labels and end in an observed `Output:`, and
+   `tests/curriculum.rs::subgoals_travel_with_a_worked_example` fails on a labelled block with no
+   example or an example that renames a step.
 3. **Phase 4, measurement — the surface is built (0.18.0); the human input is not.** Input: every
    section yields at least four retrieval items (0.16.0, 101 over 21, proven non-vacuous) and one
    recorded session exists as data (`fixtures/session-2026-11-07-synthetic.json`, 0.17.0).
@@ -91,7 +95,7 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 ## What this project can and cannot claim
 
-* **Can:** the code compiles, 138 tests pass, CI gates it, the videos regenerate from one
+* **Can:** the code compiles, 139 tests pass, CI gates it, the videos regenerate from one
   command, captions align to 0.0 s, `mdbook test` is proven non-vacuous.
 * **Cannot:** that anyone learns. No measurement exists, and two factual errors in the prose were
   found only because a reviewer asked a pointed question.

@@ -1,6 +1,6 @@
 # 18 — Errors: panic, Result and ?
 
-<sub>rust_lessons 0.19.0 · source: `src/section_18_*.rs` · run: `cargo run --example 18_errors`</sub>
+<sub>rust_lessons 0.20.0 · source: `src/section_18_*.rs` · run: `cargo run --example 18_errors`</sub>
 
 Section 18 — errors: `assert`, `panic!`, `Result` and `?`.
 

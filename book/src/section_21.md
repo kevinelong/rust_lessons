@@ -1,6 +1,6 @@
 # 21 — Reading compiler errors
 
-<sub>rust_lessons 0.19.0 · source: `src/section_21_*.rs` · run: `cargo run --example 21_compiler_errors`</sub>
+<sub>rust_lessons 0.20.0 · source: `src/section_21_*.rs` · run: `cargo run --example 21_compiler_errors`</sub>
 
 Section 21 — reading compiler errors.
 

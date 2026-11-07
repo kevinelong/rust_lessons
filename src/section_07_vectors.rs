@@ -12,6 +12,43 @@
 //! 3. **Fold over the elements.** One traversal, one accumulator (or one running extreme).
 //! 4. **Return without surprising the caller.** Do not mutate an input you were loaned;
 //!    `sorted_ascending` copies before it sorts for exactly this reason.
+//!
+//! # Worked example — the spread of a list of scores
+//!
+//! The question is "how far apart are the scores?", and the four moves answer it
+//! in the order they are named.
+//!
+//! 1. **Decide the element type.** A score is a whole number, so the input is
+//!    `&[i32]` — borrowed, because the caller keeps its list and this function
+//!    only reads it.
+//! 2. **Choose the shape of the answer.** A list with no scores in it has no
+//!    spread, so the answer is `Option<i32>`: `Some(6)` or `None`, never a `0`
+//!    that reads as a real gap between two equal scores.
+//! 3. **Fold over the elements.** One traversal carries both extremes at once,
+//!    which is the whole of the work:
+//!
+//! ```text
+//! let (lo, hi) = values.iter().fold((i32::MAX, i32::MIN), |(lo, hi), &v| (lo.min(v), hi.max(v)));
+//! ```
+//!
+//! 4. **Return without surprising the caller.** The empty list is answered
+//!    before the subtraction, because `i32::MAX - i32::MIN` overflows and a debug
+//!    build panics on it. The caller's vector is never touched:
+//!
+//! ```text
+//! fn spread(values: &[i32]) -> Option<i32> {
+//!     if values.is_empty() {
+//!         return None;
+//!     }
+//!     let (lo, hi) = values.iter().fold((i32::MAX, i32::MIN), |(lo, hi), &v| (lo.min(v), hi.max(v)));
+//!     Some(hi - lo)
+//! }
+//! println!("{:?} {:?}", spread(&[3, 9, 4]), spread(&[]));
+//! // Output: Some(6) None
+//! ```
+//!
+//! # From the deck's list to Rust's `Vec`
+//!
 //! A list is a sequence of values, written `[v1, v2, v3]` in the deck's Python.
 //! In Rust a `Vec<T>` is the growable version of that (`[T; N]` is a fixed-size
 //! array, and slices `&[T]` are borrowed views of either).

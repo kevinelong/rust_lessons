@@ -78,7 +78,7 @@ cat problems/section_07_quiz.md     # answer from memory first
 
 ## What is verified, and what is not
 
-The code in the chapters is compiled by `cargo test` (103 tests). Chapters also quote code as
+The code in the chapters is compiled by `cargo test`. Chapters also quote code as
 `text` on purpose — it is there to be read, and it is already compiled elsewhere. The one
 `rust` block below exists so that `mdbook test` compiles something rather than passing while
 checking nothing.
