@@ -22,12 +22,14 @@
                   },
                   {
                       "id":  "measurement-fixture",
-                      "status":  "running",
+                      "status":  "done",
                       "origin":  "human",
                       "title":  "A synthetic learner session as data, so scoring can be tested without a person",
                       "acceptance":  "One fixture session (answers, timings, a wrong-then-right pair) checked into the repository as data, loaded by a test, with no UI and no network. It is the input phase 4 scoring is written against.",
                       "owner":  "pm1",
-                      "claimed":  "2026-11-07 08:12"
+                      "claimed":  "2026-11-07 08:12",
+                      "finished":  "2026-11-07",
+                      "note":  "0.17.0. fixtures/session-2026-11-07-synthetic.json: 8 attempts over sections 01-03, 102400 ms on task, retrieval 4/6 and recognition 1/2, and one wrong-then-right pair (s01-q2 attempt 1 answer 'var', attempt 2 'let'). src/session.rs loads it from a string or a path, versioned schema 1, and derives correctness from answer-vs-expected instead of storing a verdict; validate() refuses an unknown schema, a section the course does not have, an attempt that does not run 1,2,3 per item, and a zero duration. tests/session_fixture.rs asserts the numbers above exactly, the pair, and that every retrieval answer is the one problems/section_NN_quiz.md gives and every recognition answer is a permutation of that section's Parsons lines. Non-vacuous, each proven by doctoring the fixture and reverting: ms 36000 -> 36001 failed 'total time on task' 102401 vs 102400; deleting the retry row failed 'exactly one item was retried, found []'; expected '2 + 3 * 4' -> '3 * 4 + 2' failed 'section 03 question 3 does not answer'. cargo test: 124 tests, 123 pass, 1 ignored. No UI, no network: the only dependency is serde/serde_json, already cached, so cargo test --offline builds."
                   },
                   {
                       "id":  "phase4-scoring",
