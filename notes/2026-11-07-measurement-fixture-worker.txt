@@ -1,0 +1,12 @@
+# A synthetic learner session as data, so scoring can be tested without a person - measurement-fixture
+
+Task: measurement-fixture
+Started: 2026-11-07 08:12
+
+## What this turn changed
+
+## What was measured
+
+## Not done, and why
+
+## What is now fragile
