@@ -1,6 +1,6 @@
 # 04 — Strings, numbers and conversion
 
-<sub>rust_lessons 0.17.0 · source: `src/section_04_*.rs` · run: `cargo run --example 04_strings`</sub>
+<sub>rust_lessons 0.18.0 · source: `src/section_04_*.rs` · run: `cargo run --example 04_strings`</sub>
 
 Section 4 — strings, numbers, and converting between them.
 

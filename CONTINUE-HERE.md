@@ -27,10 +27,10 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 | | |
 |---|---|
-| Last commit | see `git log`; HEAD carries 0.17.0, the recorded-session fixture |
+| Last commit | see `git log`; HEAD carries 0.18.0, the scoring surface |
 | Working tree | clean |
 | Videos | **21 MP4s + 21 SRT tracks at 0.15.0**, published as `v0.15.0` (46.7 MB, 43 assets) |
-| Tests | 124: 123 passing, 1 `#[ignore]`d |
+| Tests | 137: 136 passing, 1 `#[ignore]`d |
 | Batch | finished 2026-11-07: `tools/release-videos.ps1 -Sections all -Tag v0.15.0`, 823 s |
 
 **First two things to do after a reboot:**
@@ -48,13 +48,15 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 2. **Read the five load-bearing sources properly** (Parsons review, Haynes-Magyar, Margulieux,
    Joentausta & Hellas, Kalyuga) and change `skimmed` → `read` in `docs/reading.md` where earned.
    Right now **nothing is marked read**, and two citation errors were already found.
-3. **Phase 4, measurement.** Input side is built: every section yields at least four retrieval
-   items (0.16.0, 101 over 21, asserted and proven non-vacuous), and one recorded session now
-   exists as data — `fixtures/session-2026-11-07-synthetic.json`, loaded by
-   `rust_lessons::session` and pinned by `tests/session_fixture.rs` (0.17.0). What is still
-   missing is the score itself: `phase4-scoring` in `docs/PLAN.json` must read that fixture and
-   report correctness, time to answer and retrieval-versus-recognition per section. Nothing in
-   the course measures a learner, and the course says so.
+3. **Phase 4, measurement — the surface is built (0.18.0); the human input is not.** Input: every
+   section yields at least four retrieval items (0.16.0, 101 over 21, proven non-vacuous) and one
+   recorded session exists as data (`fixtures/session-2026-11-07-synthetic.json`, 0.17.0).
+   Score: `rust_lessons::scoring` + `cargo run --bin score` print correctness, time to answer and
+   retrieval-versus-recognition per section with an overall row, and `tests/session_scoring.rs`
+   pins the fixture's numbers exactly. Roadmap phase 4's criterion, quoted: *"Done when a
+   stranger's score on section 01 can be recorded without an instructor present."* What remains
+   is a session a person actually sat — the binary already accepts one — and only then the
+   phase-4 claim about learning, with its n = 1 caveat.
 
 ## Environment facts a cold start needs
 

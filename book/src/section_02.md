@@ -1,6 +1,6 @@
 # 02 — Variables and data types
 
-<sub>rust_lessons 0.17.0 · source: `src/section_02_*.rs` · run: `cargo run --example 02_variables`</sub>
+<sub>rust_lessons 0.18.0 · source: `src/section_02_*.rs` · run: `cargo run --example 02_variables`</sub>
 
 Section 2 — variables and data types.
 

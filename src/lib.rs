@@ -58,6 +58,7 @@ pub mod section_20_testing;
 pub mod section_21_compiler_errors;
 
 pub mod lesson;
+pub mod scoring;
 pub mod session;
 pub mod version;
 

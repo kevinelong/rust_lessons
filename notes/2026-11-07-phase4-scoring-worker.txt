@@ -5,8 +5,64 @@ Started: 2026-11-07 08:43
 
 ## What this turn changed
 
+- `src/scoring.rs` (new): `score(&Session) -> Score`, with `Tally { tries, correct }`,
+  `SectionScore` (items, attempts, retrieval, recognition, total_ms, `accuracy()`,
+  `mean_ms()`) and `Score { session_id, learner, synthetic, sections, overall }`. The overall
+  figure is a `SectionScore` with `section == "overall"`, so one formula produces both.
+  `Score::report()` renders the table. Sections come from a `BTreeMap`, so the table is
+  deterministic.
+- `src/bin/score.rs` (new): `cargo run --bin score` scores the checked-in fixture;
+  `cargo run --bin score -- path` scores any session the schema accepts; a refused session
+  exits 2 with the loader's message.
+- `tests/session_scoring.rs` (new, 7 tests): the fixture's numbers pinned exactly, per-section
+  and overall; the printed rows pinned token by token; the `-` for an untested mode; the
+  synthetic provenance in the report; correctness following doctored answers; path vs text.
+- `src/lib.rs`: `pub mod scoring;`.
+- Version 0.18.0 (feature -> minor, patch 0) in `src/version.rs` and `Cargo.toml`;
+  `cargo run --bin book` regenerated the 21 tracked chapters so the version lines agree.
+  `Cargo.lock` follows the manifest.
+- `docs/STATE.md`: scoring row, the phase-4 criterion quoted in open item 5, two decisions
+  (tries vs items; `None`/`-` vs `0.0%`), two commands, test count 137.
+- `README.md`: the score command and the printed table, in the Practice section; test count.
+- `CONTINUE-HERE.md`: version, test count, and phase 4's next action.
+
 ## What was measured
+
+`cargo test --offline`: 137 tests, 136 passed, 1 ignored, 0 failed. New:
+6 unit tests in `src/scoring.rs`, 7 integration in `tests/session_scoring.rs`.
+
+`cargo run --bin score` (fixture) printed, and the integration test asserts each row:
+
+```
+section  items  tries  correct  accuracy   mean s  total s  retrieval         recognition
+01           3      4        2     50.0%     13.4     53.7  2/3 (66.7%)       0/1 (0.0%)
+02           2      2        1     50.0%      4.7      9.4  1/2 (50.0%)       -
+03           2      2        2    100.0%     19.6     39.3  1/1 (100.0%)      1/1 (100.0%)
+overall      7      8        5     62.5%     12.8    102.4  4/6 (66.7%)       1/2 (50.0%)
+```
+
+Non-vacuous, checked by hand in a throwaway copy: changing section 02's answer to
+`let x = 5;` moved 02 to 0/2 (0.0%) and the overall to 4/8 (50.0%), retrieval 3/6 (50.0%);
+the same change is asserted by `the_score_follows_the_answers_in_the_data`. A missing file
+exits 2 with `no-such.json: The system cannot find the file specified. (os error 2)`.
+`RUSTDOCFLAGS="-D warnings" cargo doc --no-deps` is clean.
+
+Phase 4's completion criterion, now quoted in `docs/STATE.md` open item 5:
+"Parsons + retrieval artefacts are scoreable; a section ends with 'you can now do X' and a
+task that produces a number. Done when a stranger's score on section 01 can be recorded
+without an instructor present."
 
 ## Not done, and why
 
+- No human session exists, so the table is evidence about the reader and the arithmetic and
+  about nobody's learning; the report says so itself (`synthetic - written, not sat`).
+- ROADMAP item 11 (a claim about learning) is a later decision, not this task.
+
 ## What is now fragile
+
+- The report's column widths live in seven constants in `src/scoring.rs`; the header and each
+  row share them, and the test pins the rendered cells, so a width change is a red test, not a
+  silently misaligned table.
+- Percentage rounding is `{:.1}` on an f64; the pinned fixture values are far from a rounding
+  boundary except section 03's mean (19.65 s prints 19.6 because the f64 is 19.6499…). A
+  future session whose true value sits exactly on `.x5` would round by binary representation.

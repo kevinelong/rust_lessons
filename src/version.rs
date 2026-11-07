@@ -8,4 +8,4 @@
 //! documentation cannot drift apart.
 
 /// The course version, shown by `rust_lessons --version` and by every example.
-pub const VERSION: &str = "0.17.0";
+pub const VERSION: &str = "0.18.0";

@@ -14,11 +14,12 @@ bare `cargo` install and a student can read every line of what it does.
 cargo run                     the course map
 cargo run -- 7                section 7's lesson text
 cargo run --example 07_vectors   section 7's code, running
-cargo test                    85 tests; one long one is #[ignore]d
+cargo test                    137 tests; one long one is #[ignore]d
 cargo run --bin narrate -- 1   generate section 1's slides, narration text and mux scripts
 cargo run --bin notebook       generate all twenty Jupyter notebooks
 cargo run --bin parsons        generate the Parsons and faded problems (problems/)
 cargo run --bin quiz           generate the retrieval checks (problems/)
+cargo run --bin score          score a session: correctness, time, retrieval vs recognition
 cargo run --bin book           write the mdBook chapters (book/src/)
 cargo run --bin captions       write SRT subtitles for every video (out/video/)
 tools/release-videos.ps1       regenerate every video and publish a release (see docs/STATE.md)
@@ -189,6 +190,27 @@ recorded session — answers, timings, and one item answered wrong and then righ
 `rust_lessons::session` and asserted number by number in `tests/session_fixture.rs`, with no
 window and no network. It is synthetic: written, not sat, so it can test a scoring rule but
 can never be evidence that anyone learned anything.
+
+`cargo run --bin score` reads that session and prints phase 4's table: correctness, time to
+answer, and retrieval versus recognition for every section, plus the whole session. A
+retried item shows as more tries than items, and a kind of item a section never asked prints
+`-` rather than a silent zero:
+
+```text
+session synthetic-2026-11-07-a | learner: synthetic-fixture | synthetic - written, not sat
+
+section  items  tries  correct  accuracy   mean s  total s  retrieval         recognition
+01           3      4        2     50.0%     13.4     53.7  2/3 (66.7%)       0/1 (0.0%)
+02           2      2        1     50.0%      4.7      9.4  1/2 (50.0%)       -
+03           2      2        2    100.0%     19.6     39.3  1/1 (100.0%)      1/1 (100.0%)
+overall      7      8        5     62.5%     12.8    102.4  4/6 (66.7%)       1/2 (50.0%)
+
+last row is the whole session; '-' means no item of that kind was asked.
+```
+
+Point it at any session the schema accepts: `cargo run --bin score -- path/to/session.json`.
+Every number above is asserted in `tests/session_scoring.rs`, and changing one recorded
+answer changes the table — it is computed from the answers, not stored.
 
 Why Parsons: it removes the blank-page cost while keeping the reasoning, and the literature
 puts it above writing-from-scratch for early practice. Sources and what they imply are in
