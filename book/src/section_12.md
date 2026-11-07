@@ -1,6 +1,6 @@
 # 12 — Capstone: guess the number
 
-<sub>rust_lessons 0.18.0 · source: `src/section_12_*.rs` · run: `cargo run --example 12_capstone`</sub>
+<sub>rust_lessons 0.19.0 · source: `src/section_12_*.rs` · run: `cargo run --example 12_capstone`</sub>
 
 Section 12 — capstone: guess the number.
 

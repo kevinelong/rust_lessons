@@ -1,6 +1,6 @@
 # 16 — Tables and SQL
 
-<sub>rust_lessons 0.18.0 · source: `src/section_16_*.rs` · run: `cargo run --example 16_databases`</sub>
+<sub>rust_lessons 0.19.0 · source: `src/section_16_*.rs` · run: `cargo run --example 16_databases`</sub>
 
 Section 16 — tables and SQL.
 

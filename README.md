@@ -14,7 +14,7 @@ bare `cargo` install and a student can read every line of what it does.
 cargo run                     the course map
 cargo run -- 7                section 7's lesson text
 cargo run --example 07_vectors   section 7's code, running
-cargo test                    137 tests; one long one is #[ignore]d
+cargo test                    138 tests; one long one is #[ignore]d
 cargo run --bin narrate -- 1   generate section 1's slides, narration text and mux scripts
 cargo run --bin notebook       generate all twenty Jupyter notebooks
 cargo run --bin parsons        generate the Parsons and faded problems (problems/)
@@ -156,6 +156,11 @@ verified; the teaching is not.
 take** — the same material argued differently — with the depth each was read to (`named`,
 `skimmed`, `read`). It exists because a citation that only proves a point is half a citation:
 the learner who wants to go further, or to disagree, needs somewhere to go.
+
+A `read` there is checkable rather than a boast: the entry carries an evidence tag, and the
+block it points at states the pages actually looked at and quotes at least one line out of the
+source. `cargo test` fails if an entry marked `read` has no such quote — the rule is that a
+reviewer can always ask "show me the sentence" and get one.
 
 The strongest entry there is the **expertise reversal effect**: scaffolding that helps novices
 can *harm* learners who already program. That is the honest case against this course for

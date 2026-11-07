@@ -27,16 +27,16 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 | | |
 |---|---|
-| Last commit | see `git log`; HEAD carries 0.18.0, the scoring surface |
+| Last commit | see `git log`; HEAD carries 0.19.0, the checked reading register |
 | Working tree | clean |
 | Videos | **21 MP4s + 21 SRT tracks at 0.15.0**, published as `v0.15.0` (46.7 MB, 43 assets) |
-| Tests | 137: 136 passing, 1 `#[ignore]`d |
+| Tests | 138: 137 passing, 1 `#[ignore]`d |
 | Batch | finished 2026-11-07: `tools/release-videos.ps1 -Sections all -Tag v0.15.0`, 823 s |
 
 **First two things to do after a reboot:**
 
 1. `cd C:/Users/kevin/rust_lessons && git status && cargo test` — the tree should be clean and
-   123 tests should pass; if not, something is half-applied.
+   138 tests should pass (137 plus one `#[ignore]`d); if not, something is half-applied.
 2. `gh release list --repo kevinelong/rust-lessons-releases | head -3` — expect `v0.15.0` as
    latest. If it is missing or lacks `.srt` assets, rerun
    `powershell -NoProfile -File tools/release-videos.ps1 -Sections all -Tag v0.15.0` (~14 min).
@@ -45,9 +45,14 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 1. **Send it for review.** `docs/REVIEW.md` to `users.rust-lang.org` (code review category) for
    accuracy on §01–11, and to one past cohort for the beginner pass. Nothing has been sent yet.
-2. **Read the five load-bearing sources properly** (Parsons review, Haynes-Magyar, Margulieux,
-   Joentausta & Hellas, Kalyuga) and change `skimmed` → `read` in `docs/reading.md` where earned.
-   Right now **nothing is marked read**, and two citation errors were already found.
+2. ~~Read the five load-bearing sources properly~~ — **done in 0.19.0.** Ericson et al. 2022,
+   Haynes-Magyar 2025 and Margulieux & Catrambone 2016 are now `read`, each with the pages that
+   were looked at and quoted lines in `docs/reading.md`; Joentausta & Hellas and Kalyuga stay
+   `skimmed` because both are paywalled (ACM 403, UNSW metadata-only) and an abstract is what
+   `skimmed` means. Three citation errors are corrected with their evidence. What is left is
+   institutional access, and the one finding that changes a claim: Margulieux & Catrambone found
+   a labelled text did **not** help on its own — only text plus a worked example carrying the
+   same labels did — so a **Subgoals** block needs a labelled example beside it.
 3. **Phase 4, measurement — the surface is built (0.18.0); the human input is not.** Input: every
    section yields at least four retrieval items (0.16.0, 101 over 21, proven non-vacuous) and one
    recorded session exists as data (`fixtures/session-2026-11-07-synthetic.json`, 0.17.0).
@@ -86,7 +91,7 @@ Everything is inside the repository, under `docs/` — nothing important is in `
 
 ## What this project can and cannot claim
 
-* **Can:** the code compiles, 110 tests pass, CI gates it, the videos regenerate from one
+* **Can:** the code compiles, 138 tests pass, CI gates it, the videos regenerate from one
   command, captions align to 0.0 s, `mdbook test` is proven non-vacuous.
 * **Cannot:** that anyone learns. No measurement exists, and two factual errors in the prose were
   found only because a reviewer asked a pointed question.

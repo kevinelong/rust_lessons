@@ -1,13 +1,13 @@
 # State — rust_lessons
 
-Written 2026-11-05 at v0.6.0, updated 2026-11-07 at v0.18.0; handoff entry point is `CONTINUE-HERE.md` at the repository root. Read this first if you are picking the project up in a new
+Written 2026-11-05 at v0.6.0, updated 2026-11-07 at v0.19.0; handoff entry point is `CONTINUE-HERE.md` at the repository root. Read this first if you are picking the project up in a new
 session; everything here is verifiable from the repository.
 
 ## What exists
 
 | Level | Artefact | Status | Evidence |
 |---|---|---|---|
-| 0 | acceptance criteria | **done** | `cargo test` → 137 tests (136 passing, 1 `#[ignore]`d) |
+| 0 | acceptance criteria | **done** | `cargo test` → 138 tests (137 passing, 1 `#[ignore]`d) |
 | 1 | lesson prose | **done** | 21 sections in `src/section_*.rs`; `SECTION_COUNT` is the single bound every generator uses |
 | 2 | slides | **done** | 277 HTML slides across 21 sections; all six diagrams embedded as images |
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
@@ -16,6 +16,7 @@ session; everything here is verifiable from the repository.
 | — | practice | **0.16.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each; retrieval floor is four per section (101 items), asserted by `cargo test` |
 | — | scoring | **0.18.0** | `rust_lessons::scoring` scores a session on correctness, time to answer and retrieval-versus-recognition per section, plus an overall row; `cargo run --bin score` prints it; `tests/session_scoring.rs` (7 tests) pins the fixture's numbers exactly |
 | — | recorded session | **0.17.0** | `fixtures/session-2026-11-07-synthetic.json` — 8 attempts over sections 01–03, 102.4 s on task, one wrong-then-right pair; read by `rust_lessons::session`, asserted by `tests/session_fixture.rs` (7 tests) |
+| — | sourcing register | **0.19.0** | `docs/reading.md` — five load-bearing sources with page ranges and quoted lines; 3 `read`, 2 `skimmed`; every `read` entry is checked by `every_read_source_has_a_quoted_line` |
 
 Published artefacts live outside this repository by design:
 
@@ -57,6 +58,17 @@ Published artefacts live outside this repository by design:
 * **An untested axis prints `-`, never `0.0%`.** Zero of zero is unknown. Section 02 asks no
   Parsons problem, so its recognition cell is `-` and `Tally::accuracy` returns `None`; a
   silent zero would read as a failure the learner never had a chance to commit.
+* **`read` is a tag plus a block, not an adjective.** A reading status in prose drifts: the
+  citation keeps its `read` after the note forgets which sentence said what. So each `read`
+  entry carries `[E<n>]` and the block states its page range and copies at least one line out
+  of the source, and a test fails on a `read` with no quote, a row with no tag, or an evidence
+  block nothing cites. The two directions matter equally: a test that only checked "quotes
+  exist" would pass on a file where every entry was flipped to `read`, which is why it also
+  refuses a register that is all `read` or all not.
+* **Paywalled sources stay `skimmed` and say why.** Joentausta & Hellas and Kalyuga had only
+  abstracts reachable (ACM 403, UNSW "metadata only access"), so their blocks hold an abstract
+  quote and a line naming the access failure. Quoting a title would have let the register claim
+  a finding nobody read.
 
 ## Defects found by building it (all fixed)
 
@@ -73,6 +85,7 @@ Published artefacts live outside this repository by design:
 
 ```bash
 cargo test                                    # the grader
+cargo test --test curriculum                   # cross-cutting invariants, incl. the reading register
 cargo test --test session_fixture              # the recorded session loads and its numbers hold
 cargo test --test session_scoring              # the fixture scores to the pinned numbers
 cargo run --bin score                          # score the fixture: 3 axes per section + overall
@@ -121,12 +134,33 @@ for idiom accuracy, Rust-Edu for the pedagogy claims, WebAIM-class communities f
 ## Sourcing
 
 `docs/reading.md` carries every section's primary source and an alternate take, each labelled
-with how deeply it was read. **Nothing is yet marked `read`** — the register says so in its own
-last line, because a claim resting on a skimmed paper is one paper-deep, and a claim resting on
-a named one is a guess.
+with how deeply it was read. **Three of the five load-bearing sources are now `read`**, each with
+the pages actually looked at and at least one line quoted out of the source: Ericson et al. 2022
+[E1], Haynes-Magyar 2025 [E2] and Margulieux & Catrambone 2016 [E3]. Two remain `skimmed` for a
+stated reason — Joentausta & Hellas 2018 [E4] and Kalyuga et al. 2003 [E5] are paywalled, and an
+abstract is what "skimmed" means.
 
-Two citation errors were found and corrected on 2026-11-06 (a wrong year, an overstated claim);
-see `docs/research/2026-11-06.md`.
+That status column is now a check, not a mood: `tests/curriculum.rs::every_read_source_has_a_quoted_line`
+requires every entry marked `read` to carry an evidence tag resolving to a block that states its
+page range and quotes it, and it refuses a register where everything (or nothing) is `read`.
+Proven non-vacuous twice, by deleting one block's quoted lines ("E3 is marked read and holds no
+quoted line") and by removing a row's tag ("row says read but carries no evidence tag").
+
+Three citation errors are corrected with their evidence, in `docs/reading.md` §Corrections:
+
+1. the Parsons review was "Aalto/ACM, 2026" — it is ITiCSE-WGR 2022 (C1);
+2. "substantial evidence that Parsons problems … outperform writing-from-scratch" overstated a
+   paper that says no large-scale replication has verified the claims (C2);
+3. found 2026-11-07: Joentausta & Hellas was cited as the primary source for *faded* Parsons; it
+   studies subgoal-labelled worked examples with 9–10-year-olds in LightBot, so the faded row now
+   cites Weinman, Fox & Hearst (CHI 2021) (C3).
+
+What the reading changed in the argument, rather than just in the footnote: E3's own results say
+a labelled text did not independently help ("subgoal labels in the text did not independently
+improve performance"); only text **and** a worked example carrying the same labels did. The
+**Subgoals** blocks in §07, §08, §11 and §16 are therefore justified only where a labelled
+example sits beside them, and E2 is a nine-participant perception study, which is why the course
+still claims nothing about learning.
 
 ## Research and plan
 
@@ -170,6 +204,11 @@ see `docs/research/2026-11-06.md`.
 7. **Completion reserve** — the 1M-token window is eaten by a ~307k completion reservation;
    no `maxTokens` key exists in `config.yml`, so this needs the provider's per-model schema
    confirmed before changing.
+8. **Two load-bearing sources are still abstract-only** — Joentausta & Hellas 2018 (ACM
+   returns HTTP 403 to a full-text fetch) and Kalyuga et al. 2003 (UNSW holds "metadata only
+   access"). Both blocks in `docs/reading.md` quote the abstract and name the failure; flipping
+   either to `read` needs institutional access, not more searching, and the test will not let
+   it happen without a quoted line.
 
 ## Environment facts worth keeping
 

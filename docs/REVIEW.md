@@ -69,7 +69,9 @@ pass. If you want credit, say how you want to be named and I will add a `CONTRIB
 * The course targets **complete beginners**; expertise reversal (Kalyuga et al. 2003) means the
   scaffolding may be *harmful* to experienced programmers. If you already program, your best
   contribution is Task A, not B.
-* Sources and their read-depth are in [`docs/reading.md`](reading.md) — nothing is marked
-  `read` yet, and you are welcome to call that out.
+* Sources and their read-depth are in [`docs/reading.md`](reading.md) — the depth is a checked
+  claim, not a mood: three of the five load-bearing sources are marked `read` and each carries a
+  page range and a line quoted out of it. If a `read` looks too generous, that quote is the
+  thing to argue with.
 * The course claims correctness and reproducibility. It does **not** claim that anyone learns,
   because nothing here measures that.

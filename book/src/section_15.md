@@ -1,6 +1,6 @@
 # 15 — Clients and servers
 
-<sub>rust_lessons 0.18.0 · source: `src/section_15_*.rs` · run: `cargo run --example 15_client_server`</sub>
+<sub>rust_lessons 0.19.0 · source: `src/section_15_*.rs` · run: `cargo run --example 15_client_server`</sub>
 
 Section 15 — clients and servers.
 

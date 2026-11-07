@@ -1,6 +1,6 @@
 # 17 — Ownership and moves
 
-<sub>rust_lessons 0.18.0 · source: `src/section_17_*.rs` · run: `cargo run --example 17_ownership`</sub>
+<sub>rust_lessons 0.19.0 · source: `src/section_17_*.rs` · run: `cargo run --example 17_ownership`</sub>
 
 Section 17 — ownership and moves (Rust requires this; the deck never had to say it).
 

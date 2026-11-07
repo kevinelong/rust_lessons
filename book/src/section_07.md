@@ -1,6 +1,6 @@
 # 07 — Vectors: collections of values
 
-<sub>rust_lessons 0.18.0 · source: `src/section_07_*.rs` · run: `cargo run --example 07_vectors`</sub>
+<sub>rust_lessons 0.19.0 · source: `src/section_07_*.rs` · run: `cargo run --example 07_vectors`</sub>
 
 Section 7 — vectors: the list, in Rust.
 
