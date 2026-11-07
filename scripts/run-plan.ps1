@@ -429,7 +429,7 @@ function Assert-CleanMain {
     # notes/. Counting those as dirty made every claim abort its own round on 2026-11-07 - two workers claimed, then both exited with
     # 0 tasks. Anything else still has to be clean.
     $dirty = (Invoke-GitQuiet @('status', '--porcelain')) | Where-Object {
-        $_ -and $_ -notmatch 'docs[/\\]PLAN\.json' -and $_ -notmatch 'notes[/\\]'
+        $_ -and $_ -notmatch 'docs[/\\]PLAN\.json' -and $_ -notmatch 'notes[/\\]' -and $_ -notmatch 'logs[/\\]'
     }
     if (($dirty -join '') -ne '') {
         throw "the working tree is not clean: commit or stash before running the plan"

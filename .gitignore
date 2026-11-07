@@ -39,3 +39,6 @@ docs/diagrams/_bake.html
 
 # mdbook build output (the chapters in book/src/ are generated and committed)
 book/book/
+
+# run records: written by the loop between commits, never part of a change
+logs/

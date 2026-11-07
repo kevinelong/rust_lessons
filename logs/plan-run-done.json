@@ -1,13 +1,13 @@
 {
-    "finished":  "2026-11-07 07:14:41",
+    "finished":  "2026-11-07 07:45:02",
     "repo":  "C:\\Users\\kevin\\rust_lessons",
     "work_root":  "C:\\Users\\kevin\\rust_lessons-work",
-    "tasks":  0,
+    "tasks":  1,
     "tests_ok":  true,
     "tail":  "   Doc-tests rust_lessons\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n",
     "ledger":  4,
     "kept_trees":  [
-
+                       "C:\\Users\\kevin\\rust_lessons-work\\retrieval-coverage"
                    ],
     "refused":  [
 
