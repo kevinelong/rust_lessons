@@ -466,6 +466,7 @@ function Test-Branch([string]$Where) {
 
 $iteration = 0
 $noProgress = 0
+Release-Claims $Worker
 while (($UntilDone -and $noProgress -lt 3 -and $iteration -lt 99) -or $iteration -lt $Max) {
     if (Test-Path -LiteralPath $stopFile) {
         Write-Output "STOP file present ($stopFile): not starting anything."
