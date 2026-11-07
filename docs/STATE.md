@@ -1,6 +1,6 @@
 # State — rust_lessons
 
-Written 2026-11-05, at v0.6.0. Read this first if you are picking the project up in a new
+Written 2026-11-05, at v0.6.0; handoff entry point is `CONTINUE-HERE.md` at the repository root. Read this first if you are picking the project up in a new
 session; everything here is verifiable from the repository.
 
 ## What exists
@@ -11,7 +11,7 @@ session; everything here is verifiable from the repository.
 | 1 | lesson prose | **done** | 21 sections in `src/section_*.rs`; `SECTION_COUNT` is the single bound every generator uses |
 | 2 | slides | **done** | 277 HTML slides across 21 sections; all six diagrams embedded as images |
 | 3 | notebook | **done** | 21 `.ipynb` in `notebooks/`; 20/20 executed cleanly when sampled, one per section regenerated since |
-| 4 | narrated video | **done** | 21 MP4s at 0.14.1, published as `v0.14.1` (46.6 MB); regenerated and published by `tools/release-videos.ps1` in one command |
+| 4 | narrated video | **done** | 21 MP4s + 21 SRT tracks at 0.15.0, published as `v0.15.0`; regenerated and published by `tools/release-videos.ps1` in one command |
 | — | book (mdBook) | **0.13.0** | 23 chapters in `book/src/`; `mdbook build` + `mdbook test` pass, and the test is proven non-vacuous |
 | — | practice | **0.10.0** | 63 generated files: Parsons, faded, retrieval — 21 sections each |
 

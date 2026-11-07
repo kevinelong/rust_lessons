@@ -35,6 +35,10 @@ pub struct Beat {
     pub text: String,
 }
 
+/// Seconds a beat with no narration is held on screen. Slides, captions and the mux all read
+/// this one constant, so a silent beat cannot be timed differently in each artefact.
+pub const SILENT_HOLD: f64 = 2.2;
+
 /// Should this beat be read aloud?
 pub fn needs_narration(beat: &Beat) -> bool {
     matches!(beat.kind, Kind::Prose | Kind::Bullets | Kind::Heading)

@@ -68,6 +68,17 @@ foreach ($n in $list) {
         Write-Host "[$id] mux"
         & powershell -NoProfile -File "mux.ps1" | Out-Null
         if (-not (Test-Path "section_$id.mp4")) { throw "mux produced no MP4 for section $id" }
+
+        Write-Host "[$id] captions"
+        Pop-Location
+        try {
+            & cargo run --quiet --bin captions -- $n | Out-Null
+            if ($LASTEXITCODE -ne 0) { throw "captions failed for section $id" }
+            if (-not (Test-Path "$dir\section_$id.srt")) { throw "no SRT for section $id" }
+        }
+        finally {
+            Push-Location $dir
+        }
         $mb = [math]::Round((Get-Item "section_$id.mp4").Length / 1MB, 2)
         Write-Host "[$id] done: section_$id.mp4 ($mb MB)"
     }
@@ -77,8 +88,9 @@ foreach ($n in $list) {
 }
 
 $videos = Get-ChildItem (Join-Path $video "section_*\section_*.mp4")
+$captions = Get-ChildItem (Join-Path $video "section_*\section_*.srt")
 $total = ($videos | Measure-Object Length -Sum).Sum / 1MB
-Write-Host ("`n{0} videos, {1:N1} MB, {2:N0}s elapsed" -f $videos.Count, $total, ((Get-Date) - $started).TotalSeconds)
+Write-Host ("`n{0} videos, {1} subtitle tracks, {2:N1} MB, {3:N0}s elapsed" -f $videos.Count, $captions.Count, $total, ((Get-Date) - $started).TotalSeconds)
 
 if ($SkipPublish -or [string]::IsNullOrWhiteSpace($Tag)) {
     Write-Host "not publishing (no -Tag, or -SkipPublish)"
@@ -90,7 +102,8 @@ $stage = Join-Path $root "out\release-$Tag"
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Path $stage | Out-Null
 foreach ($v in $videos) { Copy-Item $v.FullName $stage }
-$sums = foreach ($v in (Get-ChildItem "$stage\*.mp4")) {
+foreach ($c in $captions) { Copy-Item $c.FullName $stage }
+$sums = foreach ($v in (Get-ChildItem "$stage\*.mp4", "$stage\*.srt")) {
     "{0}  {1}" -f (Get-FileHash $v.FullName -Algorithm SHA256).Hash.ToLower(), $v.Name
 }
 $sums | Set-Content -Path (Join-Path $stage "SHA256SUMS") -Encoding ascii
@@ -98,6 +111,6 @@ $sums | Set-Content -Path (Join-Path $stage "SHA256SUMS") -Encoding ascii
 Write-Host "publishing $Tag with $($videos.Count) videos"
 & gh release create $Tag --repo kevinelong/rust-lessons-releases --title "rust_lessons $Tag" `
     --notes $Notes `
-    (Get-ChildItem "$stage\*.mp4" | ForEach-Object { $_.FullName }) (Join-Path $stage "SHA256SUMS")
+    (Get-ChildItem "$stage\*.mp4", "$stage\*.srt" | ForEach-Object { $_.FullName }) (Join-Path $stage "SHA256SUMS")
 if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }
 Write-Host "published $Tag"

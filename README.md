@@ -1,5 +1,8 @@
 # rust_lessons
 
+> Picking this up cold? Read [CONTINUE-HERE.md](CONTINUE-HERE.md) first, then
+> [docs/STATE.md](docs/STATE.md).
+
 Introduction to computer programming, taught in **Rust**: the same sixteen lessons
 as the Python course (`python_lessons/Introduction_to_computer_programming_with_Python.pptx`,
 85 slides), the same exercises, rewritten for the language this repository teaches.
@@ -17,6 +20,7 @@ cargo run --bin notebook       generate all twenty Jupyter notebooks
 cargo run --bin parsons        generate the Parsons and faded problems (problems/)
 cargo run --bin quiz           generate the retrieval checks (problems/)
 cargo run --bin book           write the mdBook chapters (book/src/)
+cargo run --bin captions       write SRT subtitles for every video (out/video/)
 tools/release-videos.ps1       regenerate every video and publish a release (see docs/STATE.md)
 mdbook serve book              read the course as a book (after: mdbook build book)
 cargo run -- serve            the section 15 server on 127.0.0.1:8765
@@ -191,7 +195,9 @@ and mux the MP4. Timing is narration-driven, so the video
 re-derives itself when the prose changes. Details, verified output and publishing notes:
 [docs/video.md](docs/video.md).
 
-**Watch them:** the generated videos are published as release assets in
+**Watch them:** every video ships an **SRT track** — one cue per narrated beat, timed from the
+same durations the mux uses, so captions cannot drift from the picture or from the prose. The
+generated videos are published as release assets in
 [`rust-lessons-releases`](https://github.com/kevinelong/rust-lessons-releases/releases) —
 **all 21 sections, 29:43**, 1920×1080 with narration, verified by SHA-256. They are
 build output, so they live there and not here.
